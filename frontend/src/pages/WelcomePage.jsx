@@ -1,26 +1,9 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from '../styles/WelcomePage.module.css';
 
 export default function WelcomePage() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Check if user is already logged in
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
-    
-    if (token && user) {
-      try {
-        const userData = JSON.parse(user);
-        // Redirect to appropriate dashboard based on user role
-        navigate(`/${userData.role}`);
-      } catch (error) {
-        // If user data is corrupted, clear it
-        localStorage.clear();
-      }
-    }
-  }, [navigate]);
+  // Welcome page is now accessible to everyone - no auto-redirect
   return (
     <div className={styles.container}>
       <header className={styles.header}>

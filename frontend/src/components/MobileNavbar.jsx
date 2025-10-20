@@ -12,6 +12,10 @@ const MobileNavbar = ({ userRole, userName, dashboardLinks = [] }) => {
     navigate('/login');
   };
 
+  const handleBrandClick = () => {
+    navigate('/');
+  };
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -33,9 +37,17 @@ const MobileNavbar = ({ userRole, userName, dashboardLinks = [] }) => {
       }}>
         <div className="container-fluid">
           {/* Brand/Logo */}
-          <Link className="navbar-brand text-white fw-bold" to={`/${userRole}`} style={{ fontSize: '1.5rem' }}>
+          <button 
+            className="navbar-brand text-white fw-bold btn p-0 border-0" 
+            onClick={handleBrandClick}
+            style={{ 
+              fontSize: '1.5rem',
+              background: 'transparent',
+              cursor: 'pointer'
+            }}
+          >
             MedPal
-          </Link>
+          </button>
 
           {/* Mobile Menu Button */}
           <button

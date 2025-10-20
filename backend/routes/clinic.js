@@ -209,15 +209,7 @@ router.get("/services/public", async (req, res) => {
     res.status(500).json({ message: "Gabim gjatë marrjes së shërbimeve." });
   }
 });
-// GET /api/clinic/doctors → mjekët e klinikës së kyçur
-router.get("/doctors", verifyToken, async (req, res) => {
-  if (req.user.role !== "clinic") {
-    return res.status(403).json({ message: "Vetëm klinikat kanë qasje." });
-  }
-
-  const doctors = await User.find({ clinicId: req.user.id, role: "doctor" }).select("name _id");
-  res.json(doctors);
-});
+// Duplicate route removed - using the one above that properly populates services
 // Përditëso emrin/emailin e mjekut
 router.put("/users/:id", verifyToken, async (req, res) => {
   if (req.user.role !== "clinic") {
