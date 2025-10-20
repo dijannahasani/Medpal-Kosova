@@ -7,15 +7,7 @@ const Appointment = require("./models/Appointment");
 const User = require("./models/User");
 require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 
-// Lidhu me MongoDB (support both vars)
-const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || "";
-if (!mongoUri) {
-  console.error("❌ reminderJob Mongo error: MONGODB_URI/MONGO_URI not set");
-} else {
-  mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("✅ reminderJob connected to MongoDB"))
-    .catch(err => console.error("❌ reminderJob Mongo error:", err.message || err));
-}
+console.log("📅 Reminder job initialized - using existing MongoDB connection");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -58,31 +50,29 @@ cron.schedule("0 8 * *  *", async () => {
   }
 
   // -------------------- Nesër --------------------
-cron.schedule("0 8  * * *", async () => {
-  console.log("⏰ Duke kontrolluar terminet për nesër...");
+  const tomorrowStart = now.clone().add(1, "day").startOf("day");
+  const tomorrowEnd = now.clone().add(1, "day").endOf("day");
 
-  const tomorrow = moment().add(1, "day").format("YYYY-MM-DD");
-
-  const appointments = await Appointment.find({
-    date: tomorrow,
+  const appointmentsTomorrow = await Appointment.find({
+    date: { $gte: tomorrowStart.toDate(), $lte: tomorrowEnd.toDate() },
     status: "approved",
   });
 
-  for (const appt of appointments) {
+  for (const appt of appointmentsTomorrow) {
     const patient = await User.findById(appt.patientId);
+    const readableDate = moment(appt.date).format("DD/MM/YYYY");
+    const time = appt.time;
+
     if (patient?.email) {
-      const mailOptions = {
+      await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: patient.email,
-        subject: "📅 Kujtesë për Terminin",
-        text: `Pershendetje ${patient.name},\n\nKujtesë: Nesër keni një vizitë te mjeku në ora ${appt.time}.\nJu lutem mos harroni!\n\nFaleminderit,\nMedPal`,
-      };
-
-      await transporter.sendMail(mailOptions);
-      console.log(`📧 Email kujtese dërguar për: ${patient.email}`);
+        subject: "📅 Kujtesë për Terminin Nesër",
+        text: `Përshëndetje ${patient.name},\n\nNesër (${readableDate}) keni një vizitë te mjeku në ora ${time}.\nJu lutem mos harroni!\n\nFaleminderit,\nMedPal`,
+      });
+      console.log(`📧 Kujtesë për nesër dërguar për: ${patient.email}`);
     }
   }
-});
 
   // -------------------- Pasnesër --------------------
   const dayAfterTomorrowStart = now.clone().add(2, "day").startOf("day");

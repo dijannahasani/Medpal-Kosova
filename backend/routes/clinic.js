@@ -105,6 +105,32 @@ router.get("/services", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Gabim gjatë marrjes së shërbimeve." });
   }
 });
+// PUT update department
+router.put("/departments/:id", verifyToken, async (req, res) => {
+  if (req.user.role !== "clinic") {
+    return res.status(403).json({ message: "Vetëm klinika mund të përditësojë departamente." });
+  }
+
+  const { name } = req.body;
+  if (!name) return res.status(400).json({ message: "Emri i departamentit është i detyrueshëm." });
+
+  try {
+    const updated = await Department.findOneAndUpdate(
+      { _id: req.params.id, clinicId: req.user.id },
+      { name },
+      { new: true }
+    );
+    
+    if (!updated) {
+      return res.status(404).json({ message: "Departamenti nuk u gjet." });
+    }
+    
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ message: "Gabim gjatë përditësimit të departamentit." });
+  }
+});
+
 // DELETE department
 router.delete("/departments/:id", verifyToken, async (req, res) => {
   try {

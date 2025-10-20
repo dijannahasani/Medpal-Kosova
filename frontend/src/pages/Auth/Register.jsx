@@ -117,7 +117,7 @@ export default function Register() {
         {!verificationStep ? (
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <input name="name" className="form-control form-control-lg" placeholder="Emri i plotë" onChange={handleChange} required />
+              <input name="name" className="form-control form-control-lg" placeholder="Emri i plotë" autoComplete="off"  onChange={handleChange} required />
             </div>
             <div className="mb-3">
               <input 
@@ -127,6 +127,7 @@ export default function Register() {
                 placeholder="Email" 
                 value={formData.email}
                 onChange={handleChange} 
+                autoComplete="off"
                 required 
                 readOnly={isInvitation}
                 style={isInvitation ? { backgroundColor: "#f8f9fa", color: "#6c757d" } : {}}

@@ -6,6 +6,7 @@ export default function ClinicServicesAndDepartments() {
   const [departmentName, setDepartmentName] = useState("");
   const [departments, setDepartments] = useState([]);
   const [services, setServices] = useState([]);
+  const [editingDepartment, setEditingDepartment] = useState(null);
   const [editingService, setEditingService] = useState(null);
   const [serviceForm, setServiceForm] = useState({
     name: "",
@@ -40,21 +41,36 @@ export default function ClinicServicesAndDepartments() {
     fetchData();
   }, [token]);
 
-  const handleAddDepartment = async (e) => {
+  const handleAddOrUpdateDepartment = async (e) => {
     e.preventDefault();
     if (!departmentName.trim()) return alert("Shkruani emrin e departamentit.");
     try {
-      await axios.post(
-        "http://localhost:5000/api/clinic/departments",
-        { name: departmentName },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      if (editingDepartment) {
+        await axios.put(
+          `http://localhost:5000/api/clinic/departments/${editingDepartment}`,
+          { name: departmentName },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setEditingDepartment(null);
+        alert("✅ Departamenti u përditësua me sukses!");
+      } else {
+        await axios.post(
+          "http://localhost:5000/api/clinic/departments",
+          { name: departmentName },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        alert("✅ Departamenti u shtua me sukses!");
+      }
       setDepartmentName("");
       fetchData();
-      alert("✅ Departamenti u shtua me sukses!");
     } catch (err) {
-      alert("❌ Gabim gjatë shtimit të departamentit.");
+      alert(`❌ Gabim gjatë ${editingDepartment ? 'përditësimit' : 'shtimit'} të departamentit.`);
     }
+  };
+
+  const handleEditDepartment = (department) => {
+    setEditingDepartment(department._id);
+    setDepartmentName(department.name);
   };
 
   const handleDeleteDepartment = async (id) => {
@@ -64,6 +80,7 @@ export default function ClinicServicesAndDepartments() {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchData();
+      alert("✅ Departamenti u fshi me sukses!");
     } catch (err) {
       alert("❌ Gabim gjatë fshirjes së departamentit.");
     }
@@ -170,15 +187,17 @@ export default function ClinicServicesAndDepartments() {
               </div>
               <div className="card-body p-5">
 
-                {/* ➕ Shto Departament */}
-                <form onSubmit={handleAddDepartment} className="mb-5" style={{
+                {/* ➕ Shto/Përditëso Departament */}
+                <form onSubmit={handleAddOrUpdateDepartment} className="mb-5" style={{
                   background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
                   padding: "2rem",
                   borderRadius: "15px",
                   boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
                   border: "1px solid rgba(220, 197, 178, 0.3)"
                 }}>
-                  <h5 className="mb-3" style={{ color: "#D9A299", fontSize: "1.3rem" }}>➕ Shto Departament</h5>
+                  <h5 className="mb-3" style={{ color: "#D9A299", fontSize: "1.3rem" }}>
+                    {editingDepartment ? "✏️ Përditëso Departament" : "➕ Shto Departament"}
+                  </h5>
                   <div className="input-group">
                     <input
                       type="text"
@@ -199,7 +218,28 @@ export default function ClinicServicesAndDepartments() {
                       color: "white",
                       borderRadius: "12px",
                       boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
-                    }}>Shto</button>
+                    }}>
+                      {editingDepartment ? "Përditëso" : "Shto"}
+                    </button>
+                    {editingDepartment && (
+                      <button
+                        type="button"
+                        className="btn btn-lg ms-2"
+                        onClick={() => {
+                          setEditingDepartment(null);
+                          setDepartmentName("");
+                        }}
+                        style={{
+                          background: "linear-gradient(135deg, #F0E4D3, #DCC5B2)",
+                          border: "none",
+                          color: "#2c3e50",
+                          borderRadius: "12px",
+                          boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                        }}
+                      >
+                        Anulo
+                      </button>
+                    )}
                   </div>
                 </form>
 
@@ -218,6 +258,7 @@ export default function ClinicServicesAndDepartments() {
                       name="name"
                       className="form-control form-control-lg"
                       placeholder="Emri i shërbimit"
+                      autoComplete="off"
                       value={serviceForm.name}
                       onChange={handleServiceChange}
                       required
@@ -378,7 +419,7 @@ export default function ClinicServicesAndDepartments() {
                     border: "1px solid rgba(220, 197, 178, 0.3)"
                   }}>
                     {filteredDepartments.map((dep) => (
-                      <li key={dep._id} className="list-group-item d-flex justify-content-between" style={{
+                      <li key={dep._id} className="list-group-item d-flex justify-content-between align-items-center" style={{
                         background: "transparent",
                         border: "1px solid rgba(220, 197, 178, 0.2)",
                         borderRadius: "10px",
@@ -386,16 +427,37 @@ export default function ClinicServicesAndDepartments() {
                         padding: "1.5rem",
                         fontSize: "1.1rem"
                       }}>
-                        {dep.name}
-                        <button className="btn btn-sm" onClick={() => handleDeleteDepartment(dep._id)} style={{
-                          background: "linear-gradient(135deg, #DCC5B2, #D9A299)",
-                          border: "none",
-                          color: "white",
-                          borderRadius: "8px",
-                          boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
-                        }}>
-                          🗑️
-                        </button>
+                        <div>
+                          {dep.name}
+                        </div>
+                        <div>
+                          <button 
+                            className="btn btn-sm me-2" 
+                            onClick={() => handleEditDepartment(dep)} 
+                            style={{
+                              background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                              border: "none",
+                              color: "white",
+                              borderRadius: "8px",
+                              boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                            }}
+                          >
+                            ✏️
+                          </button>
+                          <button 
+                            className="btn btn-sm" 
+                            onClick={() => handleDeleteDepartment(dep._id)} 
+                            style={{
+                              background: "linear-gradient(135deg, #DCC5B2, #D9A299)",
+                              border: "none",
+                              color: "white",
+                              borderRadius: "8px",
+                              boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                            }}
+                          >
+                            🗑️
+                          </button>
+                        </div>
                       </li>
                     ))}
                   </ul>

@@ -2,7 +2,6 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 
 // ✅ KRIJIMI I APP
@@ -33,33 +32,30 @@ app.use("/uploads", express.static("uploads")); // për të shfaqur dokumentet
 const documentRoutes = require("./routes/documents");
 app.use("/api/documents", documentRoutes);
 
-require("./reminderJob");
-
-
 const workingHoursRoutes = require("./routes/workingHours");
 app.use("/api/working-hours", workingHoursRoutes);
 
-
 const adminRoutes = require("./routes/admin");
-
 app.use("/api/admin", adminRoutes);
 
 app.use("/api/clinic", require("./routes/clinic"));
-// ✅ CONNECT TO MONGODB
-const config = require('./config');
-const mongoUri = config.MONGODB_URI;
 
-console.log('🔍 Attempting to connect to MongoDB...');
-mongoose.connect(mongoUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('✅ MongoDB connected successfully!');
-  console.log('📊 Database:', mongoUri.split('/').pop());
-}).catch(err => {
-  console.error('❌ MongoDB connection failed:', err.message);
-  console.error('💡 Please check your MongoDB Atlas connection string');
-  console.error('🔗 Get your connection string from: https://cloud.mongodb.com/');
+// ✅ CONNECT TO MONGODB
+const connectDB = require('./database');
+
+// Initialize database connection
+const initializeApp = async () => {
+  await connectDB();
+  
+  // Start reminder job after DB connection is established
+  require("./reminderJob");
+  
+  console.log('🔄 All services initialized successfully');
+};
+
+initializeApp().catch(err => {
+  console.error('❌ Failed to initialize application:', err);
+  process.exit(1);
 });
 
 // ✅ TEST ROUTE - prettier HTML so the status is visible
