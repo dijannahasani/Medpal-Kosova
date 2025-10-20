@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ClinicHomeButton from "../../components/ClinicHomeButton";
 
 export default function ClinicProfileUpdate() {
   const [form, setForm] = useState({ name: "", email: "" });
@@ -129,6 +130,7 @@ export default function ClinicProfileUpdate() {
           </div>
         </div>
       </div>
+      <ClinicHomeButton />
     </div>
   );
 }

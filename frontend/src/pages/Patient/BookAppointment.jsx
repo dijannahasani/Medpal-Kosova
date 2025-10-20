@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MobileNavbar from "../../components/MobileNavbar";
+import PatientHomeButton from "../../components/PatientHomeButton";
 
 export default function BookAppointment() {
   const [form, setForm] = useState({
@@ -359,6 +360,7 @@ export default function BookAppointment() {
           </div>
         </div>
       </div>
+      <PatientHomeButton />
     </div>
   );
 }

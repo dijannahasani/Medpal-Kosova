@@ -63,6 +63,11 @@ export default function Login() {
 
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
+      
+      // Also store in sessionStorage for tab-specific sessions
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("user", JSON.stringify(user));
+      
       navigate(`/${user.role}`);
     } catch (err) {
       setError(err.response?.data?.message || "Gabim gjatë qasjes.");

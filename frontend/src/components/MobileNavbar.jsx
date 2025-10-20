@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { clearAllAuth } from '../utils/auth';
 
 const MobileNavbar = ({ userRole, userName, dashboardLinks = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.clear();
+    clearAllAuth();
     navigate('/login');
   };
 

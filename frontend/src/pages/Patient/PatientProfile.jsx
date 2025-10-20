@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getToken, getUser, setAuth } from "../../utils/auth";
+import PatientHomeButton from "../../components/PatientHomeButton";
 
 export default function PatientProfile() {
   const [form, setForm] = useState({
@@ -16,7 +18,7 @@ export default function PatientProfile() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await axios.get("http://localhost:5000/api/auth/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -31,17 +33,17 @@ export default function PatientProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    const token = getToken();
     try {
       console.log("🔍 Updating patient profile:", form);
       const response = await axios.put("http://localhost:5000/api/users/me", form, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
-      // Update localStorage with new user data
-      const user = JSON.parse(localStorage.getItem("user"));
-      const updatedUser = { ...user, ...response.data };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+      // Update both storage types with new user data
+      const currentUser = getUser();
+      const updatedUser = { ...currentUser, ...response.data };
+      setAuth(token, updatedUser);
       
       console.log("✅ Profile updated successfully:", response.data);
       alert("✅ Profili u përditësua me sukses!");
@@ -172,6 +174,7 @@ export default function PatientProfile() {
           </div>
         </div>
       </div>
+      <PatientHomeButton />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import DoctorHomeButton from "../../components/DoctorHomeButton";
 
 export default function DoctorAppointments() {
   const [appointments, setAppointments] = useState([]);
@@ -49,6 +50,7 @@ export default function DoctorAppointments() {
       padding: "2rem 0",
       background: "linear-gradient(135deg, #FAF7F3 0%, #F0E4D3 50%, #DCC5B2 100%)"
     }}>
+      <DoctorHomeButton />
       <div className="container-fluid px-4">
         <div className="row justify-content-center">
           <div className="col-12">

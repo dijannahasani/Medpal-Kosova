@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import DoctorHomeButton from "../../components/DoctorHomeButton";
 
 export default function DoctorAppointmentsManager() {
   const [appointments, setAppointments] = useState([]);
@@ -466,6 +467,7 @@ export default function DoctorAppointmentsManager() {
           </div>
         </div>
       </div>
+      <DoctorHomeButton />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import PatientHomeButton from "../../components/PatientHomeButton";
 
 export default function UploadDocuments() {
   const [documents, setDocuments] = useState([]);
@@ -293,6 +294,7 @@ export default function UploadDocuments() {
           </div>
         </div>
       </div>
+      <PatientHomeButton />
     </div>
   );
 }

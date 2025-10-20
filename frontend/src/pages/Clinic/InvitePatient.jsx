@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { getToken } from "../../utils/auth";
+import ClinicHomeButton from "../../components/ClinicHomeButton";
 
 const InvitePatient = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +25,7 @@ const InvitePatient = () => {
     setError("");
 
     try {
-      const token = localStorage.getItem("token"); // JWT i klinikës
+      const token = getToken(); // JWT i klinikës
       const response = await axios.post(
         "http://localhost:5000/api/auth/invite-patient",
         formData,
@@ -160,6 +162,7 @@ const InvitePatient = () => {
           </div>
         </div>
       </div>
+      <ClinicHomeButton />
     </div>
   );
 };

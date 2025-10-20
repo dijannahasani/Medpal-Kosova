@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import PatientHomeButton from "../../components/PatientHomeButton";
 
 export default function SearchDoctors() {
   const [doctors, setDoctors] = useState([]);
@@ -86,6 +87,7 @@ export default function SearchDoctors() {
           </li>
         ))}
       </ul>
+      <PatientHomeButton />
     </div>
   );
 }

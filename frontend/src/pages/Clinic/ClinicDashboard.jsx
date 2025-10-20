@@ -1,9 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getUser, clearAuth } from "../../utils/auth";
+import MobileNavbar from "../../components/MobileNavbar";
 
 export default function ClinicDashboard() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getUser();
+
+  const handleLogout = () => {
+    clearAuth();
+    window.location.href = "/login";
+  };
 
   const cards = [
     { to: "/clinic/doctors", icon: "📋", title: "Lista e Mjekëve", desc: "Shiko të gjithë mjekët e klinikës" },
@@ -18,43 +25,63 @@ export default function ClinicDashboard() {
   ];
 
   return (
-    <div
-      className="container-fluid"
-      style={{
-        background: "linear-gradient(135deg, #FAF7F3 0%, #F0E4D3 50%, #DCC5B2 100%)",
-        minHeight: "100vh",
-        padding: "2rem 0",
-      }}
-    >
-      <div className="container">
-        {/* Header */}
-        <div
-          className="d-flex justify-content-between align-items-center p-4 mb-5"
-          style={{
-            background: "linear-gradient(135deg, #E3CFC3, #DCC5B2)",
-            color: "#4A3F35",
-            borderRadius: "15px",
-            boxShadow: "0 8px 25px rgba(217, 162, 153, 0.3)",
-          }}
-        >
-          <h2 className="m-0 fw-bold" style={{ fontSize: "1.8rem" }}>
-            Mirësevini në Klinikën {user?.name || "Klinika e Re"}
-          </h2>
-          <button
-            className="btn btn-outline-dark px-4 fw-semibold"
+    <>
+      {/* Mobile Navigation */}
+      <MobileNavbar
+        userRole="clinic"
+        userName={user?.name || "Klinika"}
+        dashboardLinks={cards}
+      />
+
+      {/* Main Content */}
+      <div
+        className="container-fluid"
+        style={{
+          backgroundColor: "#FAF7F3", 
+          minHeight: "calc(100vh - 64px)", 
+          padding: "1rem 0",
+          background: "linear-gradient(135deg, #FAF7F3 0%, #F0E4D3 50%, #DCC5B2 100%)"
+        }}
+      >
+        <div className="container">
+          {/* Desktop Header - Hidden on mobile */}
+          <div
+            className="d-none d-md-flex justify-content-between align-items-center p-4 rounded shadow mb-5"
             style={{
-              border: "1.5px solid #4A3F35",
-              borderRadius: "10px",
-              backgroundColor: "rgba(255, 255, 255, 0.5)",
-            }}
-            onClick={() => {
-              localStorage.clear();
-              window.location.href = "/login";
+              background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+              color: "white",
+              borderRadius: "15px",
+              boxShadow: "0 8px 25px rgba(217, 162, 153, 0.3)"
             }}
           >
-            Dil
-          </button>
-        </div>
+            <h2 className="m-0">
+              Mirësevini në Klinikën {user?.name || "Klinika e Re"} 👋
+            </h2>
+            <button className="btn btn-outline-light" onClick={handleLogout}>
+              Dil
+            </button>
+          </div>
+
+          {/* Mobile Welcome Card - Visible only on mobile */}
+          <div className="d-md-none mb-4">
+            <div
+              className="card text-center"
+              style={{
+                background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                color: "white",
+                border: "none",
+                borderRadius: "12px",
+                boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+              }}
+            >
+              <div className="card-body p-3">
+                <h5 className="card-title mb-2">👋 Mirësevini në Klinikën {user?.name || "Klinika e Re"}!</h5>
+                <p className="card-text mb-0 small">
+                  Zgjidhni një nga opsionet më poshtë për të vazhduar
+                </p>
+              </div>
+            </div>
+          </div>
 
         {/* Cards Grid */}
         <div
@@ -119,7 +146,8 @@ export default function ClinicDashboard() {
             </Link>
           ))}
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

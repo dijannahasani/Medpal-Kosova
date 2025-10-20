@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema({
   bio: { type: String }, // Përshkrimi/biografia
 
   // Vetëm për pacientët
+  dateOfBirth: { type: Date },
   gender: { type: String, enum: ["male", "female", "other"] },
   address: { type: String },
   bloodType: { type: String },

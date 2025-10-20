@@ -4,15 +4,20 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/Dashboard.css";
 import MobileNavbar from "../../components/MobileNavbar";
+import { clearAuth, getToken } from "../../utils/auth";
 
 export default function PatientDashboard() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getUser = async () => {
+    const getUserData = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = getToken();
+        if (!token) {
+          navigate("/login");
+          return;
+        }
         const res = await axios.get("http://localhost:5000/api/auth/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -22,12 +27,11 @@ export default function PatientDashboard() {
         navigate("/login");
       }
     };
-    getUser();
+    getUserData();
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    clearAuth();
     navigate("/");
   };
 

@@ -1,11 +1,13 @@
 // src/pages/Clinic/ClinicAddDepartment.jsx
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { getToken } from "../../utils/auth";
+import ClinicHomeButton from "../../components/ClinicHomeButton";
 
 export default function ClinicAddDepartment() {
   const [name, setName] = useState("");
   const [departments, setDepartments] = useState([]);
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   useEffect(() => {
     const fetchDepartments = async () => {
@@ -41,7 +43,8 @@ export default function ClinicAddDepartment() {
       setDepartments(res.data);
     } catch (err) {
       console.error("❌ Gabim:", err);
-      alert("❌ Gabim gjatë shtimit të departamentit.");
+      console.error("❌ Error response:", err.response?.data);
+      alert("❌ Gabim gjatë shtimit të departamentit: " + (err.response?.data?.message || err.message));
     }
   };
 
@@ -69,6 +72,7 @@ export default function ClinicAddDepartment() {
           </ul>
         </>
       )}
+      <ClinicHomeButton />
     </div>
   );
 }

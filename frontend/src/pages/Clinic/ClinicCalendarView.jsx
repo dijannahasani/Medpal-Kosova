@@ -3,6 +3,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ClinicHomeButton from "../../components/ClinicHomeButton";
 
 export default function ClinicCalendarView() {
   const [date, setDate] = useState(new Date());
@@ -139,6 +140,7 @@ export default function ClinicCalendarView() {
           </div>
         </div>
       </div>
+      <ClinicHomeButton />
     </div>
   );
 }

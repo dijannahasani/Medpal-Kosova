@@ -4,6 +4,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import Modal from "react-modal";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ClinicHomeButton from "../../components/ClinicHomeButton";
 
 Modal.setAppElement("#root");
 
@@ -283,6 +284,7 @@ export default function ClinicAppointments() {
         <button className="btn btn-danger mb-2" onClick={() => setModalIsOpen(false)}>❌ Mbyll</button>
         <iframe src={selectedDocUrl} title="Dokument" width="100%" height="90%"></iframe>
       </Modal>
+      <ClinicHomeButton />
     </div>
   );
 }

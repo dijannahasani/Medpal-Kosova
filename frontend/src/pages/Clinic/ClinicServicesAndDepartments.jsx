@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getToken } from "../../utils/auth";
+import ClinicHomeButton from "../../components/ClinicHomeButton";
 
 export default function ClinicServicesAndDepartments() {
   const [departmentName, setDepartmentName] = useState("");
@@ -18,7 +20,7 @@ export default function ClinicServicesAndDepartments() {
   const [searchServ, setSearchServ] = useState("");
   const [filterDepartment, setFilterDepartment] = useState("");
 
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const fetchData = async () => {
     try {
@@ -69,8 +71,10 @@ export default function ClinicServicesAndDepartments() {
   };
 
   const handleEditDepartment = (department) => {
+    console.log("🔧 Edit button clicked for department:", department);
     setEditingDepartment(department._id);
     setDepartmentName(department.name);
+    console.log("📝 Edit state set:", { editingDepartment: department._id, departmentName: department.name });
   };
 
   const handleDeleteDepartment = async (id) => {
@@ -510,6 +514,7 @@ export default function ClinicServicesAndDepartments() {
           </div>
         </div>
       </div>
+      <ClinicHomeButton />
     </div>
   );
 }

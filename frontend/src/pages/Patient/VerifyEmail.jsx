@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import PatientHomeButton from "../../components/PatientHomeButton";
 
 const VerifyEmail = () => {
   const [email, setEmail] = useState("");
@@ -112,6 +113,7 @@ const VerifyEmail = () => {
           </div>
         </div>
       </div>
+      <PatientHomeButton />
     </div>
   );
 };

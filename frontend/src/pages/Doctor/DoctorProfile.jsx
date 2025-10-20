@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import DoctorHomeButton from "../../components/DoctorHomeButton";
 
 export default function DoctorProfile() {
   const [doctor, setDoctor] = useState(null);
   const [workingHours, setWorkingHours] = useState(null);
+  const [showScheduleDetails, setShowScheduleDetails] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -55,16 +57,11 @@ export default function DoctorProfile() {
               timeout: 10000
             }
           );
-          setWorkingHours(hoursResponse.data);
+          console.log("🔍 Working hours data received:", hoursResponse.data);
+          setWorkingHours(hoursResponse.data.workingHours);
         } catch (hoursError) {
-          console.warn("⚠️ Nuk u mor orari i punës");
-          setWorkingHours({
-            days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            startTime: "08:00",
-            endTime: "16:00",
-            available: true,
-            isDefault: true
-          });
+          console.warn("⚠️ Nuk u mor orari i punës", hoursError);
+          setWorkingHours(null);
         }
       } catch (err) {
         console.error("❌ Gabim kryesor:", err);
@@ -172,25 +169,38 @@ export default function DoctorProfile() {
   };
 
   // Funksion për të formatuar ditët
-  const formatDays = (daysArray) => {
-    if (!daysArray || !Array.isArray(daysArray) || daysArray.length === 0) {
-      return "Nuk ka ditë të definuara";
-    }
+  const formatDays = (workingHours) => {
+    if (!workingHours) return [];
     
     const dayNames = {
-      'Monday': 'E Hënë',
-      'Tuesday': 'E Martë',
-      'Wednesday': 'E Mërkurë',
-      'Thursday': 'E Enjte',
-      'Friday': 'E Premte',
-      'Saturday': 'E Shtunë',
-      'Sunday': 'E Dielë'
+      'monday': 'E Hënë',
+      'tuesday': 'E Martë', 
+      'wednesday': 'E Mërkurë',
+      'thursday': 'E Enjte',
+      'friday': 'E Premte',
+      'saturday': 'E Shtunë',
+      'sunday': 'E Dielë'
     };
 
-    return daysArray.map(day => dayNames[day] || day).join(", ");
+    const activeDays = [];
+    Object.keys(workingHours).forEach(day => {
+      if (workingHours[day] && workingHours[day].start && workingHours[day].end) {
+        activeDays.push({
+          day: dayNames[day] || day,
+          start: workingHours[day].start,
+          end: workingHours[day].end
+        });
+      }
+    });
+    
+    return activeDays;
   };
 
-  if (loading) {
+  // Funksion për të kontrolluar nëse ka orar aktiv
+  const hasActiveSchedule = (workingHours) => {
+    if (!workingHours) return false;
+    return Object.values(workingHours).some(day => day && day.start && day.end);
+  };  if (loading) {
     return (
       <div className="container-fluid" style={{ 
         backgroundColor: "#FAF7F3", 
@@ -319,6 +329,7 @@ export default function DoctorProfile() {
       padding: "2rem 0",
       background: "linear-gradient(135deg, #FAF7F3 0%, #F0E4D3 50%, #DCC5B2 100%)"
     }}>
+      <DoctorHomeButton />
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-10 col-xl-8">
@@ -400,45 +411,6 @@ export default function DoctorProfile() {
             )}
           </div>
 
-          {/* Departamenti dhe Shërbimet */}
-                <div className="mb-4" style={{
-                  background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
-                  padding: "2rem",
-                  borderRadius: "20px",
-                  boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
-                  border: "1px solid rgba(220, 197, 178, 0.3)"
-                }}>
-                  <h5 className="mb-3" style={{ color: "#D9A299", fontSize: "1.5rem" }}>🏥 Informacione Profesionale</h5>
-            <div className="row">
-              <div className="col-md-6">
-                <div className="mb-3">
-                  <label className="form-label fw-bold text-muted">Departamenti</label>
-                  <p className="form-control-plaintext border-bottom pb-2">
-                    {doctor.departmentId?.name || "Nuk caktuar"}
-                  </p>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="mb-3">
-                  <label className="form-label fw-bold text-muted">Shërbimet</label>
-                  <div className="form-control-plaintext border-bottom pb-2">
-                    {doctor.services?.length > 0 ? (
-                      <div>
-                        {doctor.services.map((service, index) => (
-                          <span key={service._id || index} className="badge bg-success me-1 mb-1">
-                            {service.name}
-                          </span>
-                        ))}
-                      </div>
-                    ) : (
-                      "Nuk ka shërbime të caktuara"
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Orari i Punës */}
                 <div className="mt-4" style={{
                   background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
@@ -449,65 +421,126 @@ export default function DoctorProfile() {
                 }}>
             <div className="d-flex justify-content-between align-items-center mb-3">
                     <h5 className="mb-0" style={{ color: "#D9A299", fontSize: "1.5rem" }}>🕐 Orari i Punës</h5>
-              {workingHours?.isDefault && (
-                      <span className="badge" style={{
-                        background: "linear-gradient(135deg, #F0E4D3, #DCC5B2)",
-                        color: "#2c3e50",
-                        borderRadius: "8px",
-                        padding: "0.5rem 1rem"
-                      }}>Të dhëna Default</span>
+              
+              {hasActiveSchedule(workingHours) && (
+                <button 
+                  className="btn btn-sm btn-outline-primary"
+                  onClick={() => setShowScheduleDetails(!showScheduleDetails)}
+                  style={{
+                    borderRadius: "8px",
+                    fontSize: "0.85rem",
+                    padding: "0.4rem 0.8rem"
+                  }}
+                >
+                  {showScheduleDetails ? '🔼 Fshih Detajet' : '🔽 Shiko Detajet'}
+                </button>
               )}
             </div>
             
-            {workingHours ? (
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="mb-3">
-                    <label className="form-label fw-bold text-muted">Ditet e Punës</label>
-                    <p className="form-control-plaintext border-bottom pb-2">
-                      {formatDays(workingHours.days)}
-                    </p>
+            {hasActiveSchedule(workingHours) ? (
+              <div>
+                {/* Overview Card */}
+                <div className="mb-3 p-3 rounded" style={{
+                  background: "linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1))",
+                  border: "1px solid rgba(76, 175, 80, 0.2)"
+                }}>
+                  <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div>
+                      <h6 className="mb-1 text-success" style={{ fontSize: "0.9rem" }}>
+                        ✅ Orari Aktiv
+                      </h6>
+                      <small className="text-muted" style={{ fontSize: "0.75rem" }}>
+                        {formatDays(workingHours).length} ditë pune të konfiguruara
+                      </small>
+                    </div>
+                    <span className="badge bg-success" style={{ fontSize: "0.75rem", padding: "0.4rem 0.8rem" }}>
+                      🏥 Në Shërbim
+                    </span>
                   </div>
                 </div>
-                <div className="col-md-3">
-                  <div className="mb-3">
-                    <label className="form-label fw-bold text-muted">Koha e Fillimit</label>
-                    <p className="form-control-plaintext border-bottom pb-2">
-                      {formatTime(workingHours.startTime)}
-                    </p>
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="mb-3">
-                    <label className="form-label fw-bold text-muted">Koha e Mbarimit</label>
-                    <p className="form-control-plaintext border-bottom pb-2">
-                      {formatTime(workingHours.endTime)}
-                    </p>
-                  </div>
-                </div>
-                {workingHours.available !== undefined && (
-                  <div className="col-12">
-                    <div className="mb-3">
-                      <label className="form-label fw-bold text-muted">Statusi</label>
-                      <p className="form-control-plaintext">
-                        <span className={`badge ${workingHours.available ? 'bg-success' : 'bg-warning'}`}>
-                          {workingHours.available ? '🏥 Aktiv' : '⏸️ Jo Aktiv'}
-                        </span>
-                      </p>
+
+                {/* Detailed Schedule - Collapsible */}
+                {showScheduleDetails && (
+                  <div className="mt-3">
+                    <div className="row g-2">
+                      {formatDays(workingHours).map((schedule, index) => (
+                        <div key={index} className="col-12">
+                          <div className="card" style={{
+                            background: "linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 249, 250, 0.8))",
+                            border: "1px solid rgba(220, 197, 178, 0.3)",
+                            borderRadius: "8px"
+                          }}>
+                            <div className="card-body py-2 px-3">
+                              <div className="d-flex justify-content-between align-items-center">
+                                <h6 className="mb-0 fw-bold" style={{ 
+                                  color: "#2c3e50", 
+                                  fontSize: "0.9rem",
+                                  flex: "0 0 auto"
+                                }}>
+                                  📅 {schedule.day}
+                                </h6>
+                                <div className="text-end">
+                                  <span style={{ 
+                                    color: "#D9A299", 
+                                    fontSize: "0.85rem",
+                                    fontWeight: "bold"
+                                  }}>
+                                    {schedule.start} - {schedule.end}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Summary at bottom */}
+                    <div className="mt-3 p-2 rounded" style={{
+                      background: "rgba(76, 175, 80, 0.1)",
+                      border: "1px solid rgba(76, 175, 80, 0.2)"
+                    }}>
+                      <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <small className="text-success fw-bold" style={{ fontSize: "0.8rem" }}>
+                          📊 Total: {formatDays(workingHours).length} ditë aktive
+                        </small>
+                        <small className="text-muted" style={{ fontSize: "0.75rem" }}>
+                          Orari i vendosur nga {workingHours.setBy === 'clinic' ? 'klinika' : 'ju'}
+                        </small>
+                      </div>
                     </div>
                   </div>
                 )}
               </div>
             ) : (
                     <div className="alert" style={{
-                      background: "linear-gradient(145deg, #F0E4D3, #DCC5B2)",
-                      border: "1px solid rgba(220, 197, 178, 0.3)",
+                      background: "linear-gradient(145deg, #FFF3CD, #FFEAA7)",
+                      border: "1px solid rgba(255, 193, 7, 0.3)",
                       borderRadius: "15px",
-                      color: "#2c3e50",
-                      fontSize: "1.1rem"
+                      color: "#856404",
+                      fontSize: "1rem"
                     }}>
-                <strong>⚠️ Nuk ka orar të punës të definuar</strong>
-                <p className="mb-0 mt-2">Ju lutem kontaktoni administratorin për të vendosur orarin tuaj të punës.</p>
+                <div className="d-flex align-items-start gap-3">
+                  <div style={{ fontSize: "2rem" }}>⚠️</div>
+                  <div>
+                    <strong>Nuk ka orar të punës të definuar</strong>
+                    <p className="mb-2 mt-1" style={{ fontSize: "0.9rem" }}>
+                      Ju lutem kontaktoni administratorin e klinikës për të vendosur orarin tuaj të punës ose vendoseni vetë nëpërmjet butonit "🗓️ Orari".
+                    </p>
+                    <div className="d-flex gap-2 flex-wrap">
+                      <button 
+                        onClick={handleManageSchedule}
+                        className="btn btn-sm btn-warning"
+                        style={{ fontSize: "0.8rem" }}
+                      >
+                        🗓️ Vendos Orarin
+                      </button>
+                      <span className="text-muted" style={{ fontSize: "0.8rem", alignSelf: "center" }}>
+                        ose kontaktoni administratorin
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>

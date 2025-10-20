@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getToken } from "../../utils/auth";
+import ClinicHomeButton from "../../components/ClinicHomeButton";
 
 export default function DoctorList() {
   const [doctors, setDoctors] = useState([]);
@@ -21,7 +23,7 @@ export default function DoctorList() {
 
   const fetchDoctors = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await axios.get("http://localhost:5000/api/clinic/doctors", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -33,7 +35,7 @@ export default function DoctorList() {
 
   const fetchDepartments = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await axios.get("http://localhost:5000/api/clinic/departments", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -45,7 +47,7 @@ export default function DoctorList() {
 
   const fetchServices = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await axios.get("http://localhost:5000/api/clinic/services", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -58,7 +60,7 @@ export default function DoctorList() {
   const handleDelete = async (id) => {
     if (!window.confirm("A jeni të sigurt që doni ta fshini mjekun?")) return;
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       await axios.delete(`http://localhost:5000/api/clinic/doctors/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -86,7 +88,7 @@ export default function DoctorList() {
 
   const handleSave = async (id) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
 
       // Emri & emaili
       await axios.put(
@@ -316,6 +318,7 @@ export default function DoctorList() {
           </div>
         </div>
       </div>
+      <ClinicHomeButton />
     </div>
   );
 }

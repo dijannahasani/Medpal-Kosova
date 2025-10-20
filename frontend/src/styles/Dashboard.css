@@ -54,6 +54,21 @@
   width: 100%;
 }
 
+/* Special Doctor Dashboard Layout */
+.doctor-dashboard-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.doctor-dashboard-cards .card:nth-child(5) {
+  grid-column: 1;
+  justify-self: center;
+  max-width: 300px;
+}
+
 /* Individual Card Styles - Mobile Optimized */
 .card {
   background: linear-gradient(145deg, #FAF7F3, #F0E4D3);
@@ -133,6 +148,17 @@
     gap: 1.5rem;
   }
   
+  .doctor-dashboard-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .doctor-dashboard-cards .card:nth-child(5) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    max-width: 280px;
+  }
+  
   .dashboard-header {
     padding: 1.5rem;
     text-align: left;
@@ -157,6 +183,19 @@
   .dashboard-cards {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+  }
+  
+  /* Special layout for doctor dashboard - 3 cards top, 1 centered bottom */
+  .doctor-dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .doctor-dashboard-cards .card:nth-child(5) { 
+    grid-column: 2;
+    justify-self: center;
+    max-width: 280px;
   }
   
   .dashboard-header {
@@ -197,11 +236,33 @@
   .dashboard-cards {
     grid-template-columns: repeat(3, 1fr);
   }
+  
+  /* Maintain doctor dashboard layout */
+  .doctor-dashboard-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .doctor-dashboard-cards .card:nth-child(5) { 
+    grid-column: 2;
+    justify-self: center;
+    max-width: 280px;
+  }
 }
 
 /* Extra large screens (1200px and up) */
 @media (min-width: 1200px) {
   .dashboard-cards {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* Maintain doctor dashboard layout */
+  .doctor-dashboard-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .doctor-dashboard-cards .card:nth-child(5) { 
+    grid-column: 2;
+    justify-self: center;
+    max-width: 280px;
   }
 }

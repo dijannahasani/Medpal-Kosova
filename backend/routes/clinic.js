@@ -25,7 +25,8 @@ router.post("/departments", verifyToken, async (req, res) => {
     await newDepartment.save();
     res.status(201).json(newDepartment);
   } catch (err) {
-    res.status(500).json({ message: "Gabim gjatë shtimit të departamentit." });
+    console.error("❌ Error creating department:", err);
+    res.status(500).json({ message: "Gabim gjatë shtimit të departamentit.", error: err.message });
   }
 });
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import PatientHomeButton from "../../components/PatientHomeButton";
 
 export default function PatientNotifications() {
   const [appointments, setAppointments] = useState([]);
@@ -92,6 +93,7 @@ export default function PatientNotifications() {
           </div>
         </div>
       </div>
+      <PatientHomeButton />
     </div>
   );
 }

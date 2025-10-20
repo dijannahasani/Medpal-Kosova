@@ -142,9 +142,29 @@ router.post("/login", async (req, res) => {
 // GET /me
 router.get("/me", verifyToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    let user;
+    
+    // For doctors, populate department and services
+    if (req.user.role === "doctor") {
+      user = await User.findById(req.user.id)
+        .select("-password")
+        .populate("departmentId", "name")
+        .populate("services", "name price");
+    } else {
+      user = await User.findById(req.user.id).select("-password");
+    }
+    
+    console.log("🔍 /me endpoint - returning user data:", {
+      id: user._id,
+      name: user.name,
+      role: user.role,
+      departmentId: user.departmentId,
+      services: user.services?.length || 0
+    });
+    
     res.json(user);
   } catch (err) {
+    console.error("❌ Error in /me endpoint:", err);
     res.status(500).json({ message: err.message });
   }
 });

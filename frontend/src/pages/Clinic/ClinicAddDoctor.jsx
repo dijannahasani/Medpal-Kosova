@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getToken } from "../../utils/auth";
+import ClinicHomeButton from "../../components/ClinicHomeButton";
 
 export default function ClinicAddDoctor() {
   const [formData, setFormData] = useState({
@@ -15,7 +17,7 @@ export default function ClinicAddDoctor() {
   const [clinicServices, setClinicServices] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     console.log("🔍 Loading departments and services...");
 
     axios
@@ -47,7 +49,13 @@ export default function ClinicAddDoctor() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    // If department changes, clear selected services
+    if (name === "departmentId") {
+      setFormData((prev) => ({ ...prev, [name]: value, services: [] }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleServiceCheckboxChange = (serviceId) => {
@@ -62,7 +70,7 @@ export default function ClinicAddDoctor() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    const token = getToken();
 
     try {
       await axios.post("http://localhost:5000/api/auth/register-doctor", formData, {
@@ -217,21 +225,35 @@ export default function ClinicAddDoctor() {
                       border: "2px solid rgba(220, 197, 178, 0.3)",
                       borderRadius: "12px"
                     }}>
-                      {clinicServices.length === 0 && <p className="text-muted">Nuk ka shërbime të regjistruara.</p>}
-                      {clinicServices.map((s) => (
-                        <div className="form-check" key={s._id}>
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id={`service-${s._id}`}
-                            checked={formData.services.includes(s._id)}
-                            onChange={() => handleServiceCheckboxChange(s._id)}
-                          />
-                          <label className="form-check-label" htmlFor={`service-${s._id}`}>
-                            {s.name} – {s.price}€
-                          </label>
-                        </div>
-                      ))}
+                      {!formData.departmentId && (
+                        <p className="text-muted text-center" style={{ fontSize: "0.9rem", color: "#6c757d" }}>
+                          🔍 Zgjedh një departament për të parë shërbimet
+                        </p>
+                      )}
+                      {formData.departmentId && 
+                        clinicServices.filter(s => s.departmentId?._id === formData.departmentId).length === 0 && (
+                        <p className="text-muted text-center" style={{ fontSize: "0.9rem", color: "#6c757d" }}>
+                          ⚠️ Nuk ka shërbime të regjistruara për këtë departament
+                        </p>
+                      )}
+                      {formData.departmentId && 
+                        clinicServices
+                          .filter(s => s.departmentId?._id === formData.departmentId)
+                          .map((s) => (
+                            <div className="form-check" key={s._id}>
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id={`service-${s._id}`}
+                                checked={formData.services.includes(s._id)}
+                                onChange={() => handleServiceCheckboxChange(s._id)}
+                              />
+                              <label className="form-check-label" htmlFor={`service-${s._id}`}>
+                                {s.name} – {s.price}€
+                              </label>
+                            </div>
+                          ))
+                      }
                     </div>
                   </div>
 
@@ -262,6 +284,7 @@ export default function ClinicAddDoctor() {
           </div>
         </div>
       </div>
+      <ClinicHomeButton />
     </div>
   );
 }

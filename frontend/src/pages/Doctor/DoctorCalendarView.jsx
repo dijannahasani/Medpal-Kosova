@@ -3,6 +3,7 @@ import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import DoctorHomeButton from "../../components/DoctorHomeButton";
 
 export default function DoctorCalendarView() {
   const [date, setDate] = useState(new Date());
@@ -140,6 +141,7 @@ export default function DoctorCalendarView() {
           </div>
         </div>
       </div>
+      <DoctorHomeButton />
     </div>
   );
 }

@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/Dashboard.css";
 import MobileNavbar from "../../components/MobileNavbar";
+import DoctorHomeButton from "../../components/DoctorHomeButton";
+import { getUser, clearAllAuth } from "../../utils/auth";
 
 export default function DoctorDashboard() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getUser();
 
   const cards = [
     { to: "/doctor/appointments", icon: "📋", title: "Terminet", desc: "Shiko pacientët që kanë rezervuar" },
@@ -16,7 +18,7 @@ export default function DoctorDashboard() {
   ];
 
   const handleLogout = () => {
-    localStorage.clear();
+    clearAllAuth();
     window.location.href = "/login";
   };
 
@@ -78,7 +80,7 @@ export default function DoctorDashboard() {
           </div>
 
           {/* Cards Grid */}
-          <div className="dashboard-cards">
+          <div className="doctor-dashboard-cards">
             {cards.map((card, index) => (
               <Link to={card.to} className="text-decoration-none" key={index}>
                 <div className="card h-100">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ClinicHomeButton from "../../components/ClinicHomeButton";
 
 export default function ClinicSetDoctorHours() {
   const [doctors, setDoctors] = useState([]);
@@ -179,6 +180,7 @@ export default function ClinicSetDoctorHours() {
           </div>
         </div>
       </div>
+      <ClinicHomeButton />
     </div>
   );
 }

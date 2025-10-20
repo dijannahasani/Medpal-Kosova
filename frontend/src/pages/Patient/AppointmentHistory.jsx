@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MobileNavbar from "../../components/MobileNavbar";
+import PatientHomeButton from "../../components/PatientHomeButton";
 
 export default function AppointmentHistory() {
   const [appointments, setAppointments] = useState([]);
@@ -151,6 +152,7 @@ export default function AppointmentHistory() {
           </div>
         </div>
       </div>
+      <PatientHomeButton />
     </>
   );
 }

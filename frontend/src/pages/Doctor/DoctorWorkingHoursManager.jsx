@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import DoctorHomeButton from "../../components/DoctorHomeButton";
 
 export default function DoctorWorkingHoursManager() {
   const [workingHours, setWorkingHours] = useState({
@@ -240,6 +241,7 @@ export default function DoctorWorkingHoursManager() {
           </ul>
         </div>
       </div>
+      <DoctorHomeButton />
     </div>
   );
 }
