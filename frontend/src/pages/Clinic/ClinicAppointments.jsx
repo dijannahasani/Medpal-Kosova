@@ -98,95 +98,180 @@ export default function ClinicAppointments() {
   });
 
   return (
-    <div className="container py-5" style={{ maxWidth: "1000px" }}>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="text-success">📅 Terminet për Klinikën</h2>
-        <button className="btn btn-success" onClick={exportToExcel}>
-          ⬇️ Eksporto Excel
-        </button>
-      </div>
+    <div className="container-fluid" style={{
+      backgroundColor: "#FAF7F3",
+      minHeight: "100vh",
+      padding: "2rem 0",
+      background: "linear-gradient(135deg, #FAF7F3 0%, #F0E4D3 50%, #DCC5B2 100%)"
+    }}>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-lg-12">
+            <div className="card shadow-lg" style={{
+              background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+              border: "1px solid rgba(220, 197, 178, 0.3)",
+              borderRadius: "25px",
+              boxShadow: "0 20px 40px rgba(217, 162, 153, 0.3)",
+              overflow: "hidden"
+            }}>
+              <div className="card-header text-center py-4" style={{
+                background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                color: "white",
+                border: "none"
+              }}>
+                <div className="d-flex justify-content-between align-items-center">
+                  <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
+                    📅 Terminet për Klinikën
+                  </h2>
+                  <button className="btn btn-outline-light btn-lg" onClick={exportToExcel} style={{
+                    borderRadius: "12px",
+                    padding: "0.75rem 1.5rem",
+                    fontSize: "1rem",
+                    fontWeight: "bold"
+                  }}>
+                    ⬇️ Eksporto Excel
+                  </button>
+                </div>
+                <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
+                  Menaxhoni të gjitha terminet e klinikës suaj
+                </p>
+              </div>
+              <div className="card-body p-5">
 
-      <input
-        type="text"
-        className="form-control mb-4"
-        placeholder="🔍 Kërko sipas pacientit, doktorit, datës apo emailit..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+                <input
+                  type="text"
+                  className="form-control form-control-lg mb-4"
+                  placeholder="🔍 Kërko sipas pacientit, doktorit, datës apo emailit..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  style={{
+                    border: "2px solid rgba(220, 197, 178, 0.3)",
+                    borderRadius: "12px",
+                    padding: "0.75rem 1rem",
+                    fontSize: "1.1rem"
+                  }}
+                />
 
-      {filteredAppointments.length === 0 ? (
-        <p className="text-muted">Nuk ka termine të regjistruara ose kërkimi nuk përputhet me asnjë rezultat.</p>
-      ) : (
-        <div className="table-responsive">
-          <table className="table table-bordered table-hover align-middle">
-            <thead className="table-light">
-              <tr>
-                <th>Pacienti</th>
-                <th>Email</th>
-                <th>Data</th>
-                <th>Ora</th>
-                <th>Doktori</th>
-                <th>Dokumente</th>
-                <th>Statusi</th>
-                <th>Raport</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredAppointments.map((a) => (
-                <tr key={a._id}>
-                  <td>{a.patientId?.name}</td>
-                  <td>{a.patientId?.email}</td>
-                  <td>{a.date}</td>
-                  <td>{a.time}</td>
-                  <td>{a.doctorId?.name || "-"}</td>
-                  <td>
-                    {a.documents && a.documents.length > 0 ? (
-                      <ul>
-                        {a.documents.map((doc, i) => (
-                          <li key={i}>
-                            <button
-                              className="btn btn-link p-0"
-                              onClick={() => openModal(doc.fileUrl)}
-                            >
-                              📎 {doc.title}
-                            </button>
-                          </li>
+                {filteredAppointments.length === 0 ? (
+                  <div className="alert text-center" style={{
+                    background: "linear-gradient(145deg, #F0E4D3, #DCC5B2)",
+                    border: "1px solid rgba(220, 197, 178, 0.3)",
+                    borderRadius: "15px",
+                    color: "#2c3e50",
+                    fontSize: "1.1rem",
+                    fontWeight: "500",
+                    padding: "2rem"
+                  }}>
+                    📭 Nuk ka termine të regjistruara ose kërkimi nuk përputhet me asnjë rezultat.
+                  </div>
+                ) : (
+                  <div className="table-responsive">
+                    <table className="table table-striped align-middle" style={{
+                      background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+                      borderRadius: "15px",
+                      boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)"
+                    }}>
+                      <thead style={{
+                        background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                        color: "white"
+                      }}>
+                        <tr>
+                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Pacienti</th>
+                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Email</th>
+                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Data</th>
+                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Ora</th>
+                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Doktori</th>
+                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Dokumente</th>
+                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Statusi</th>
+                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Raport</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredAppointments.map((a) => (
+                          <tr key={a._id} style={{ fontSize: "1rem" }}>
+                            <td style={{ padding: "1rem" }}>{a.patientId?.name}</td>
+                            <td style={{ padding: "1rem" }}>{a.patientId?.email}</td>
+                            <td style={{ padding: "1rem" }}>{a.date}</td>
+                            <td style={{ padding: "1rem" }}>{a.time}</td>
+                            <td style={{ padding: "1rem" }}>{a.doctorId?.name || "-"}</td>
+                            <td style={{ padding: "1rem" }}>
+                              {a.documents && a.documents.length > 0 ? (
+                                <ul>
+                                  {a.documents.map((doc, i) => (
+                                    <li key={i}>
+                                      <button
+                                        className="btn btn-link p-0"
+                                        onClick={() => openModal(doc.fileUrl)}
+                                        style={{ color: "#D9A299" }}
+                                      >
+                                        📎 {doc.title}
+                                      </button>
+                                    </li>
+                                  ))}
+                                </ul>
+                              ) : (
+                                <span style={{ color: "gray" }}>Nuk ka dokumente</span>
+                              )}
+                            </td>
+                            <td style={{ padding: "1rem" }}>
+                              {a.status === "pending" ? (
+                                <>
+                                  <button className="btn btn-success btn-sm me-2" onClick={() => updateStatus(a._id, "approved")} style={{
+                                    background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                                    border: "none",
+                                    borderRadius: "8px",
+                                    boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                                  }}>
+                                    ✅ Aprovo
+                                  </button>
+                                  <button className="btn btn-danger btn-sm" onClick={() => updateStatus(a._id, "canceled")} style={{
+                                    background: "linear-gradient(135deg, #DCC5B2, #D9A299)",
+                                    border: "none",
+                                    borderRadius: "8px",
+                                    boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                                  }}>
+                                    ❌ Anulo
+                                  </button>
+                                </>
+                              ) : (
+                                <span className="badge" style={{
+                                  background: a.status === "approved" 
+                                    ? "linear-gradient(135deg, #D9A299, #DCC5B2)"
+                                    : "linear-gradient(135deg, #F0E4D3, #DCC5B2)",
+                                  color: a.status === "approved" ? "white" : "#2c3e50",
+                                  borderRadius: "8px",
+                                  padding: "0.5rem 1rem"
+                                }}>
+                                  {a.status}
+                                </span>
+                              )}
+                            </td>
+                            <td style={{ padding: "1rem" }}>
+                              <button
+                                className="btn btn-sm"
+                                onClick={() => downloadPDF(a._id)}
+                                style={{
+                                  background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                                  border: "none",
+                                  color: "white",
+                                  borderRadius: "8px",
+                                  boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                                }}
+                              >
+                                📄 Shkarko
+                              </button>
+                            </td>
+                          </tr>
                         ))}
-                      </ul>
-                    ) : (
-                      <span style={{ color: "gray" }}>Nuk ka dokumente</span>
-                    )}
-                  </td>
-                  <td>
-                    {a.status === "pending" ? (
-                      <>
-                        <button className="btn btn-success btn-sm me-2" onClick={() => updateStatus(a._id, "approved")}>
-                          ✅ Aprovo
-                        </button>
-                        <button className="btn btn-danger btn-sm" onClick={() => updateStatus(a._id, "canceled")}>
-                          ❌ Anulo
-                        </button>
-                      </>
-                    ) : (
-                      <span className={`badge bg-${a.status === "approved" ? "success" : "secondary"}`}>
-                        {a.status}
-                      </span>
-                    )}
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-outline-primary btn-sm"
-                      onClick={() => downloadPDF(a._id)}
-                    >
-                      📄 Shkarko
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-      )}
+      </div>
 
       {/* Modal për dokumentin PDF */}
       <Modal

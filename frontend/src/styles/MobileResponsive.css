@@ -1,0 +1,687 @@
+/* MedPal Mobile-First Responsive Design */
+
+/* ========================================
+   BASE STYLES - Mobile First Approach
+   ======================================== */
+
+/* Remove default Bootstrap margins/padding that cause horizontal scroll */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Base mobile styles (320px+) */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   CONTAINER & LAYOUT IMPROVEMENTS
+   ======================================== */
+
+.container,
+.container-fluid {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-fluid {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Remove Bootstrap row negative margins that cause overflow */
+.row {
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+}
+
+.col,
+[class*="col-"] {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* ========================================
+   DASHBOARD RESPONSIVE DESIGN
+   ======================================== */
+
+/* Dashboard Header - Mobile First */
+.dashboard-header,
+.d-flex.justify-content-between {
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.dashboard-header h1,
+.dashboard-header h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.dashboard-header .btn {
+  align-self: center;
+  min-width: 120px;
+  padding: 0.75rem 1.5rem;
+}
+
+/* Dashboard Cards Grid - Mobile First */
+.dashboard-cards,
+.row.g-3,
+.row.g-md-4 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* Individual Cards - Mobile Optimized */
+.card {
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(220, 197, 178, 0.3);
+  box-shadow: 0 2px 8px rgba(217, 162, 153, 0.1);
+  overflow: hidden;
+  width: 100%;
+}
+
+.card-body {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #6c757d;
+}
+
+/* Card hover effects - reduced for mobile */
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(217, 162, 153, 0.2);
+}
+
+/* ========================================
+   BUTTON IMPROVEMENTS
+   ======================================== */
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  min-height: 48px;
+  min-width: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  min-height: 52px;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  min-height: 40px;
+}
+
+/* Button groups - stack on mobile */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.btn-group .btn {
+  width: 100%;
+  margin: 0;
+  border-radius: 8px;
+}
+
+/* ========================================
+   FORM IMPROVEMENTS
+   ======================================== */
+
+.form-control,
+.form-select {
+  font-size: 16px; /* Prevents iOS zoom */
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  min-height: 48px;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #D9A299;
+  box-shadow: 0 0 0 0.2rem rgba(217, 162, 153, 0.25);
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* Form rows - stack on mobile */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+}
+
+.form-row .col,
+.form-row [class*="col-"] {
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+/* Input groups - stack on mobile */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group .form-control,
+.input-group .btn {
+  border-radius: 8px;
+  margin: 0;
+  width: 100%;
+}
+
+/* ========================================
+   TABLE IMPROVEMENTS
+   ======================================== */
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.table {
+  font-size: 0.9rem;
+  margin-bottom: 0;
+  min-width: 600px; /* Ensures table doesn't get too cramped */
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 0.5rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #dee2e6;
+  white-space: nowrap;
+}
+
+.table th {
+  font-weight: 600;
+  background-color: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Table action buttons */
+.table .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  min-height: 32px;
+  min-width: auto;
+}
+
+/* ========================================
+   MODAL IMPROVEMENTS
+   ======================================== */
+
+.modal-dialog {
+  margin: 1rem;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+}
+
+.modal-content {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+.modal-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #dee2e6;
+  gap: 0.5rem;
+}
+
+.modal-footer .btn {
+  min-width: 100px;
+}
+
+/* ========================================
+   ALERT IMPROVEMENTS
+   ======================================== */
+
+.alert {
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: none;
+  font-size: 0.95rem;
+}
+
+.alert-dismissible .btn-close {
+  padding: 1rem;
+}
+
+/* ========================================
+   NAVIGATION IMPROVEMENTS
+   ======================================== */
+
+.navbar {
+  padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-nav {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.text-truncate-mobile {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.d-mobile-none {
+  display: none;
+}
+
+.d-mobile-block {
+  display: block;
+}
+
+.p-mobile {
+  padding: 1rem;
+}
+
+.m-mobile {
+  margin: 1rem;
+}
+
+/* ========================================
+   MEDIUM SCREENS (576px and up)
+   ======================================== */
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .dashboard-cards,
+  .row.g-3,
+  .row.g-md-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .dashboard-header,
+  .d-flex.justify-content-between {
+    flex-direction: row;
+    text-align: left;
+  }
+  
+  .dashboard-header .btn {
+    align-self: flex-start;
+  }
+  
+  .form-row {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .form-row .col,
+  .form-row [class*="col-"] {
+    margin-bottom: 0;
+  }
+  
+  .input-group {
+    flex-direction: row;
+  }
+  
+  .btn-group {
+    flex-direction: row;
+    width: auto;
+  }
+  
+  .btn-group .btn {
+    width: auto;
+  }
+  
+  .d-mobile-none {
+    display: initial;
+  }
+  
+  .modal-dialog {
+    margin: 1.75rem auto;
+    max-width: 500px;
+  }
+}
+
+/* ========================================
+   LARGE SCREENS (768px and up)
+   ======================================== */
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  .container-fluid {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .dashboard-cards,
+  .row.g-3,
+  .row.g-md-4 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .dashboard-header {
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .dashboard-header h1,
+  .dashboard-header h2 {
+    font-size: 2rem;
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+  }
+  
+  .table {
+    font-size: 1rem;
+    min-width: auto;
+  }
+  
+  .table th,
+  .table td {
+    padding: 1rem;
+    white-space: normal;
+  }
+  
+  .modal-dialog {
+    max-width: 600px;
+  }
+}
+
+/* ========================================
+   EXTRA LARGE SCREENS (992px and up)
+   ======================================== */
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+  
+  .dashboard-cards,
+  .row.g-3,
+  .row.g-md-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(217, 162, 153, 0.25);
+  }
+}
+
+/* ========================================
+   XXL SCREENS (1200px and up)
+   ======================================== */
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+  
+  .dashboard-cards,
+  .row.g-3,
+  .row.g-md-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ========================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ======================================== */
+
+@media (pointer: coarse) {
+  .btn {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  .form-control,
+  .form-select {
+    min-height: 48px;
+  }
+  
+  .nav-link {
+    min-height: 48px;
+  }
+  
+  .table .btn {
+    min-height: 40px;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .btn,
+  .navbar,
+  .modal,
+  .alert {
+    display: none !important;
+  }
+  
+  .card {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+  
+  .table {
+    font-size: 12px !important;
+  }
+  
+  .container,
+  .container-fluid {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY IMPROVEMENTS
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card {
+    border: 2px solid #000;
+  }
+  
+  .btn {
+    border: 2px solid #000;
+  }
+  
+  .form-control,
+  .form-select {
+    border: 2px solid #000;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .card {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    border-color: #34495e;
+  }
+  
+  .table {
+    color: #ecf0f1;
+    background-color: #2c3e50;
+  }
+  
+  .table th {
+    background-color: #34495e;
+  }
+  
+  .form-control,
+  .form-select {
+    background-color: #34495e;
+    color: #ecf0f1;
+    border-color: #4a6741;
+  }
+  
+  .modal-content {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+  }
+}
+
+/* ========================================
+   iOS SAFARI SPECIFIC FIXES
+   ======================================== */
+
+@supports (-webkit-touch-callout: none) {
+  /* Fix iOS Safari rendering issues */
+  .card {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Fix iOS Safari button appearance */
+  .btn {
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Fix iOS Safari form controls */
+  .form-control,
+  .form-select {
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Fix iOS Safari scrolling */
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Fix iOS Safari viewport units */
+  .min-vh-100 {
+    min-height: -webkit-fill-available;
+  }
+}

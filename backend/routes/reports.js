@@ -90,7 +90,6 @@ router.get("/me", verifyToken, async (req, res) => {
 });
 
 // 📄 GET /api/reports/:id/pdf → gjenero PDF të raportit
-// 📄 GET /api/reports/:id/pdf → gjenero PDF të raportit
 router.get("/:id/pdf", verifyToken, async (req, res) => {
   try {
     const report = await VisitReport.findById(req.params.id)
@@ -102,8 +101,8 @@ router.get("/:id/pdf", verifyToken, async (req, res) => {
 
     if (
       req.user.role !== "clinic" &&
-      req.user.id !== report.patientId._id.toString() &&
-      req.user.id !== report.doctorId._id.toString()
+      req.user.id !== report.patientId?._id.toString() &&
+      req.user.id !== report.doctorId?._id.toString()
     ) {
       return res.status(403).json({ message: "Nuk keni qasje në këtë raport." });
     }
@@ -121,20 +120,20 @@ router.get("/:id/pdf", verifyToken, async (req, res) => {
     doc.fontSize(14).text("🧍‍♂️ Të dhënat e pacientit", { underline: true });
     doc.moveDown(0.5);
     doc.fontSize(12)
-      .text(`👤 Emri: ${report.patientId.name}`)
-      .text(`📧 Email: ${report.patientId.email}`)
-      .text(`🎂 Datëlindja: ${report.patientId.dateOfBirth || "N/A"}`)
-      .text(`🧬 Gjinia: ${report.patientId.gender || "N/A"}`)
-      .text(`🩸 Grupi i gjakut: ${report.patientId.bloodType || "N/A"}`);
+      .text(`👤 Emri: ${report.patientId?.name || "N/A"}`)
+      .text(`📧 Email: ${report.patientId?.email || "N/A"}`)
+      .text(`🎂 Datëlindja: ${report.patientId?.dateOfBirth || "N/A"}`)
+      .text(`🧬 Gjinia: ${report.patientId?.gender || "N/A"}`)
+      .text(`🩸 Grupi i gjakut: ${report.patientId?.bloodType || "N/A"}`);
     doc.moveDown(1);
 
     // Të dhënat e terminit
     doc.fontSize(14).text("📅 Informacione të vizitës", { underline: true });
     doc.moveDown(0.5);
     doc.fontSize(12)
-      .text(`👨‍⚕️ Mjeku: ${report.doctorId.name}`)
-      .text(`📅 Data: ${report.appointmentId.date}`)
-      .text(`⏰ Ora: ${report.appointmentId.time}`);
+      .text(`👨‍⚕️ Mjeku: ${report.doctorId?.name || "N/A"}`)
+      .text(`📅 Data: ${report.appointmentId?.date ? new Date(report.appointmentId.date).toLocaleDateString() : "N/A"}`)
+      .text(`⏰ Ora: ${report.appointmentId?.time || "N/A"}`);
     doc.moveDown(1);
 
     // Raporti mjekësor
@@ -155,12 +154,13 @@ router.get("/:id/pdf", verifyToken, async (req, res) => {
     // Vendi për nënshkrim
     doc.moveDown(3);
     doc.font("Helvetica-Oblique").text("____________________________", { align: "right" });
-    doc.text(`Nënshkrimi i mjekut (${report.doctorId.name})`, { align: "right" });
+    doc.text(`Nënshkrimi i mjekut (${report.doctorId?.name || "N/A"})`, { align: "right" });
 
     doc.end();
   } catch (err) {
     console.error("❌ Gabim gjatë gjenerimit të PDF:", err);
-    res.status(500).json({ message: "Gabim gjatë gjenerimit të raportit." });
+    // Shmangim res.end dyfishtë
+    if (!res.headersSent) res.status(500).json({ message: "Gabim gjatë gjenerimit të raportit." });
   }
 });
 
@@ -184,9 +184,7 @@ router.get("/clinic", verifyToken, async (req, res) => {
     const reportQuery = {
       doctorId: { $in: doctorFilter },
     };
-    if (from || to) {
-      reportQuery.createdAt = dateFilter;
-    }
+    if (from || to) reportQuery.createdAt = dateFilter;
 
     const reports = await VisitReport.find(reportQuery)
       .populate("doctorId", "name")
@@ -199,6 +197,7 @@ router.get("/clinic", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Gabim gjatë marrjes së raporteve." });
   }
 });
+
 // 📋 GET /api/reports/doctor → Raportet e mjekut të kyçur
 router.get("/doctor", verifyToken, async (req, res) => {
   if (req.user.role !== "doctor") {

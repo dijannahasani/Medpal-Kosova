@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: #FAF7F3;
+  min-height: 100vh;
 }
 
 .logo {
@@ -35,8 +37,18 @@
 
 .card {
   padding: 2em;
+  background: linear-gradient(145deg, #FAF7F3, #F0E4D3);
+  border: 1px solid rgba(220, 197, 178, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(217, 162, 153, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(217, 162, 153, 0.2);
 }
 
 .read-the-docs {
-  color: #888;
+  color: #D9A299;
 }

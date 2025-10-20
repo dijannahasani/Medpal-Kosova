@@ -106,21 +106,50 @@ export default function Login() {
 
   return (
     <div
-      className="container d-flex flex-column align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
+      className="container-fluid d-flex flex-column align-items-center justify-content-center"
+      style={{ 
+        minHeight: "100vh", 
+        backgroundColor: "#FAF7F3",
+        background: "linear-gradient(135deg, #FAF7F3 0%, #F0E4D3 50%, #DCC5B2 100%)"
+      }}
     >
-      <div className="card p-4 shadow-lg" style={{ maxWidth: "480px", width: "100%" }}>
+      <div className="card p-4 shadow-lg" style={{ 
+        maxWidth: "480px", 
+        width: "100%",
+        background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+        border: "1px solid rgba(220, 197, 178, 0.3)",
+        borderRadius: "20px",
+        boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)"
+      }}>
         {step === "select" && (
           <>
-            <h2 className="mb-4 text-center">Zgjedh mënyrën e qasjes</h2>
+            <h2 className="mb-4 text-center" style={{ color: "#D9A299" }}>Zgjedh mënyrën e qasjes</h2>
             <div className="d-grid gap-3">
-              <button className="btn btn-primary btn-lg" onClick={() => handleRoleSelect("patient")}>
+              <button className="btn btn-lg" onClick={() => handleRoleSelect("patient")} style={{
+                background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                border: "none",
+                color: "white",
+                borderRadius: "10px",
+                boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+              }}>
                 🧑‍⚕️ Vazhdo si Pacient
               </button>
-              <button className="btn btn-success btn-lg" onClick={() => handleRoleSelect("doctor")}>
+              <button className="btn btn-lg" onClick={() => handleRoleSelect("doctor")} style={{
+                background: "linear-gradient(135deg, #DCC5B2, #F0E4D3)",
+                border: "none",
+                color: "#2c3e50",
+                borderRadius: "10px",
+                boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+              }}>
                 👨‍⚕️ Vazhdo si Mjek
               </button>
-              <button className="btn btn-info btn-lg" onClick={() => handleRoleSelect("clinic")}>
+              <button className="btn btn-lg" onClick={() => handleRoleSelect("clinic")} style={{
+                background: "linear-gradient(135deg, #F0E4D3, #FAF7F3)",
+                border: "1px solid rgba(220, 197, 178, 0.3)",
+                color: "#2c3e50",
+                borderRadius: "10px",
+                boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+              }}>
                 🏥 Vazhdo si Klinikë
               </button>
 
@@ -145,7 +174,7 @@ export default function Login() {
                 : "Pacient"}
             </h2>
             {error && <div className="alert alert-danger">{error}</div>}
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin} autoComplete="off">
               {role === "doctor" ? (
                 <div className="mb-3">
                   <input
@@ -154,6 +183,7 @@ export default function Login() {
                     placeholder="Kodi i Mjekut"
                     value={formData.doctorCode}
                     onChange={handleChange}
+                    autoComplete="off"
                     required
                   />
                 </div>
@@ -166,6 +196,7 @@ export default function Login() {
                     placeholder="Emaili"
                     value={formData.email}
                     onChange={handleChange}
+                    autoComplete="off"
                     required
                   />
                 </div>
@@ -178,6 +209,7 @@ export default function Login() {
                   placeholder="Fjalëkalimi"
                   value={formData.password}
                   onChange={handleChange}
+                  autoComplete="off"
                   required
                 />
               </div>
@@ -210,7 +242,7 @@ export default function Login() {
             <h2 className="mb-4 text-center">🔐 Keni harruar fjalëkalimin?</h2>
             {error && <div className="alert alert-danger">{error}</div>}
             {message && <div className="alert alert-success">{message}</div>}
-            <form onSubmit={handleForgot}>
+            <form onSubmit={handleForgot} autoComplete="off">
               <input
                 name="email"
                 type="email"
@@ -218,6 +250,7 @@ export default function Login() {
                 placeholder="Shkruani emailin tuaj"
                 value={formData.email}
                 onChange={handleChange}
+                autoComplete="off"
                 required
               />
               <button type="submit" className="btn btn-warning w-100">
@@ -235,13 +268,14 @@ export default function Login() {
             <h2 className="mb-4 text-center">🔑 Ndrysho fjalëkalimin</h2>
             {error && <div className="alert alert-danger">{error}</div>}
             {message && <div className="alert alert-success">{message}</div>}
-            <form onSubmit={handleReset}>
+            <form onSubmit={handleReset} autoComplete="off">
               <input
                 name="code"
                 className="form-control form-control-lg mb-3"
                 placeholder="Kodi i pranuar"
                 value={formData.code}
                 onChange={handleChange}
+                autoComplete="off"
                 required
               />
               <input
@@ -251,6 +285,7 @@ export default function Login() {
                 placeholder="Fjalëkalimi i ri"
                 value={formData.newPassword}
                 onChange={handleChange}
+                autoComplete="off"
                 required
               />
               <button type="submit" className="btn btn-success w-100">

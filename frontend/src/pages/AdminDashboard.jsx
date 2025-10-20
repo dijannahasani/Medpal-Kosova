@@ -135,12 +135,17 @@ export default function AdminDashboard() {
   if (error) return <div className="container py-4 alert alert-danger">{error}</div>;
 
   return (
-    <div className="container py-4">
-      <h2 className="mb-4">📋 Paneli i Adminit</h2>
+    <div className="container py-4" style={{ backgroundColor: "#FAF7F3", minHeight: "100vh" }}>
+      <h2 className="mb-4" style={{ color: "#D9A299" }}>📋 Paneli i Adminit</h2>
 
       {/* --- Settings/Profile Section --- */}
-      <section className="mb-4 p-3 border rounded">
-        <h4>👤 Profili im</h4>
+      <section className="mb-4 p-3 border rounded" style={{ 
+        background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+        border: "1px solid rgba(220, 197, 178, 0.3)",
+        borderRadius: "15px",
+        boxShadow: "0 4px 15px rgba(217, 162, 153, 0.1)"
+      }}>
+        <h4 style={{ color: "#D9A299" }}>👤 Profili im</h4>
         {!profile ? (
           <p>Duke ngarkuar profilin...</p>
         ) : editingProfile ? (
@@ -195,19 +200,43 @@ export default function AdminDashboard() {
 
       {/* Statistikat */}
       <div className="d-flex gap-3 mb-4 flex-wrap">
-        <div className="card bg-primary text-white p-3 flex-grow-1" style={{ minWidth: "180px" }}>
+        <div className="card p-3 flex-grow-1" style={{ 
+          minWidth: "180px",
+          background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+          color: "white",
+          borderRadius: "15px",
+          boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+        }}>
           <h5>Përdorues Total</h5>
           <p className="fs-3">{stats?.totalUsers || 0}</p>
         </div>
-        <div className="card bg-success text-white p-3 flex-grow-1" style={{ minWidth: "180px" }}>
+        <div className="card p-3 flex-grow-1" style={{ 
+          minWidth: "180px",
+          background: "linear-gradient(135deg, #DCC5B2, #F0E4D3)",
+          color: "#2c3e50",
+          borderRadius: "15px",
+          boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+        }}>
           <h5>Të Verifikuar</h5>
           <p className="fs-3">{stats?.verifiedUsers || 0}</p>
         </div>
-        <div className="card bg-warning text-dark p-3 flex-grow-1" style={{ minWidth: "180px" }}>
+        <div className="card p-3 flex-grow-1" style={{ 
+          minWidth: "180px",
+          background: "linear-gradient(135deg, #F0E4D3, #FAF7F3)",
+          color: "#2c3e50",
+          borderRadius: "15px",
+          boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+        }}>
           <h5>Të Pa Verifikuar</h5>
           <p className="fs-3">{stats?.unverifiedUsers || 0}</p>
         </div>
-        <div className="card bg-info text-white p-3 flex-grow-1" style={{ minWidth: "180px" }}>
+        <div className="card p-3 flex-grow-1" style={{ 
+          minWidth: "180px",
+          background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+          color: "white",
+          borderRadius: "15px",
+          boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+        }}>
           <h5>Të Ardhurat</h5>
           <p className="fs-3">${stats?.totalRevenue?.toFixed(2) || "0.00"}</p>
         </div>

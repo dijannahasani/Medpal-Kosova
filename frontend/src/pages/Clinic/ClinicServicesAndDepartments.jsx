@@ -140,154 +140,313 @@ export default function ClinicServicesAndDepartments() {
   });
 
   return (
-    <div className="container py-5" style={{ maxWidth: "750px" }}>
-      <h2 className="mb-4 text-success">🏥 Menaxho Departamentet & Shërbimet</h2>
-
-      {/* ➕ Shto Departament */}
-      <form onSubmit={handleAddDepartment} className="mb-4">
-        <h5 className="mb-2">➕ Shto Departament</h5>
-        <div className="input-group">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Emri i departamentit"
-            value={departmentName}
-            onChange={(e) => setDepartmentName(e.target.value)}
-            required
-          />
-          <button className="btn btn-primary" type="submit">Shto</button>
-        </div>
-      </form>
-
-      {/* ➕ Shto/Përditëso Shërbim */}
-      <form onSubmit={handleAddOrUpdateService} className="mb-5">
-        <h5 className="mb-3">{editingService ? "✏️ Përditëso Shërbim" : "➕ Shto Shërbim"}</h5>
-        <div className="mb-3">
-          <input
-            type="text"
-            name="name"
-            className="form-control"
-            placeholder="Emri i shërbimit"
-            value={serviceForm.name}
-            onChange={handleServiceChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <input
-            type="number"
-            name="price"
-            className="form-control"
-            placeholder="Çmimi (€)"
-            value={serviceForm.price}
-            onChange={handleServiceChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <select
-            name="departmentId"
-            className="form-select"
-            value={serviceForm.departmentId}
-            onChange={handleServiceChange}
-            required
-          >
-            <option value="">Zgjedh departamentin</option>
-            {departments.map((d) => (
-              <option key={d._id} value={d._id}>{d.name}</option>
-            ))}
-          </select>
-        </div>
-        <button className="btn btn-success w-100" type="submit">
-          {editingService ? "Përditëso" : "Shto"}
-        </button>
-        {editingService && (
-          <button
-            type="button"
-            className="btn btn-secondary w-100 mt-2"
-            onClick={() => {
-              setEditingService(null);
-              setServiceForm({ name: "", price: "", departmentId: "" });
-            }}
-          >
-            Anulo
-          </button>
-        )}
-      </form>
-
-      {/* 🔍 Kërkimi dhe Filtrimi */}
-      <div className="mb-4">
-        <h5>🔍 Kërko & Filtrim</h5>
-        <input
-          type="text"
-          className="form-control mb-3"
-          placeholder="Kërko në departamente..."
-          value={searchDep}
-          onChange={(e) => setSearchDep(e.target.value)}
-        />
-        <input
-          type="text"
-          className="form-control mb-3"
-          placeholder="Kërko në shërbime..."
-          value={searchServ}
-          onChange={(e) => setSearchServ(e.target.value)}
-        />
-        <select
-          className="form-select mb-2"
-          value={filterDepartment}
-          onChange={(e) => setFilterDepartment(e.target.value)}
-        >
-          <option value="">-- Filtrimi sipas departamentit --</option>
-          {departments.map((d) => (
-            <option key={d._id} value={d._id}>
-              {d.name}
-            </option>
-          ))}
-        </select>
-        <button
-          className="btn btn-outline-secondary"
-          onClick={() => {
-            setSearchDep("");
-            setSearchServ("");
-            setFilterDepartment("");
-          }}
-        >
-          ♻️ Reseto filtrat
-        </button>
-      </div>
-
-      {/* 📋 Lista */}
-      <div>
-        <h5>📋 Departamentet ekzistuese:</h5>
-        <ul className="list-group mb-4">
-          {filteredDepartments.map((dep) => (
-            <li key={dep._id} className="list-group-item d-flex justify-content-between">
-              {dep.name}
-              <button className="btn btn-sm btn-outline-danger" onClick={() => handleDeleteDepartment(dep._id)}>
-                🗑
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        <h5>📄 Shërbimet ekzistuese:</h5>
-        <ul className="list-group">
-          {filteredServices.map((s) => (
-            <li key={s._id} className="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                {s.name} – {s.price}€ ({s.departmentId?.name || "-"})
+    <div className="container-fluid" style={{
+      backgroundColor: "#FAF7F3",
+      minHeight: "100vh",
+      padding: "2rem 0",
+      background: "linear-gradient(135deg, #FAF7F3 0%, #F0E4D3 50%, #DCC5B2 100%)"
+    }}>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-lg-10 col-xl-8">
+            <div className="card shadow-lg" style={{
+              background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+              border: "1px solid rgba(220, 197, 178, 0.3)",
+              borderRadius: "25px",
+              boxShadow: "0 20px 40px rgba(217, 162, 153, 0.3)",
+              overflow: "hidden"
+            }}>
+              <div className="card-header text-center py-4" style={{
+                background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                color: "white",
+                border: "none"
+              }}>
+                <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color:"white" }}>
+                  🏥 Menaxho Departamentet & Shërbimet
+                </h2>
+                <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
+                  Krijoni dhe menaxhoni departamentet dhe shërbimet e klinikës
+                </p>
               </div>
-              <div>
-                <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => handleEditService(s)}>
-                  ✏️
-                </button>
-                <button className="btn btn-sm btn-outline-danger" onClick={() => handleDeleteService(s._id)}>
-                  🗑
-                </button>
+              <div className="card-body p-5">
+
+                {/* ➕ Shto Departament */}
+                <form onSubmit={handleAddDepartment} className="mb-5" style={{
+                  background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+                  padding: "2rem",
+                  borderRadius: "15px",
+                  boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
+                  border: "1px solid rgba(220, 197, 178, 0.3)"
+                }}>
+                  <h5 className="mb-3" style={{ color: "#D9A299", fontSize: "1.3rem" }}>➕ Shto Departament</h5>
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Emri i departamentit"
+                      value={departmentName}
+                      onChange={(e) => setDepartmentName(e.target.value)}
+                      required
+                      style={{
+                        border: "2px solid rgba(220, 197, 178, 0.3)",
+                        borderRadius: "12px",
+                        padding: "0.75rem 1rem"
+                      }}
+                    />
+                    <button className="btn btn-lg" type="submit" style={{
+                      background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                      border: "none",
+                      color: "white",
+                      borderRadius: "12px",
+                      boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                    }}>Shto</button>
+                  </div>
+                </form>
+
+                {/* ➕ Shto/Përditëso Shërbim */}
+                <form onSubmit={handleAddOrUpdateService} className="mb-5" style={{
+                  background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+                  padding: "2rem",
+                  borderRadius: "15px",
+                  boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
+                  border: "1px solid rgba(220, 197, 178, 0.3)"
+                }}>
+                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>{editingService ? "✏️ Përditëso Shërbim" : "➕ Shto Shërbim"}</h5>
+                  <div className="mb-4">
+                    <input
+                      type="text"
+                      name="name"
+                      className="form-control form-control-lg"
+                      placeholder="Emri i shërbimit"
+                      value={serviceForm.name}
+                      onChange={handleServiceChange}
+                      required
+                      style={{
+                        border: "2px solid rgba(220, 197, 178, 0.3)",
+                        borderRadius: "12px",
+                        padding: "0.75rem 1rem"
+                      }}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <input
+                      type="number"
+                      name="price"
+                      className="form-control form-control-lg"
+                      placeholder="Çmimi (€)"
+                      value={serviceForm.price}
+                      onChange={handleServiceChange}
+                      required
+                      style={{
+                        border: "2px solid rgba(220, 197, 178, 0.3)",
+                        borderRadius: "12px",
+                        padding: "0.75rem 1rem"
+                      }}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <select
+                      name="departmentId"
+                      className="form-select form-select-lg"
+                      value={serviceForm.departmentId}
+                      onChange={handleServiceChange}
+                      required
+                      style={{
+                        border: "2px solid rgba(220, 197, 178, 0.3)",
+                        borderRadius: "12px",
+                        padding: "0.75rem 1rem"
+                      }}
+                    >
+                      <option value="">Zgjedh departamentin</option>
+                      {departments.map((d) => (
+                        <option key={d._id} value={d._id}>{d.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <button className="btn btn-lg w-100" type="submit" style={{
+                    background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                    border: "none",
+                    color: "white",
+                    borderRadius: "15px",
+                    boxShadow: "0 8px 25px rgba(217, 162, 153, 0.4)",
+                    padding: "1rem 2rem",
+                    fontSize: "1.2rem",
+                    fontWeight: "bold"
+                  }}>
+                    {editingService ? "Përditëso" : "Shto"}
+                  </button>
+                  {editingService && (
+                    <button
+                      type="button"
+                      className="btn btn-lg w-100 mt-3"
+                      onClick={() => {
+                        setEditingService(null);
+                        setServiceForm({ name: "", price: "", departmentId: "" });
+                      }}
+                      style={{
+                        background: "linear-gradient(135deg, #F0E4D3, #DCC5B2)",
+                        border: "none",
+                        color: "#2c3e50",
+                        borderRadius: "15px",
+                        boxShadow: "0 8px 25px rgba(217, 162, 153, 0.4)",
+                        padding: "1rem 2rem",
+                        fontSize: "1.2rem",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      Anulo
+                    </button>
+                  )}
+                </form>
+
+                {/* 🔍 Kërkimi dhe Filtrimi */}
+                <div className="mb-5" style={{
+                  background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+                  padding: "2rem",
+                  borderRadius: "15px",
+                  boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
+                  border: "1px solid rgba(220, 197, 178, 0.3)"
+                }}>
+                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>🔍 Kërko & Filtrim</h5>
+                  <input
+                    type="text"
+                    className="form-control form-control-lg mb-3"
+                    placeholder="Kërko në departamente..."
+                    value={searchDep}
+                    onChange={(e) => setSearchDep(e.target.value)}
+                    style={{
+                      border: "2px solid rgba(220, 197, 178, 0.3)",
+                      borderRadius: "12px",
+                      padding: "0.75rem 1rem"
+                    }}
+                  />
+                  <input
+                    type="text"
+                    className="form-control form-control-lg mb-3"
+                    placeholder="Kërko në shërbime..."
+                    value={searchServ}
+                    onChange={(e) => setSearchServ(e.target.value)}
+                    style={{
+                      border: "2px solid rgba(220, 197, 178, 0.3)",
+                      borderRadius: "12px",
+                      padding: "0.75rem 1rem"
+                    }}
+                  />
+                  <select
+                    className="form-select form-select-lg mb-3"
+                    value={filterDepartment}
+                    onChange={(e) => setFilterDepartment(e.target.value)}
+                    style={{
+                      border: "2px solid rgba(220, 197, 178, 0.3)",
+                      borderRadius: "12px",
+                      padding: "0.75rem 1rem"
+                    }}
+                  >
+                    <option value="">Filtrimi sipas departamentit</option>
+                    {departments.map((d) => (
+                      <option key={d._id} value={d._id}>
+                        {d.name}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    className="btn btn-lg"
+                    onClick={() => {
+                      setSearchDep("");
+                      setSearchServ("");
+                      setFilterDepartment("");
+                    }}
+                    style={{
+                      background: "linear-gradient(135deg, #F0E4D3, #DCC5B2)",
+                      border: "none",
+                      color: "#2c3e50",
+                      borderRadius: "12px",
+                      boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                    }}
+                  >
+                    ♻️ Reseto filtrat
+                  </button>
+                </div>
+
+                {/* 📋 Lista */}
+                <div>
+                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>📋 Departamentet ekzistuese:</h5>
+                  <ul className="list-group mb-5" style={{
+                    background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+                    borderRadius: "15px",
+                    boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
+                    border: "1px solid rgba(220, 197, 178, 0.3)"
+                  }}>
+                    {filteredDepartments.map((dep) => (
+                      <li key={dep._id} className="list-group-item d-flex justify-content-between" style={{
+                        background: "transparent",
+                        border: "1px solid rgba(220, 197, 178, 0.2)",
+                        borderRadius: "10px",
+                        marginBottom: "0.5rem",
+                        padding: "1.5rem",
+                        fontSize: "1.1rem"
+                      }}>
+                        {dep.name}
+                        <button className="btn btn-sm" onClick={() => handleDeleteDepartment(dep._id)} style={{
+                          background: "linear-gradient(135deg, #DCC5B2, #D9A299)",
+                          border: "none",
+                          color: "white",
+                          borderRadius: "8px",
+                          boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                        }}>
+                          🗑️
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>📄 Shërbimet ekzistuese:</h5>
+                  <ul className="list-group" style={{
+                    background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+                    borderRadius: "15px",
+                    boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
+                    border: "1px solid rgba(220, 197, 178, 0.3)"
+                  }}>
+                    {filteredServices.map((s) => (
+                      <li key={s._id} className="list-group-item d-flex justify-content-between align-items-center" style={{
+                        background: "transparent",
+                        border: "1px solid rgba(220, 197, 178, 0.2)",
+                        borderRadius: "10px",
+                        marginBottom: "0.5rem",
+                        padding: "1.5rem",
+                        fontSize: "1.1rem"
+                      }}>
+                        <div>
+                          {s.name} – {s.price}€ ({s.departmentId?.name || "-"})
+                        </div>
+                        <div>
+                          <button className="btn btn-sm me-2" onClick={() => handleEditService(s)} style={{
+                            background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                            border: "none",
+                            color: "white",
+                            borderRadius: "8px",
+                            boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                          }}>
+                            ✏️
+                          </button>
+                          <button className="btn btn-sm" onClick={() => handleDeleteService(s._id)} style={{
+                            background: "linear-gradient(135deg, #DCC5B2, #D9A299)",
+                            border: "none",
+                            color: "white",
+                            borderRadius: "8px",
+                            boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                          }}>
+                            🗑️
+                          </button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </li>
-          ))}
-        </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

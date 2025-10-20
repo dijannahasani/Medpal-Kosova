@@ -2,12 +2,20 @@ const cron = require("node-cron");
 const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 const moment = require("moment");
+const path = require("path");
 const Appointment = require("./models/Appointment");
 const User = require("./models/User");
-require("dotenv").config();
+require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 
-// Lidhu me MongoDB
-mongoose.connect(process.env.MONGO_URI);
+// Lidhu me MongoDB (support both vars)
+const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || "";
+if (!mongoUri) {
+  console.error("❌ reminderJob Mongo error: MONGODB_URI/MONGO_URI not set");
+} else {
+  mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("✅ reminderJob connected to MongoDB"))
+    .catch(err => console.error("❌ reminderJob Mongo error:", err.message || err));
+}
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -15,6 +23,7 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  tls: { rejectUnauthorized: process.env.EMAIL_REJECT_UNAUTHORIZED === "true" }
 });
 
 // Kontrollo çdo 10 sekonda (vetëm për testim, pastaj bëje 1 herë në ditë në 08:00)

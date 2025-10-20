@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 const verifyToken = require("../middleware/verifyToken");
 const Document = require("../models/Document");
 
@@ -46,55 +47,52 @@ router.get("/mine", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Gabim gjatë marrjes së dokumenteve." });
   }
 });
-// backend/routes/documents.js (shto këtë endpoint)
 
-router.post(
-  "/upload/:appointmentId",
-  verifyToken,
-  upload.single("file"),
-  async (req, res) => {
-    try {
-      const { title } = req.body;
-      const fileUrl = "/uploads/" + req.file.filename;
-
-      const doc = new Document({
-        title,
-        fileUrl,
-        patientId: req.user.role === "doctor" ? req.body.patientId : req.user.id,
-        doctorId: req.user.role === "doctor" ? req.user.id : null,
-        appointmentId: req.params.appointmentId,
-      });
-
-      await doc.save();
-      res.status(201).json({ message: "Dokumenti u ngarkua me sukses.", document: doc });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: "Gabim gjatë ngarkimit." });
-    }
-  }
-);
-// 📤 POST /api/documents/upload/:appointmentId
-router.post("/upload/:appointmentId", verifyToken, upload.single("file"), async (req, res) => {
-  const { title } = req.body;
-  const fileUrl = "/uploads/" + req.file.filename;
-
-  const document = new Document({
-    title,
-    fileUrl,
-    patientId: req.user.id, // ose merre nga appointment.patientId
-    appointmentId: req.params.appointmentId,
-    doctorId: req.user.id,
-  });
-
-  await document.save();
-
-  await Appointment.findByIdAndUpdate(req.params.appointmentId, {
-    $push: { documents: document._id },
-  });
-
-  res.status(201).json({ message: "Dokumenti u ngarkua me sukses", document });
+// 🧪 GET /api/documents/test - Test route
+router.get("/test", (req, res) => {
+  res.json({ message: "✅ Documents routes are working!", timestamp: new Date() });
 });
 
+// 🧪 DELETE /api/documents/test - Test DELETE method
+router.delete("/test", (req, res) => {
+  res.json({ message: "✅ DELETE method is working!", timestamp: new Date() });
+});
 
+// 🗑️ DELETE /api/documents/:id
+router.delete("/:id", verifyToken, async (req, res) => {
+  console.log('🗑️ DELETE request received for ID:', req.params.id);
+  try {
+    const { id } = req.params;
+    
+    // Gjej dokumentin
+    const document = await Document.findById(id);
+    console.log('Document found:', document ? 'Yes' : 'No');
+    
+    if (!document) {
+      return res.status(404).json({ message: "Dokumenti nuk u gjet." });
+    }
+    
+    // Kontrollo nëse përdoruesi ka të drejtë ta fshijë
+    console.log('User ID:', req.user.id, 'Document patientId:', document.patientId.toString());
+    if (document.patientId.toString() !== req.user.id && req.user.role !== "doctor") {
+      return res.status(403).json({ message: "S'keni të drejtë të fshini këtë dokument." });
+    }
+    
+    // Fshi dokumentin nga databaza
+    await Document.findByIdAndDelete(id);
+    
+    // Mundësisht fshi edhe fajlin fizik nga uploads/ (opsionale)
+    const filePath = path.join(__dirname, '..', document.fileUrl);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+    
+    console.log('✅ Document deleted successfully');
+    res.json({ message: "✅ Dokumenti u fshi me sukses." });
+  } catch (err) {
+    console.error("❌ Gabim në fshirjen e dokumentit:", err);
+    res.status(500).json({ message: "Gabim gjatë fshirjes së dokumentit." });
+  }
+});
 
 module.exports = router;

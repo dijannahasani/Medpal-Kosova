@@ -1,0 +1,198 @@
+/* Mobile-specific responsive styles for MedPal */
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+  /* Dashboard cards mobile layout */
+  .dashboard-cards .row {
+    margin: 0 !important;
+  }
+  
+  .dashboard-cards .col-md-6,
+  .dashboard-cards .col-lg-4 {
+    padding: 0.5rem !important;
+    margin-bottom: 1rem;
+  }
+  
+  /* Card mobile adjustments */
+  .dashboard-cards .card {
+    margin: 0 !important;
+    border-radius: 12px !important;
+  }
+  
+  .dashboard-cards .card-body {
+    padding: 1rem !important;
+  }
+  
+  /* Header mobile adjustments */
+  .dashboard-header {
+    padding: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.8em !important;
+  }
+  
+  .dashboard-header p {
+    font-size: 0.9em !important;
+  }
+  
+  /* Form mobile adjustments */
+  .form-control,
+  .form-select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 0.75rem !important;
+  }
+  
+  .form-control-lg,
+  .form-select-lg {
+    font-size: 16px !important;
+    padding: 0.75rem 1rem !important;
+  }
+  
+  /* Button mobile adjustments */
+  .btn {
+    padding: 0.75rem 1.5rem !important;
+    font-size: 1rem !important;
+    min-height: 44px; /* Touch-friendly */
+  }
+  
+  .btn-lg {
+    padding: 1rem 2rem !important;
+    font-size: 1.1rem !important;
+    min-height: 48px;
+  }
+  
+  /* Table mobile adjustments */
+  .table-responsive {
+    font-size: 0.9rem;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.5rem !important;
+    font-size: 0.9rem;
+  }
+  
+  /* Grid mobile adjustments */
+  .row {
+    margin-left: -0.5rem !important;
+    margin-right: -0.5rem !important;
+  }
+  
+  .col,
+  .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+  .col-7, .col-8, .col-9, .col-10, .col-11, .col-12,
+  .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6,
+  .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12,
+  .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6,
+  .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12,
+  .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6,
+  .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  
+  /* Typography mobile adjustments */
+  h1 {
+    font-size: 2.2em !important;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 1.8em !important;
+  }
+  
+  h3 {
+    font-size: 1.4em !important;
+  }
+  
+  h4 {
+    font-size: 1.2em !important;
+  }
+  
+  /* Spacing mobile adjustments */
+  .mb-5 {
+    margin-bottom: 2rem !important;
+  }
+  
+  .mt-5 {
+    margin-top: 2rem !important;
+  }
+  
+  .p-5 {
+    padding: 2rem !important;
+  }
+  
+  .py-4 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 576px) {
+  body {
+    font-size: 13px;
+  }
+  
+  h1 {
+    font-size: 1.8em !important;
+  }
+  
+  h2 {
+    font-size: 1.5em !important;
+  }
+  
+  .card-body {
+    padding: 1rem !important;
+  }
+  
+  .btn {
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .btn-lg {
+    padding: 0.8rem 1.5rem !important;
+    font-size: 1rem !important;
+  }
+  
+  .form-control,
+  .form-select {
+    font-size: 16px !important;
+    padding: 0.6rem !important;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.4rem !important;
+    font-size: 0.8rem;
+  }
+  
+  /* Stack columns on very small screens */
+  .col-md-3,
+  .col-md-4,
+  .col-md-6,
+  .col-lg-3,
+  .col-lg-4,
+  .col-lg-6 {
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* Landscape orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+  .container-fluid {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  .card-body {
+    padding: 1rem !important;
+  }
+  
+  .btn-lg {
+    padding: 0.8rem 1.5rem !important;
+  }
+}

@@ -75,80 +75,175 @@ export default function ClinicPatientReports() {
   };
 
   return (
-    <div className="container py-5">
-      <h2 className="mb-4 text-success">📑 Raportet e Vizitave të Pacientëve</h2>
+    <div className="container-fluid" style={{
+      backgroundColor: "#FAF7F3",
+      minHeight: "100vh",
+      padding: "2rem 0",
+      background: "linear-gradient(135deg, #FAF7F3 0%, #F0E4D3 50%, #DCC5B2 100%)"
+    }}>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-lg-11 col-xl-10">
+            <div className="card shadow-lg" style={{
+              background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+              border: "1px solid rgba(220, 197, 178, 0.3)",
+              borderRadius: "25px",
+              boxShadow: "0 20px 40px rgba(217, 162, 153, 0.3)",
+              overflow: "hidden"
+            }}>
+              <div className="card-header text-center py-4" style={{
+                background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                color: "white",
+                border: "none"
+              }}>
+                <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color:"white" }}>
+                  📑 Raportet e Vizitave të Pacientëve
+                </h2>
+                <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
+                  Shikoni dhe menaxhoni raportet e vizitave të pacientëve
+                </p>
+              </div>
+              <div className="card-body p-5">
 
-      {/* Formë për filtrat */}
-      <form className="row g-3 mb-4" onSubmit={filtroRaportet}>
-        <div className="col-md-3">
-          <label className="form-label">📅 Nga data</label>
-          <input
-            type="date"
-            name="from"
-            className="form-control"
-            value={filtrat.from}
-            onChange={ndryshoFiltrin}
-          />
-        </div>
-        <div className="col-md-3">
-          <label className="form-label">📅 Deri më</label>
-          <input
-            type="date"
-            name="to"
-            className="form-control"
-            value={filtrat.to}
-            onChange={ndryshoFiltrin}
-          />
-        </div>
-        <div className="col-md-4">
-          <label className="form-label">👨‍⚕️ Mjeku</label>
-          <select
-            name="doctorId"
-            className="form-select"
-            value={filtrat.doctorId}
-            onChange={ndryshoFiltrin}
-          >
-            <option value="">Të gjithë mjekët</option>
-            {mjeket.map((mjek) => (
-              <option key={mjek._id} value={mjek._id}>
-                {mjek.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col-md-2 d-flex align-items-end">
-          <button type="submit" className="btn btn-success w-100">
-            🔍 Kërko
-          </button>
-        </div>
-      </form>
+                {/* Formë për filtrat */}
+                <form className="row g-4 mb-5" onSubmit={filtroRaportet} style={{
+                  background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+                  padding: "2.5rem",
+                  borderRadius: "15px",
+                  boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
+                  border: "1px solid rgba(220, 197, 178, 0.3)"
+                }}>
+                  <div className="col-md-3">
+                    <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>📅 Nga data</label>
+                    <input
+                      type="date"
+                      name="from"
+                      className="form-control form-control-lg"
+                      value={filtrat.from}
+                      onChange={ndryshoFiltrin}
+                      placeholder=""
+                      style={{
+                        border: "2px solid rgba(220, 197, 178, 0.3)",
+                        borderRadius: "12px",
+                        padding: "0.75rem 1rem",
+                        color: "transparent",
+                        textAlign: "center"
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>📅 Deri më</label>
+                    <input
+                      type="date"
+                      name="to"
+                      className="form-control form-control-lg"
+                      value={filtrat.to}
+                      onChange={ndryshoFiltrin}
+                      placeholder=""
+                      style={{
+                        border: "2px solid rgba(220, 197, 178, 0.3)",
+                        borderRadius: "12px",
+                        padding: "0.75rem 1rem",
+                        color: "transparent",
+                        textAlign: "center"
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>👨‍⚕️ Mjeku</label>
+                    <select
+                      name="doctorId"
+                      className="form-select form-select-lg"
+                      value={filtrat.doctorId}
+                      onChange={ndryshoFiltrin}
+                      style={{
+                        border: "2px solid rgba(220, 197, 178, 0.3)",
+                        borderRadius: "12px",
+                        padding: "0.75rem 1rem",
+                        color: "#2c3e50",
+                        backgroundColor: "#FAF7F3"
+                      }}
+                    >
+                      <option value="">Të gjithë mjekët</option>
+                      {mjeket.map((mjek) => (
+                        <option key={mjek._id} value={mjek._id}>
+                          {mjek.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-md-3 d-flex align-items-end">
+                    <button type="submit" className="btn btn-lg w-100" style={{
+                      background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                      border: "none",
+                      color: "white",
+                      borderRadius: "12px",
+                      boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                    }}>
+                      🔍 Kërko
+                    </button>
+                  </div>
+                </form>
 
-      {/* Lista e raporteve */}
-      {raportet.length === 0 ? (
-        <div className="alert alert-warning">📭 Nuk u gjetën raporte për këto kritere.</div>
-      ) : (
-        <div className="list-group">
-          {raportet.map((r) => (
-            <div key={r._id} className="list-group-item list-group-item-action mb-2 shadow-sm">
-              <div className="d-flex justify-content-between align-items-center">
-                <div>
-                  <p className="mb-1"><strong>👨‍⚕️ Mjeku:</strong> {r.doctorId?.name}</p>
-                  <p className="mb-1"><strong>🧑‍💼 Pacienti:</strong> {r.patientId?.name}</p>
-                  <p className="mb-1"><strong>📅 Data:</strong> {r.appointmentId?.date} &nbsp;&nbsp;
-                    <strong>🕒 Ora:</strong> {r.appointmentId?.time}
-                  </p>
-                </div>
-                <button
-                  onClick={() => shkarkoPDF(r._id)}
-                  className="btn btn-outline-primary btn-sm"
-                >
-                  ⬇️ Shkarko PDF
-                </button>
+                {/* Lista e raporteve */}
+                {raportet.length === 0 ? (
+                  <div className="alert text-center" style={{
+                    background: "linear-gradient(145deg, #F0E4D3, #DCC5B2)",
+                    border: "1px solid rgba(220, 197, 178, 0.3)",
+                    borderRadius: "15px",
+                    color: "#2c3e50",
+                    fontSize: "1.1rem",
+                    fontWeight: "500",
+                    padding: "2rem"
+                  }}>
+                    📭 Nuk u gjetën raporte për këto kritere.
+                  </div>
+                ) : (
+                  <div className="list-group" style={{
+                    background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
+                    borderRadius: "15px",
+                    boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
+                    border: "1px solid rgba(220, 197, 178, 0.3)"
+                  }}>
+                    {raportet.map((r) => (
+                      <div key={r._id} className="list-group-item list-group-item-action mb-3" style={{
+                        background: "transparent",
+                        border: "1px solid rgba(220, 197, 178, 0.2)",
+                        borderRadius: "10px",
+                        padding: "1.5rem",
+                        fontSize: "1.1rem"
+                      }}>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <div>
+                            <p className="mb-1"><strong style={{ color: "#D9A299" }}>👨‍⚕️ Mjeku:</strong> {r.doctorId?.name}</p>
+                            <p className="mb-1"><strong style={{ color: "#D9A299" }}>🧑‍💼 Pacienti:</strong> {r.patientId?.name}</p>
+                            <p className="mb-1"><strong style={{ color: "#D9A299" }}>📅 Data:</strong> {r.appointmentId?.date} &nbsp;&nbsp;
+                              <strong style={{ color: "#D9A299" }}>🕒 Ora:</strong> {r.appointmentId?.time}
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => shkarkoPDF(r._id)}
+                            className="btn btn-lg"
+                            style={{
+                              background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
+                              border: "none",
+                              color: "white",
+                              borderRadius: "12px",
+                              boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                            }}
+                          >
+                            ⬇️ Shkarko PDF
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
-          ))}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

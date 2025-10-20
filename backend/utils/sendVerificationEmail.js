@@ -26,12 +26,14 @@ const sendVerificationEmail = async (to, code, link = null, name = null, clinicN
           ? `
         <h2>Përshëndetje ${name},</h2>
         <p>Klinika <strong>${clinicName}</strong> ju ka ftuar të regjistroheni në platformën <strong>MedPal</strong>.</p>
-        <p><strong>Kodi juaj i verifikimit:</strong> <span style="color: #007bff; font-size: 18px;">${code}</span></p>
-        <p>Kliko butonin më poshtë për të verifikuar llogarinë:</p>
-        <a href="${link}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-          Verifiko Llogarinë
-        </a>
-        <p style="margin-top: 20px;">Nëse nuk e keni kërkuar këtë ftesë, thjesht injoroni këtë email.</p>
+        <p><strong>Kodi juaj i verifikimit:</strong> <span style="color: #007bff; font-size: 18px; font-weight: bold;">${code}</span></p>
+        <p>Kliko butonin më poshtë për të regjistruar llogarinë tuaj:</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${link}" style="display: inline-block; padding: 15px 30px; background: linear-gradient(135deg, #D9A299, #DCC5B2); color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(217, 162, 153, 0.3);">
+            🎉 Regjistrohu në MedPal
+          </a>
+        </div>
+        <p style="margin-top: 20px; color: #666;">Nëse nuk e keni kërkuar këtë ftesë, thjesht injoroni këtë email.</p>
         `
           : `
         <h2>Përshëndetje,</h2>

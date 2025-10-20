@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
 const verifyToken = require("../middleware/verifyToken");
 const Appointment = require("../models/Appointment");
@@ -14,8 +15,22 @@ const path = require("path");
 router.post("/", verifyToken, async (req, res) => {
   try {
     const { doctorId, serviceId, date, time } = req.body;
+
+    // Basic input validation
     if (!doctorId || !serviceId || !date || !time) {
       return res.status(400).json({ message: "Të gjitha fushat janë të detyrueshme." });
+    }
+    if (!mongoose.isValidObjectId(doctorId)) {
+      return res.status(400).json({ message: "doctorId i pavlefshëm." });
+    }
+    if (!mongoose.isValidObjectId(serviceId)) {
+      return res.status(400).json({ message: "serviceId i pavlefshëm." });
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return res.status(400).json({ message: "Data duhet të jetë në formatin YYYY-MM-DD." });
+    }
+    if (!/^\d{2}:\d{2}$/.test(time)) {
+      return res.status(400).json({ message: "Ora duhet të jetë në formatin HH:mm." });
     }
 
     const doctor = await User.findById(doctorId);
@@ -28,7 +43,10 @@ router.post("/", verifyToken, async (req, res) => {
     const workingHours = doctor.workingHours;
     if (!workingHours) return res.status(400).json({ message: "Mjeku nuk ka orar të caktuar." });
 
-    const dayName = new Date(date).toLocaleDateString("en-US", { weekday: "long" }).toLowerCase();
+  // Compute weekday in a stable way (avoid locale surprises)
+  const dayIdx = new Date(date + 'T00:00:00').getDay(); // 0=Sun..6=Sat
+  const days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+  const dayName = days[dayIdx];
     const daySchedule = workingHours[dayName];
 
     if (!daySchedule || !daySchedule.start || !daySchedule.end) {
@@ -49,53 +67,55 @@ router.post("/", verifyToken, async (req, res) => {
       time,
       status: "pending"
     });
-0
     await newAppointment.save();
 
     // Merr dokumentet
     const documents = await Document.find({ patientId: req.user.id });
 
-    // Email për pacientin
-    await sendAppointmentNotification(
-      patient.email,
-      "📅 Termini u rezervua",
-      `Përshëndetje ${patient.name},<br />Keni rezervuar një takim te Dr. ${doctor.name} për shërbimin <strong>${service.name}</strong> më <strong>${date}</strong> në orën <strong>${time}</strong>.`
-    );
+    // Email për pacientin (best-effort)
+    try {
+      await sendAppointmentNotification(
+        patient.email,
+        "📅 Termini u rezervua",
+        `Përshëndetje ${patient.name},<br />Keni rezervuar një takim te Dr. ${doctor.name} për shërbimin <strong>${service.name}</strong> më <strong>${date}</strong> në orën <strong>${time}</strong>.`
+      );
+    } catch (_) {}
 
-    // Email për mjekun
-    await sendAppointmentNotification(
-      doctor.email,
-      `📥 Termini i ri nga ${patient.name}`,
-      `
+    // Email për mjekun (best-effort)
+    try {
+      await sendAppointmentNotification(
+        doctor.email,
+        `📥 Termini i ri nga ${patient.name}`,
+        `
         <p>Një pacient ka rezervuar një takim:</p>
         <ul>
           <li><strong>Pacient:</strong> ${patient.name}</li>
           <li><strong>Email:</strong> ${patient.email}</li>
-          <li><strong>Data e lindjes:</strong> ${patient.dateOfBirth || "N/A"}</li>
           <li><strong>Shërbimi:</strong> ${service.name}</li>
           <li><strong>Data:</strong> ${date}</li>
           <li><strong>Ora:</strong> ${time}</li>
         </ul>
         ${
           documents.length
-            ? `<p><strong>📎 Dokumente të bashkangjitura:</strong></p><ul>` +
-              documents.map(d => `<li><a href="http://localhost:5000${d.fileUrl}" target="_blank">${d.title}</a></li>`).join("") +
+          ? `<p><strong>📎 Dokumente të bashkangjitura:</strong></p><ul>` +
+            documents.map(d => `<li><a href="${process.env.SERVER_URL || 'http://localhost:5000'}${d.fileUrl}" target="_blank">${d.title}</a></li>`).join("") +
               `</ul>`
             : `<p>❌ Nuk ka dokumente të bashkangjitura.</p>`
         }
       `
-    );
+      );
+    } catch (_) {}
     const clinic = await User.findById(doctor.clinicId);
-if (clinic) {
-  await sendAppointmentNotification(
-    clinic.email,
-    `📥 Termini i ri për Dr. ${doctor.name}`,
-    `
+    if (clinic) {
+      try {
+        await sendAppointmentNotification(
+          clinic.email,
+          `📥 Termini i ri për Dr. ${doctor.name}`,
+          `
       <p>Një pacient ka rezervuar një takim:</p>
       <ul>
         <li><strong>Pacient:</strong> ${patient.name}</li>
         <li><strong>Email:</strong> ${patient.email}</li>
-        <li><strong>Data e lindjes:</strong> ${patient.dateOfBirth || "N/A"}</li>
         <li><strong>Shërbimi:</strong> ${service.name}</li>
         <li><strong>Data:</strong> ${date}</li>
         <li><strong>Ora:</strong> ${time}</li>
@@ -103,19 +123,21 @@ if (clinic) {
       ${
         documents.length
           ? `<p><strong>📎 Dokumente të bashkangjitura:</strong></p><ul>` +
-            documents.map(d => `<li><a href="http://localhost:5000${d.fileUrl}" target="_blank">${d.title}</a></li>`).join("") +
+            documents.map(d => `<li><a href="${process.env.SERVER_URL || 'http://localhost:5000'}${d.fileUrl}" target="_blank">${d.title}</a></li>`).join("") +
             `</ul>`
           : `<p>❌ Nuk ka dokumente të bashkangjitura.</p>`
       }
     `
-  );
-}
+        );
+      } catch (_) {}
+    }
 
 
     res.status(201).json({ message: "Termini u ruajt me sukses!", appointment: newAppointment });
   } catch (err) {
     console.error("❌ Error në /appointments:", err);
-    res.status(500).json({ message: "Gabim gjatë rezervimit." });
+    const extra = process.env.NODE_ENV === 'production' ? undefined : (err && err.message ? { error: err.message } : undefined);
+    res.status(500).json({ message: "Gabim gjatë rezervimit.", ...(extra || {}) });
   }
 });
 
@@ -123,30 +145,54 @@ if (clinic) {
 router.put("/:id/status", verifyToken, async (req, res) => {
   try {
     const { status } = req.body;
-
-    if (req.user.role !== "clinic") {
-      return res.status(403).json({ message: "Vetëm klinika mund të ndryshojë statusin e terminit." });
-    }
+    console.log("📝 Status change request:", { appointmentId: req.params.id, newStatus: status, userRole: req.user.role, userId: req.user.id });
 
     const appointment = await Appointment.findById(req.params.id)
       .populate("patientId", "email name")
-      .populate("doctorId", "name workingHours");
+      .populate("doctorId", "name workingHours clinicId");
 
     if (!appointment) return res.status(404).json({ message: "Termini nuk u gjet." });
 
-    if (!["pending", "approved", "canceled"].includes(status)) {
+    if (!["pending", "approved", "canceled", "completed"].includes(status)) {
+      console.error("❌ Invalid status:", status);
       return res.status(400).json({ message: "Status i pavlefshëm." });
+    }
+
+    // Authorization: clinic may manage appointments for its own doctors; doctors may manage their own appointments
+    if (req.user.role === "clinic") {
+      const apptClinicId = appointment.doctorId?.clinicId?.toString();
+      if (!apptClinicId || apptClinicId !== req.user.id.toString()) {
+        return res.status(403).json({ message: "Nuk keni leje të menaxhoni këtë takim (jo i klinikës suaj)." });
+      }
+    } else if (req.user.role === "doctor") {
+      const apptDoctorId = (appointment.doctorId && appointment.doctorId._id && appointment.doctorId._id.toString())
+        || (appointment.doctorId && appointment.doctorId.toString && appointment.doctorId.toString())
+        || null;
+      const currentDoctorId = req.user.id.toString();
+      if (!apptDoctorId || apptDoctorId !== currentDoctorId) {
+        console.warn("⚠️ Doctor approval forbidden:", { apptDoctorId, currentDoctorId, apptId: appointment._id.toString() });
+        return res.status(403).json({ message: "Nuk keni leje të menaxhoni këtë takim." });
+      }
+    } else {
+      return res.status(403).json({ message: "Roli juaj nuk lejohet të ndryshojë statusin." });
     }
 
     if (status === "approved") {
       const workingHours = appointment.doctorId.workingHours;
-      const dayName = new Date(appointment.date).toLocaleDateString("en-US", { weekday: "long" }).toLowerCase();
+      const dayIdx = new Date(appointment.date + 'T00:00:00').getDay();
+      const days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+      const dayName = days[dayIdx];
       const schedule = workingHours?.[dayName];
 
-      if (!schedule || appointment.time < schedule.start || appointment.time > schedule.end) {
-        return res.status(400).json({
-          message: `Ora është jashtë orarit të punës së mjekut (${schedule?.start || "?"} - ${schedule?.end || "?"})`
-        });
+      const outOfHours = (!schedule || !schedule.start || !schedule.end || appointment.time < schedule.start || appointment.time > schedule.end);
+      if (outOfHours) {
+        if (req.user.role === "clinic") {
+          return res.status(400).json({
+            message: `Ora është jashtë orarit të punës së mjekut (${schedule?.start || "?"} - ${schedule?.end || "?"}). Përditësoni orarin ose zgjidhni një orë tjetër.`
+          });
+        }
+        // If doctor is approving, allow but include a warning header
+        res.set("X-Warning", "Approved outside working hours; consider updating working hours.");
       }
     }
 
@@ -163,6 +209,7 @@ router.put("/:id/status", verifyToken, async (req, res) => {
 
     res.json({ message: "Statusi u përditësua me sukses.", appointment });
   } catch (err) {
+    console.error("❌ Gabim gjatë përditësimit të statusit:", err?.message || err);
     res.status(500).json({ message: "Gabim gjatë përditësimit." });
   }
 });
@@ -170,12 +217,25 @@ router.put("/:id/status", verifyToken, async (req, res) => {
 // 📥 GET /api/appointments/mine
 router.get("/mine", verifyToken, async (req, res) => {
   try {
-    const appointments = await Appointment.find({ patientId: req.user.id })
-      .populate("doctorId", "name")
-      .populate("serviceId", "name")
-      .sort({ date: -1 });
+    let appointments;
+    
+    if (req.user.role === "patient") {
+      appointments = await Appointment.find({ patientId: req.user.id })
+        .populate("doctorId", "name")
+        .populate("serviceId", "name")
+        .sort({ date: -1 });
+    } else if (req.user.role === "doctor") {
+      appointments = await Appointment.find({ doctorId: req.user.id })
+        .populate("patientId", "name email")
+        .populate("serviceId", "name")
+        .sort({ date: -1 });
+    } else {
+      return res.status(403).json({ message: "Qasje e ndaluar për këtë rol." });
+    }
+    
     res.json(appointments);
   } catch (err) {
+    console.error("Gabim në /mine:", err);
     res.status(500).json({ message: "Gabim gjatë marrjes së termineve." });
   }
 });
@@ -266,7 +326,11 @@ router.get("/all", verifyToken, async (req, res) => {
 
     // Merr dokumentet për çdo pacient në këto termine
     for (const a of appointments) {
-      a.documents = await Document.find({ patientId: a.patientId._id });
+      if (a.patientId && a.patientId._id) {
+        a.documents = await Document.find({ patientId: a.patientId._id });
+      } else {
+        a.documents = [];
+      }
     }
 
     res.json(appointments);

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 const verifyToken = require("../middleware/verifyToken");
 
 const Department = require("../models/Department");
@@ -214,25 +215,40 @@ router.put("/users/:id", verifyToken, async (req, res) => {
 // ✏️ PUT /api/clinic/update → Përditëso profilin e klinikës
 router.put("/update", verifyToken, async (req, res) => {
   try {
+    console.log("🔍 Clinic update request received:", {
+      userId: req.user.id,
+      role: req.user.role,
+      body: req.body
+    });
+
     if (req.user.role !== "clinic") {
       return res.status(403).json({ message: "Vetëm klinika mund të përditësojë këtë profil." });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email } = req.body;
     const updateFields = {};
 
     if (name) updateFields.name = name;
     if (email) updateFields.email = email;
-    if (password) {
-      const hashed = await bcrypt.hash(password, 10);
-      updateFields.password = hashed;
-    }
+
+    console.log("📝 Update fields:", updateFields);
 
     const updated = await User.findByIdAndUpdate(req.user.id, updateFields, { new: true }).select("-password");
+    
+    if (!updated) {
+      return res.status(404).json({ message: "Klinika nuk u gjet." });
+    }
+
+    console.log("✅ Clinic updated successfully:", updated);
     res.json({ message: "Profili u përditësua me sukses!", clinic: updated });
   } catch (err) {
     console.error("❌ Gabim gjatë përditësimit të klinikës:", err);
-    res.status(500).json({ message: "Gabim gjatë përditësimit." });
+    console.error("❌ Error details:", {
+      message: err.message,
+      stack: err.stack,
+      name: err.name
+    });
+    res.status(500).json({ message: "Gabim gjatë përditësimit.", error: err.message });
   }
 });
 

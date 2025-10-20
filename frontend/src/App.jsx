@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/MobileResponsive.css';
+import './styles/Dashboard.css';
 
 import WelcomePage from "./pages/WelcomePage";
 import Login from "./pages/Auth/Login";
@@ -22,6 +24,8 @@ import DoctorAppointments from "./pages/Doctor/DoctorAppointments";
 import DoctorCalendarView from "./pages/Doctor/DoctorCalendarView";
 import DoctorProfile from "./pages/Doctor/DoctorProfile";
 import DoctorWorkingHours from "./pages/Doctor/DoctorWorkingHours";
+import DoctorWorkingHoursManager from "./pages/Doctor/DoctorWorkingHoursManager";
+import DoctorAppointmentsManager from "./pages/Doctor/DoctorAppointmentsManager";
 import AddVisitReport from "./pages/Doctor/AddVisitReport";
 import DoctorReports from "./pages/Doctor/DoctorReports";
 
@@ -170,7 +174,15 @@ function App() {
           path="/doctor/working-hours"
           element={
             <PrivateRoute allowedRoles={["doctor"]}>
-              <DoctorWorkingHours />
+              <DoctorWorkingHoursManager />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/doctor/appointments-manager"
+          element={
+            <PrivateRoute allowedRoles={["doctor"]}>
+              <DoctorAppointmentsManager />
             </PrivateRoute>
           }
         />

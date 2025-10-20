@@ -1,22 +1,44 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail", // ose zëvendëso me 'outlook', 'yahoo' etj. nëse përdor tjetër shërbim
+  service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER,     // p.sh. "yourclinic@gmail.com"
-    pass: process.env.EMAIL_PASS      // gjeneruar nga Google App Passwords
-  }
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+  // In some dev environments, outgoing SMTP is intercepted with a self-signed cert.
+  // This avoids TLS handshake failures locally. For production, prefer proper CA.
+  tls: {
+    rejectUnauthorized: process.env.EMAIL_REJECT_UNAUTHORIZED === "true",
+  },
 });
 
 async function sendAppointmentNotification(to, subject, htmlContent) {
+  // Guard: skip if email not configured or recipient missing
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    console.warn("⚠️ Email not configured (EMAIL_USER/EMAIL_PASS missing). Skipping send.");
+    return false;
+  }
+  if (!to) {
+    console.warn("⚠️ No recipient email provided. Skipping send.");
+    return false;
+  }
+
   const mailOptions = {
     from: `"MedPal Klinika" <${process.env.EMAIL_USER}>`,
     to,
     subject,
-    html: htmlContent
+    html: htmlContent,
   };
 
-  return transporter.sendMail(mailOptions);
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`📧 Email sent to ${to}: ${subject} -> ${info.messageId || info.response || "OK"}`);
+    return true;
+  } catch (err) {
+    console.error("❌ Failed to send appointment email:", err.message || err);
+    return false; // Do not throw; callers shouldn't fail booking on email issues
+  }
 }
 
 module.exports = sendAppointmentNotification;

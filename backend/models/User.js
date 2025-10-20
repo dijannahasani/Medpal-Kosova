@@ -20,9 +20,13 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
+  // Fusha të përgjithshme
+  phone: { type: String },
+  specialization: { type: String }, // Për mjekë dhe klinika
+  bio: { type: String }, // Përshkrimi/biografia
+
   // Vetëm për pacientët
   gender: { type: String, enum: ["male", "female", "other"] },
-  phone: { type: String },
   address: { type: String },
   bloodType: { type: String },
   medicalHistory: { type: String },

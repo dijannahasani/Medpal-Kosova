@@ -1,5 +1,5 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const router = express.Router();
@@ -308,7 +308,7 @@ router.post("/invite-patient", verifyToken, async (req, res) => {
 
     await newPatient.save();
 
-    const link = `${process.env.CLIENT_URL}/verify?email=${encodeURIComponent(email)}`;
+    const link = `${process.env.CLIENT_URL}/verify-invite?email=${encodeURIComponent(email)}&code=${verificationCode}`;
 
     await sendVerificationEmail(email, verificationCode, link, name, req.user.name);
 
@@ -449,6 +449,65 @@ router.get("/stats", verifyToken, checkRole("admin"), async (req, res) => {
   } catch (err) {
     console.error("Gabim në marrjen e statistikave:", err);
     res.status(500).json({ message: "Gabim serveri" });
+  }
+});
+
+// @route   PUT /api/auth/update-profile
+// @desc    Update user profile
+// @access  Private
+router.put("/update-profile", verifyToken, async (req, res) => {
+  try {
+    const { name, email, phone, specialization, bio } = req.body;
+    
+    console.log("🔄 Update profile request:", { name, email, phone, specialization, bio });
+    
+    // Gjej user-in nga token
+    const user = await User.findById(req.user.id);
+    
+    if (!user) {
+      return res.status(404).json({ message: 'Useri nuk u gjet' });
+    }
+
+    console.log("👤 Current user before update:", {
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      specialization: user.specialization,
+      bio: user.bio
+    });
+
+    // Përditëso fushat
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (phone) user.phone = phone;
+    if (specialization) user.specialization = specialization;
+    if (bio) user.bio = bio;
+
+    await user.save();
+
+    console.log("✅ User after save:", {
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      specialization: user.specialization,
+      bio: user.bio
+    });
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      specialization: user.specialization,
+      bio: user.bio,
+      role: user.role,
+      doctorCode: user.doctorCode,
+      departmentId: user.departmentId,
+      services: user.services
+    });
+  } catch (error) {
+    console.error('Gabim në përditësimin e profilit:', error);
+    res.status(500).json({ message: 'Gabim serveri', error: error.message });
   }
 });
 
