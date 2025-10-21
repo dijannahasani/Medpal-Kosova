@@ -12,6 +12,91 @@
   gap: 1rem;
 }
 
+/* Responsive: mobile phones up to 440px */
+@media (max-width: 440px) {
+  .clinic-appointments-header {
+    padding: 1rem 1rem;
+  }
+
+  /* stack heading and button */
+  .clinic-appointments-header .header-row {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  .clinic-appointments-header .card-title {
+    font-size: 1.25rem;
+    text-align: left;
+    margin: 0;
+  }
+
+  .clinic-appointments-header p {
+    font-size: 0.9rem;
+    text-align: left;
+    margin-top: 0.25rem;
+  }
+
+  .clinic-appointments-header .export-btn {
+    align-self: flex-end;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  /* Make the table more mobile-friendly: allow horizontal scroll and reduce padding */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table thead th {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  .table tbody td {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  /* Optional: convert each row to card-like block for small screens */
+  .table.table-striped {
+    border-collapse: separate;
+  }
+
+  .table tbody tr {
+    display: block;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(145deg, #FFFDFC, #F7F3EE);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(217, 162, 153, 0.08);
+    padding: 0.5rem;
+  }
+
+  .table tbody tr td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .table tbody tr td:nth-child(1)::before { content: "Pacienti:"; font-weight: 600; margin-right: 0.5rem; }
+  .table tbody tr td:nth-child(2)::before { content: "Email:"; font-weight: 600; margin-right: 0.5rem; }
+  .table tbody tr td:nth-child(3)::before { content: "Data:"; font-weight: 600; margin-right: 0.5rem; }
+  .table tbody tr td:nth-child(4)::before { content: "Ora:"; font-weight: 600; margin-right: 0.5rem; }
+  .table tbody tr td:nth-child(5)::before { content: "Doktori:"; font-weight: 600; margin-right: 0.5rem; }
+  .table tbody tr td:nth-child(6)::before { content: "Dokumente:"; font-weight: 600; margin-right: 0.5rem; }
+  .table tbody tr td:nth-child(7)::before { content: "Statusi:"; font-weight: 600; margin-right: 0.5rem; }
+  .table tbody tr td:nth-child(8)::before { content: "Raport:"; font-weight: 600; margin-right: 0.5rem; }
+
+  /* small adjustments for buttons inside cards */
+  .table tbody tr td .btn {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+
 .clinic-appointments-header .card-title {
   font-size: 2.5rem;
   font-weight: 700;
