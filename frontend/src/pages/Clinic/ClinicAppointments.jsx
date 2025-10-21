@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 import Modal from "react-modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
+import "./ClinicAppointments.css";
 
 Modal.setAppElement("#root");
 
@@ -115,25 +116,16 @@ export default function ClinicAppointments() {
               boxShadow: "0 20px 40px rgba(217, 162, 153, 0.3)",
               overflow: "hidden"
             }}>
-              <div className="card-header text-center py-4" style={{
-                background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
-                color: "white",
-                border: "none"
-              }}>
-                <div className="d-flex justify-content-between align-items-center">
-                  <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
+              <div className="card-header text-center py-4 clinic-appointments-header">
+                <div className="header-row">
+                  <h2 className="card-title mb-0">
                     📅 Terminet për Klinikën
                   </h2>
-                  <button className="btn btn-outline-light btn-lg" onClick={exportToExcel} style={{
-                    borderRadius: "12px",
-                    padding: "0.75rem 1.5rem",
-                    fontSize: "1rem",
-                    fontWeight: "bold"
-                  }}>
+                  <button className="btn btn-outline-light btn-lg export-btn" onClick={exportToExcel}>
                     ⬇️ Eksporto Excel
                   </button>
                 </div>
-                <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
+                <p className="mt-2 mb-0">
                   Menaxhoni të gjitha terminet e klinikës suaj
                 </p>
               </div>

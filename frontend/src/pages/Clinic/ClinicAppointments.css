@@ -1,0 +1,65 @@
+/* Responsive tweaks for ClinicAppointments header on small phones */
+.clinic-appointments-header {
+  background: linear-gradient(135deg, #D9A299, #DCC5B2);
+  color: white;
+  border: none;
+}
+
+.clinic-appointments-header .header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.clinic-appointments-header .card-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.clinic-appointments-header .export-btn {
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Mobile specific styles */
+@media (max-width: 440px) {
+  .clinic-appointments-header .header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .clinic-appointments-header .card-title {
+    font-size: 1.6rem; /* reduce heading size */
+    line-height: 1.1;
+    display: block;
+    width: 100%;
+    word-break: break-word;
+  }
+
+  .clinic-appointments-header .export-btn {
+    align-self: stretch; /* make button full-width */
+    text-align: center;
+    font-size: 0.95rem;
+    padding: 0.6rem 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .clinic-appointments-header p {
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
+
+  .card-body.p-5 {
+    padding: 1rem !important;
+  }
+
+  .form-control.form-control-lg.mb-4 {
+    font-size: 1rem;
+    padding: 0.6rem 0.75rem;
+  }
+}

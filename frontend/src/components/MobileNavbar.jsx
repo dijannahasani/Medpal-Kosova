@@ -113,7 +113,10 @@ const MobileNavbar = ({ userRole, userName, dashboardLinks = [] }) => {
           zIndex: 999,
           padding: '1rem',
           maxHeight: 'calc(100vh - 64px)',
-          overflowY: 'auto'
+          overflowY: 'auto',
+          // ensure the menu is fully removed from flow when closed so
+          // individual links (e.g. "Raportet") don't appear fixed at top
+          display: isOpen ? 'block' : 'none'
         }}
       >
         {/* User Welcome */}
