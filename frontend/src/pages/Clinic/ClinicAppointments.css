@@ -97,6 +97,48 @@
   }
 }
 
+/* Make appointment rows stack vertically (label above value) and hide the header on small screens */
+@media (max-width: 440px) {
+  .table thead { display: none; }
+
+  .table tbody tr { display: block; padding: 0.6rem; margin-bottom: 0.8rem; }
+
+  .table tbody tr td {
+    display: block;
+    width: 100%;
+    padding: 0.45rem 0.35rem;
+    border: none;
+    white-space: normal;
+    text-align: left; /* ensure values are left aligned */
+    box-sizing: border-box;
+  }
+
+  .table tbody tr td::before {
+    display: block;
+    content: attr(data-label);
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    color: #2c3e50;
+    text-align: left;
+  }
+
+  /* Fallback labels when no data-label attribute present (using nth-child) */
+  .table tbody tr td:nth-child(1)::before { content: "Pacienti:"; }
+  .table tbody tr td:nth-child(2)::before { content: "Email:"; }
+  .table tbody tr td:nth-child(3)::before { content: "Data:"; }
+  .table tbody tr td:nth-child(4)::before { content: "Ora:"; }
+  .table tbody tr td:nth-child(5)::before { content: "Doktori:"; }
+  .table tbody tr td:nth-child(6)::before { content: "Dokumente:"; }
+  .table tbody tr td:nth-child(7)::before { content: "Statusi:"; }
+  .table tbody tr td:nth-child(8)::before { content: "Raport:"; }
+
+  /* ensure buttons align left within the card */
+  .table tbody tr td .btn { margin-top: 0.35rem; float: left; }
+
+  /* prevent outer container horizontal scroll */
+  .table-responsive { overflow-x: hidden; }
+}
+
 .clinic-appointments-header .card-title {
   font-size: 2.5rem;
   font-weight: 700;

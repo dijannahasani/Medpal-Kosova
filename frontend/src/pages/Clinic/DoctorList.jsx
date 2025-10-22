@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./DoctorList.css";
 import { getToken } from "../../utils/auth";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
 

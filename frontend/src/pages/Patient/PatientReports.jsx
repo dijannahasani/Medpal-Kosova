@@ -102,8 +102,9 @@ export default function PatientReports() {
                             <p style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
                               👨‍⚕️ <strong style={{ color: "#D9A299" }}>{r.doctorId?.name}</strong>
                             </p>
-                            <p style={{ fontSize: "1rem", marginBottom: "0" }}>
-                              📅 {r.appointmentId?.date} ora {r.appointmentId?.time}
+                            <p style={{ fontSize: "0.95rem", marginBottom: "0", textAlign: "left", marginLeft: "-6px" }}>
+                              <span style={{ whiteSpace: "nowrap", display: "inline-block" }}>📅&nbsp;{r.appointmentId?.date}</span>
+                              <span style={{ margin: "0 6px", whiteSpace: "nowrap", display: "inline-block" }}>⏰&nbsp;{r.appointmentId?.time}</span>
                             </p>
                           </div>
                           <div className="text-center">
@@ -116,12 +117,15 @@ export default function PatientReports() {
                                 color: "white",
                                 borderRadius: "12px",
                                 boxShadow: "0 6px 20px rgba(217, 162, 153, 0.4)",
-                                padding: "0.75rem 2rem",
-                                fontSize: "1rem",
-                                fontWeight: "bold",
-                                transition: "all 0.3s ease",
+                                padding: "0.5rem 1rem",
+                                fontSize: "0.95rem",
+                                fontWeight: "600",
+                                transition: "all 0.2s ease",
                                 width: "100%",
-                                maxWidth: "250px"
+                                maxWidth: "260px",
+                                whiteSpace: "normal",
+                                overflow: "visible",
+                                textOverflow: "unset"
                               }}
                               onMouseEnter={(e) => {
                                 e.target.style.transform = "translateY(-2px)";

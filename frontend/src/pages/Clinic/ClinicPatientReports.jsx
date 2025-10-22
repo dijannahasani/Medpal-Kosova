@@ -218,19 +218,29 @@ export default function ClinicPatientReports() {
                           <div>
                             <p className="mb-1"><strong style={{ color: "#D9A299" }}>👨‍⚕️ Mjeku:</strong> {r.doctorId?.name}</p>
                             <p className="mb-1"><strong style={{ color: "#D9A299" }}>🧑‍💼 Pacienti:</strong> {r.patientId?.name}</p>
-                            <p className="mb-1"><strong style={{ color: "#D9A299" }}>📅 Data:</strong> {r.appointmentId?.date} &nbsp;&nbsp;
-                              <strong style={{ color: "#D9A299" }}>🕒 Ora:</strong> {r.appointmentId?.time}
+                            <p className="mb-1" style={{ fontSize: "0.95rem", textAlign: "left", marginLeft: "-6px" }}>
+                              <span style={{ whiteSpace: "nowrap", display: "inline-block" }}>📅 <strong>Data:</strong>&nbsp;{r.appointmentId?.date}</span>
+                              <span style={{ margin: "0 6px", whiteSpace: "nowrap", display: "inline-block" }}>🕒 <strong>Ora:</strong>&nbsp;{r.appointmentId?.time}</span>
                             </p>
                           </div>
                           <button
                             onClick={() => shkarkoPDF(r._id)}
-                            className="btn btn-lg"
+                            className="btn btn-sm"
                             style={{
                               background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
                               border: "none",
                               color: "white",
-                              borderRadius: "12px",
-                              boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                              borderRadius: "10px",
+                              boxShadow: "0 4px 12px rgba(217, 162, 153, 0.28)",
+                              padding: "0.4rem 0.8rem",
+                              fontSize: "0.95rem",
+                              fontWeight: "600",
+                              whiteSpace: "nowrap",
+                              maxWidth: "220px",
+                              overflow: "visible",
+                              textOverflow: "unset",
+                              whiteSpace: "normal",
+                              lineHeight: "1.05"
                             }}
                           >
                             ⬇️ Shkarko PDF

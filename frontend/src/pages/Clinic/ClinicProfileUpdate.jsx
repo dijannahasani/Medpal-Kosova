@@ -32,7 +32,26 @@ export default function ClinicProfileUpdate() {
 
       console.log("✅ Frontend - Clinic update successful:", res.data);
       alert("✅ Profili u përditësua me sukses!");
-      localStorage.setItem("user", JSON.stringify(res.data.clinic));
+      // Save updated clinic in both storages so getUser() (which checks sessionStorage first)
+      // and other components see the same value.
+      const clinicObj = res.data.clinic;
+      localStorage.setItem("user", JSON.stringify(clinicObj));
+      try {
+        sessionStorage.setItem("user", JSON.stringify(clinicObj));
+      } catch (e) {
+        // some environments may restrict sessionStorage; ignore safely
+      }
+
+  // Debug: log stored values for verification
+  console.log('🗂️ Stored clinic (localStorage):', localStorage.getItem('user'));
+  try { console.log('🗂️ Stored clinic (sessionStorage):', sessionStorage.getItem('user')); } catch (e) {}
+
+  // Notify other components in this window that the clinic data changed
+      try {
+        window.dispatchEvent(new CustomEvent('clinicUpdated', { detail: clinicObj }));
+      } catch (e) {
+        // ignore if custom events are not supported
+      }
     } catch (err) {
       console.error("❌ Frontend - Clinic update failed:", err);
       console.error("❌ Error response:", err.response?.data);

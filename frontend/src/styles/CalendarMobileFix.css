@@ -1,0 +1,37 @@
+/* Mobile-specific fixes for react-calendar to prevent digit stacking and header overlap */
+@media (max-width: 576px) {
+  /* Ensure calendar fits its container */
+  .react-calendar {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Make tiles use inline-flex so two-digit numbers stay on one line and are centered */
+  .react-calendar__tile {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important; /* prevent digits from wrapping vertically */
+    padding: 6px !important;
+  }
+
+  /* Abbr inside tiles (sometimes used for accessibility) should not force wrapping */
+  .react-calendar__tile abbr {
+    white-space: nowrap !important;
+    display: inline-block !important;
+    line-height: 1 !important;
+  }
+
+  /* Ensure navigation/header sits above tiles and doesn't overlap */
+  .react-calendar__navigation {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  /* Tighten spacing to avoid visual overlap while preserving readable layout */
+  .react-calendar__month-view__weekdays__weekday,
+  .react-calendar__tile {
+    padding: 4px 6px !important;
+    font-size: 0.95rem !important;
+  }
+}

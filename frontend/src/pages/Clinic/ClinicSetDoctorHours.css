@@ -1,0 +1,52 @@
+/* Styles for ClinicSetDoctorHours responsive layout */
+
+.day-card {
+  background: linear-gradient(145deg, #FAF7F3, #F0E4D3);
+  padding: 1.25rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(217, 162, 153, 0.08);
+  border: 1px solid rgba(220, 197, 178, 0.25);
+}
+
+.day-label {
+  color: #D9A299;
+  font-size: 1.05rem;
+}
+
+.time-input {
+  border: 2px solid rgba(220, 197, 178, 0.3);
+  border-radius: 12px;
+  padding: 0.5rem 0.75rem;
+  max-width: 180px;
+}
+
+.time-sep {
+  color: #D9A299;
+  font-size: 1rem;
+  align-self: center;
+}
+
+/* Make layout mobile-friendly */
+@media (max-width: 576px) {
+  .card-body.p-5 {
+    padding: 1rem !important;
+  }
+
+  .day-card {
+    padding: 1rem;
+  }
+
+  .time-input {
+    width: 100%;
+    max-width: none;
+  }
+
+  .time-sep {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  .clinic-set-hours-select {
+    font-size: 1rem;
+  }
+}

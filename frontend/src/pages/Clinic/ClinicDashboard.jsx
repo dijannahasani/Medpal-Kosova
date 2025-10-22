@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getUser, clearAuth } from "../../utils/auth";
 import MobileNavbar from "../../components/MobileNavbar";
 
 export default function ClinicDashboard() {
-  const user = getUser();
+  const [user, setUser] = useState(getUser());
+
+  useEffect(() => {
+    function onClinicUpdated(e) {
+      const updated = e?.detail || getUser();
+      setUser(updated);
+    }
+    function onStorage(e) {
+      if (e.key === 'user') {
+        setUser(getUser());
+      }
+    }
+    window.addEventListener('clinicUpdated', onClinicUpdated);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener('clinicUpdated', onClinicUpdated);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, []);
 
   const handleLogout = () => {
     clearAuth();
@@ -74,12 +92,12 @@ export default function ClinicDashboard() {
                 boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
               }}
             >
-              <div className="card-body p-3">
-                <h5 className="card-title mb-2">👋 Mirësevini në Klinikën {user?.name || "Klinika e Re"}!</h5>
-                <p className="card-text mb-0 small">
-                  Zgjidhni një nga opsionet më poshtë për të vazhduar
-                </p>
-              </div>
+                <div className="card-body p-3">
+                  <h5 className="card-title mb-2" style={{ color: "white" }}>👋 Mirësevini në Klinikën {user?.name || "Klinika e Re"}!</h5>
+                  <p className="card-text mb-0 small" style={{ color: "white" }}>
+                    Zgjidhni një nga opsionet më poshtë për të vazhduar
+                  </p>
+                </div>
             </div>
           </div>
 

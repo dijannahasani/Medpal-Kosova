@@ -122,8 +122,8 @@ export default function PatientDashboard() {
               }}
             >
               <div className="card-body p-3">
-                <h5 className="card-title mb-2">👋 Mirësevini në MedPal!</h5>
-                <p className="card-text mb-0 small">
+                <h5 className="card-title mb-2" style={{ color: 'white' }}>👋 Mirësevini në MedPal!</h5>
+                <p className="card-text mb-0 small" style={{ color: 'white' }}>
                   Zgjidhni një nga opsionet më poshtë për të vazhduar
                 </p>
               </div>

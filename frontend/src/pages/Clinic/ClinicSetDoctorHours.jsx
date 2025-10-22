@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
+import "./ClinicSetDoctorHours.css";
 
 export default function ClinicSetDoctorHours() {
   const [doctors, setDoctors] = useState([]);
@@ -68,7 +69,7 @@ export default function ClinicSetDoctorHours() {
     }}>
       <div className="container">
         <div className="row justify-content-center">
-          <div className="col-lg-8 col-xl-6">
+          <div className="col-12 col-md-10 col-lg-8 col-xl-6">
             <div className="card shadow-lg" style={{
               background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
               border: "1px solid rgba(220, 197, 178, 0.3)",
@@ -113,37 +114,23 @@ export default function ClinicSetDoctorHours() {
                   </div>
 
                   {Object.entries(workingHours).map(([day, hours]) => (
-                    <div key={day} className="mb-4" style={{
-                      background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
-                      padding: "1.5rem",
-                      borderRadius: "15px",
-                      boxShadow: "0 4px 15px rgba(217, 162, 153, 0.1)",
-                      border: "1px solid rgba(220, 197, 178, 0.3)"
-                    }}>
-                      <label className="form-label fw-bold mb-3" style={{ color: "#D9A299", fontSize: "1.1rem" }}>{dayLabels[day]}:</label>
-                      <div className="d-flex gap-3 align-items-center">
+                    <div key={day} className="mb-4 day-card">
+                      <label className="form-label fw-bold mb-3 day-label">{dayLabels[day]}:</label>
+                      <div className="d-flex flex-column flex-md-row gap-3 align-items-center">
                         <input
                           type="time"
                           value={hours.start}
                           onChange={(e) => handleChange(day, "start", e.target.value)}
-                          className="form-control form-control-lg"
-                          style={{
-                            border: "2px solid rgba(220, 197, 178, 0.3)",
-                            borderRadius: "12px",
-                            padding: "0.75rem 1rem"
-                          }}
+                          className="form-control form-control-lg time-input"
+                          aria-label={`${day}-start`}
                         />
-                        <span className="fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>deri</span>
+                        <span className="fw-bold time-sep">deri</span>
                         <input
                           type="time"
                           value={hours.end}
                           onChange={(e) => handleChange(day, "end", e.target.value)}
-                          className="form-control form-control-lg"
-                          style={{
-                            border: "2px solid rgba(220, 197, 178, 0.3)",
-                            borderRadius: "12px",
-                            padding: "0.75rem 1rem"
-                          }}
+                          className="form-control form-control-lg time-input"
+                          aria-label={`${day}-end`}
                         />
                       </div>
                     </div>

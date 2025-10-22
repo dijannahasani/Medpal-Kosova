@@ -330,7 +330,7 @@ export default function BookAppointment() {
 
                   <button
                     type="submit"
-                    className="btn btn-lg w-100 mt-4"
+                    className="btn btn-lg w-100 mt-4 reserve-btn"
                     disabled={!form.time}
                     style={{
                       background: "linear-gradient(135deg, #D9A299, #DCC5B2)",

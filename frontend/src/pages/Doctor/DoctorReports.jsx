@@ -113,32 +113,40 @@ export default function DoctorReports() {
                             <p style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
                               🧑‍💼 <strong style={{ color: "#D9A299" }}>Pacienti:</strong> {r.patientId?.name}
                             </p>
-                            <p style={{ fontSize: "1rem", marginBottom: "0.5rem" }}>
-                              📅 <strong>Data:</strong> {r.appointmentId?.date} &nbsp;&nbsp; ⏰ <strong>Ora:</strong> {r.appointmentId?.time}
+                            <p style={{ fontSize: "0.95rem", marginBottom: "0.5rem", textAlign: "left", marginLeft: "-6px" }}>
+                              <span style={{ whiteSpace: "nowrap", display: "inline-block" }}>📅 <strong>Data:</strong>&nbsp;{r.appointmentId?.date}</span>
+                              <span style={{ margin: "0 6px", whiteSpace: "nowrap", display: "inline-block" }}>⏰ <strong>Ora:</strong>&nbsp;{r.appointmentId?.time}</span>
                             </p>
                             <p style={{ fontSize: "1rem", marginBottom: "0" }}>
                               📋 <strong>Diagnoza:</strong> {r.diagnosis}
                             </p>
                           </div>
                           <div className="col-md-4 text-end">
-                            <button className="btn btn-lg" onClick={() => handleDownload(r._id)} style={{
+                            <button className="btn btn-sm" onClick={() => handleDownload(r._id)} style={{
                               background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
                               border: "none",
                               color: "white",
-                              borderRadius: "12px",
-                              boxShadow: "0 6px 20px rgba(217, 162, 153, 0.4)",
-                              padding: "0.75rem 1.5rem",
-                              fontSize: "1rem",
-                              fontWeight: "bold",
-                              transition: "all 0.3s ease"
+                              borderRadius: "10px",
+                              boxShadow: "0 6px 18px rgba(217, 162, 153, 0.35)",
+                              padding: "0.45rem 0.9rem",
+                              fontSize: "0.92rem",
+                              fontWeight: "600",
+                              transition: "all 0.18s ease",
+                              display: "inline-block",
+                              maxWidth: "220px",
+                              width: "auto",
+                              whiteSpace: "normal",
+                              overflow: "visible",
+                              textOverflow: "unset",
+                              lineHeight: "1.05"
                             }}
                             onMouseEnter={(e) => {
-                              e.target.style.transform = "translateY(-2px)";
-                              e.target.style.boxShadow = "0 8px 25px rgba(217, 162, 153, 0.5)";
+                              e.target.style.transform = "translateY(-1px)";
+                              e.target.style.boxShadow = "0 8px 20px rgba(217, 162, 153, 0.45)";
                             }}
                             onMouseLeave={(e) => {
                               e.target.style.transform = "translateY(0)";
-                              e.target.style.boxShadow = "0 6px 20px rgba(217, 162, 153, 0.4)";
+                              e.target.style.boxShadow = "0 6px 18px rgba(217, 162, 153, 0.35)";
                             }}>
                               ⬇️ Shkarko PDF
                             </button>

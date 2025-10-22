@@ -1,0 +1,20 @@
+/* Page-specific responsive tweaks for Clinic Services & Departments */
+
+@media (max-width: 576px) {
+  .card-body .form-control, .card-body .form-select {
+    font-size: 0.95rem;
+  }
+
+  .card-body .btn {
+    /* make default buttons smaller in this card */
+    padding: 0.5rem 0.85rem;
+    font-size: 0.95rem;
+  }
+
+  /* ensure reset button wraps and stays inside the filter card */
+  .card-body > div.mb-5 > button {
+    display: inline-block;
+    width: auto;
+    white-space: normal;
+  }
+}

@@ -4,9 +4,12 @@ import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DoctorHomeButton from "../../components/DoctorHomeButton";
+import "../../styles/ClinicCalendarResponsive.css";
 
 export default function DoctorCalendarView() {
   const [date, setDate] = useState(new Date());
+  const [view, setView] = useState("month");
+  const [activeStartDate, setActiveStartDate] = useState(new Date(date.getFullYear(), date.getMonth(), 1));
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
@@ -87,14 +90,63 @@ export default function DoctorCalendarView() {
                   boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
                   border: "1px solid rgba(220, 197, 178, 0.3)"
                 }}>
-                  <Calendar
-                    value={date}
-                    onChange={setDate}
-                    tileContent={tileContent}
-                    style={{
-                      fontSize: "1.1rem"
-                    }}
-                  />
+                  <div className="clinic-calendar-wrapper">
+                    <div className="clinic-calendar-header d-flex align-items-center justify-content-between mb-2">
+                      <button
+                        className="calendar-nav-btn"
+                        aria-label="Previous"
+                        onClick={() => {
+                          if (view === "month") {
+                            setActiveStartDate(new Date(activeStartDate.getFullYear(), activeStartDate.getMonth() - 1, 1));
+                          } else if (view === "year") {
+                            setActiveStartDate(new Date(activeStartDate.getFullYear() - 1, activeStartDate.getMonth(), 1));
+                          }
+                        }}
+                      >
+                        ‹
+                      </button>
+
+                      <button
+                        className="calendar-label-btn"
+                        onClick={() => setView(view === "month" ? "year" : "month")}
+                        aria-label="Toggle month/year view"
+                      >
+                        {view === "month"
+                          ? `${activeStartDate.toLocaleString(undefined, { month: "long" })} ${activeStartDate.getFullYear()}`
+                          : `${activeStartDate.getFullYear()}`}
+                      </button>
+
+                      <button
+                        className="calendar-nav-btn"
+                        aria-label="Next"
+                        onClick={() => {
+                          if (view === "month") {
+                            setActiveStartDate(new Date(activeStartDate.getFullYear(), activeStartDate.getMonth() + 1, 1));
+                          } else if (view === "year") {
+                            setActiveStartDate(new Date(activeStartDate.getFullYear() + 1, activeStartDate.getMonth(), 1));
+                          }
+                        }}
+                      >
+                        ›
+                      </button>
+                    </div>
+
+                    <Calendar
+                      className="w-100 border rounded shadow-sm"
+                      value={date}
+                      onChange={(d) => {
+                        setDate(d);
+                        if (view !== "month") setView("month");
+                      }}
+                      tileContent={tileContent}
+                      activeStartDate={activeStartDate}
+                      onActiveStartDateChange={({ activeStartDate }) => setActiveStartDate(activeStartDate)}
+                      view={view}
+                      onViewChange={({ view }) => setView(view)}
+                      showNavigation={false}
+                      style={{ fontSize: "1.1rem" }}
+                    />
+                  </div>
                 </div>
 
                 <h5 className="text-center mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>
@@ -109,18 +161,23 @@ export default function DoctorCalendarView() {
                     border: "1px solid rgba(220, 197, 178, 0.3)"
                   }}>
                     {filteredAppointments.map((a, i) => (
-                      <li key={i} className="list-group-item d-flex justify-content-between align-items-center" style={{
+                      <li key={i} className="list-group-item appointment-item" style={{
                         background: "transparent",
                         border: "1px solid rgba(220, 197, 178, 0.2)",
                         borderRadius: "10px",
                         marginBottom: "0.5rem",
-                        padding: "1.5rem",
-                        fontSize: "1.1rem"
+                        padding: "1.25rem 1rem",
+                        fontSize: "1.05rem",
+                        color: "#2c3e50"
                       }}>
-                        <div>
-                          ⏰ {a.time} – <strong style={{ color: "#D9A299" }}>{a.patientId?.name}</strong>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <div style={{ fontWeight: 600, color: '#D9A299' }}>
+                            ⏰ {a.time} – {a.patientId?.name}
+                          </div>
+                          <div className="appointment-email">
+                            {a.patientId?.email}
+                          </div>
                         </div>
-                        <span className="text-muted">{a.patientId?.email}</span>
                       </li>
                     ))}
                   </ul>

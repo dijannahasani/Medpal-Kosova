@@ -1,0 +1,77 @@
+/* Responsive styles for the clinic doctor list */
+
+/* Base tweaks */
+.table.table-striped {
+  border-collapse: separate;
+}
+
+@media (max-width: 440px) {
+  .table-responsive {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table thead th {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  .table tbody td {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  /* Convert rows into card-like blocks for easier reading and tapping */
+  .table tbody tr {
+    display: block;
+    margin-bottom: 0.7rem;
+    background: linear-gradient(145deg, #FFFDFC, #F7F3EE);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(217, 162, 153, 0.08);
+    padding: 0.6rem;
+  }
+
+  /* hide the table header to avoid the dark header taking horizontal space */
+  .table thead { display: none; }
+
+  .table tbody tr {
+    display: block;
+    margin-bottom: 0.7rem;
+    background: linear-gradient(145deg, #FFFDFC, #F7F3EE);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(217, 162, 153, 0.08);
+    padding: 0.6rem;
+  }
+
+  .table tbody tr td {
+    display: block;
+    width: 100%;
+    border: none;
+    padding: 0.45rem 0.4rem;
+    white-space: normal;
+    text-align: left;
+    box-sizing: border-box;
+  }
+
+  /* label prefixes for each column in mobile view */
+  .table tbody tr td:nth-child(1)::before { content: "Emri:"; }
+  .table tbody tr td:nth-child(2)::before { content: "Email:"; }
+  .table tbody tr td:nth-child(3)::before { content: "Departamenti:"; }
+  .table tbody tr td:nth-child(4)::before { content: "Shërbimet:"; }
+  .table tbody tr td:nth-child(5)::before { content: "Veprime:"; }
+  .table tbody tr td:nth-child(3)::before { content: "Departamenti:"; }
+  .table tbody tr td:nth-child(4)::before { content: "Shërbimet:"; }
+  .table tbody tr td:nth-child(5)::before { content: "Veprime:"; }
+
+  /* Keep the action buttons more compact */
+  .table tbody tr td .btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  /* If service list is long, allow it to wrap nicely */
+  .table tbody tr td ul {
+    margin: 0;
+    padding-left: 1rem;
+  }
+}

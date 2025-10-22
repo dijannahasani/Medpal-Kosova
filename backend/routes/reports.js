@@ -122,7 +122,6 @@ router.get("/:id/pdf", verifyToken, async (req, res) => {
     doc.fontSize(12)
       .text(`👤 Emri: ${report.patientId?.name || "N/A"}`)
       .text(`📧 Email: ${report.patientId?.email || "N/A"}`)
-      .text(`🎂 Datëlindja: ${report.patientId?.dateOfBirth || "N/A"}`)
       .text(`🧬 Gjinia: ${report.patientId?.gender || "N/A"}`)
       .text(`🩸 Grupi i gjakut: ${report.patientId?.bloodType || "N/A"}`);
     doc.moveDown(1);

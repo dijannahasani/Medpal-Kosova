@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./ClinicServicesAndDepartments.css";
 import { getToken } from "../../utils/auth";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
 
@@ -395,7 +396,7 @@ export default function ClinicServicesAndDepartments() {
                     ))}
                   </select>
                   <button
-                    className="btn btn-lg"
+                    className="btn"
                     onClick={() => {
                       setSearchDep("");
                       setSearchServ("");
@@ -406,7 +407,12 @@ export default function ClinicServicesAndDepartments() {
                       border: "none",
                       color: "#2c3e50",
                       borderRadius: "12px",
-                      boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
+                      boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)",
+                      padding: "0.6rem 1rem",
+                      fontSize: "1rem",
+                      display: "inline-block",
+                      width: "auto",
+                      marginTop: "0.5rem"
                     }}
                   >
                     ♻️ Reseto filtrat

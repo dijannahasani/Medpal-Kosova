@@ -440,20 +440,24 @@ export default function DoctorProfile() {
             {hasActiveSchedule(workingHours) ? (
               <div>
                 {/* Overview Card */}
-                <div className="mb-3 p-3 rounded" style={{
+                <div className="mb-3 p-3 rounded doctor-schedule-overview" style={{
                   background: "linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1))",
-                  border: "1px solid rgba(76, 175, 80, 0.2)"
+                  border: "1px solid rgba(76, 175, 80, 0.2)",
+                  width: '100%',
+                  boxSizing: 'border-box',
+                  padding: '1rem',
+                  overflow: 'hidden'
                 }}>
-                  <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                    <div>
-                      <h6 className="mb-1 text-success" style={{ fontSize: "0.9rem" }}>
+                  <div className="d-flex justify-content-between align-items-center flex-wrap gap-2" style={{ width: '100%' }}>
+                    <div style={{ minWidth: 0, flex: '1 1 auto' }}>
+                      <h6 className="mb-1 text-success" style={{ fontSize: "0.88rem", margin: 0 }}>
                         ✅ Orari Aktiv
                       </h6>
-                      <small className="text-muted" style={{ fontSize: "0.75rem" }}>
+                      <small className="text-muted" style={{ fontSize: "0.73rem", display: 'block', whiteSpace: 'normal', marginTop: '4px' }}>
                         {formatDays(workingHours).length} ditë pune të konfiguruara
                       </small>
                     </div>
-                    <span className="badge bg-success" style={{ fontSize: "0.75rem", padding: "0.4rem 0.8rem" }}>
+                    <span className="badge bg-success schedule-badge" style={{ fontSize: "0.75rem", padding: "0.35rem 0.7rem", flex: '0 0 auto', marginLeft: '8px' }}>
                       🏥 Në Shërbim
                     </span>
                   </div>
@@ -498,13 +502,16 @@ export default function DoctorProfile() {
                     {/* Summary at bottom */}
                     <div className="mt-3 p-2 rounded" style={{
                       background: "rgba(76, 175, 80, 0.1)",
-                      border: "1px solid rgba(76, 175, 80, 0.2)"
+                      border: "1px solid rgba(76, 175, 80, 0.2)",
+                      width: '100%',
+                      boxSizing: 'border-box',
+                      overflow: 'hidden'
                     }}>
-                      <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                        <small className="text-success fw-bold" style={{ fontSize: "0.8rem" }}>
+                      <div className="d-flex justify-content-between align-items-center flex-wrap gap-2" style={{ width: '100%' }}>
+                        <small className="text-success fw-bold" style={{ fontSize: "0.8rem", minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           📊 Total: {formatDays(workingHours).length} ditë aktive
                         </small>
-                        <small className="text-muted" style={{ fontSize: "0.75rem" }}>
+                        <small className="text-muted" style={{ fontSize: "0.75rem", minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           Orari i vendosur nga {workingHours.setBy === 'clinic' ? 'klinika' : 'ju'}
                         </small>
                       </div>
