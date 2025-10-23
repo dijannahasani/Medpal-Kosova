@@ -26,10 +26,10 @@ export default function ClinicServicesAndDepartments() {
   const fetchData = async () => {
     try {
       const [depRes, servRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/clinic/departments", {
+        axios.get(`${API_BASE_URL}/api/clinic/departments`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`${API_BASE_URL}/api/clinic/services", {
+        axios.get(`${API_BASE_URL}/api/clinic/services`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -58,7 +58,7 @@ export default function ClinicServicesAndDepartments() {
         alert("âœ… Departamenti u pÃ«rditÃ«sua me sukses!");
       } else {
         await axios.post(
-          `${API_BASE_URL}/api/clinic/departments",
+          `${API_BASE_URL}/api/clinic/departments`,
           { name: departmentName },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -117,7 +117,7 @@ export default function ClinicServicesAndDepartments() {
         setEditingService(null);
       } else {
         await axios.post(
-          `${API_BASE_URL}/api/clinic/services",
+          `${API_BASE_URL}/api/clinic/services`,
           { name, price, departmentId },
           { headers: { Authorization: `Bearer ${token}` } }
         );

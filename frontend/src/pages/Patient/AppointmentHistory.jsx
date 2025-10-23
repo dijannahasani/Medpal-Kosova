@@ -11,7 +11,7 @@ export default function AppointmentHistory() {
     const fetchAppointments = async () => {
       const token = localStorage.getItem("token");
       try {
-        const res = await axios.get(`${API_BASE_URL}/api/appointments/mine", {
+        const res = await axios.get(`${API_BASE_URL}/api/appointments/mine`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAppointments(res.data);

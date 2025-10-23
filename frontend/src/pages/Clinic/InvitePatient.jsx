@@ -27,7 +27,7 @@ const InvitePatient = () => {
     try {
       const token = getToken(); // JWT i klinikÃ«s
       const response = await axios.post(
-        `${API_BASE_URL}/api/auth/invite-patient",
+        `${API_BASE_URL}/api/auth/invite-patient`,
         formData,
         {
           headers: {

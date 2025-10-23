@@ -25,7 +25,7 @@ export default function BookAppointment() {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/api/doctors/public");
+        const res = await axios.get(`${API_BASE_URL}/api/doctors/public`);
         setDoctors(res.data);
       } catch (err) {
         console.error("âŒ Gabim nÃ« marrjen e mjekÃ«ve:", err);
@@ -122,7 +122,7 @@ export default function BookAppointment() {
     }
 
     try {
-      await axios.post(`${API_BASE_URL}/api/appointments", form, {
+      await axios.post(`${API_BASE_URL}/api/appointments`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

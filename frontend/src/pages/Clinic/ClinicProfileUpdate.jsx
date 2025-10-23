@@ -26,7 +26,7 @@ export default function ClinicProfileUpdate() {
     });
 
     try {
-      const res = await axios.put(`${API_BASE_URL}/api/clinic/update", form, {
+      const res = await axios.put(`${API_BASE_URL}/api/clinic/update`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

@@ -16,7 +16,7 @@ export default function DoctorCalendarView() {
     const fetchAppointments = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${API_BASE_URL}/api/appointments/doctor", {
+        const res = await axios.get(`${API_BASE_URL}/api/appointments/doctor`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAppointments(res.data);

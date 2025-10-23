@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -60,7 +60,7 @@ export default function Register() {
         navigate("/login");
       }
     } catch (err) {
-      alert("❌ " + (err.response?.data?.message || "Gabim gjatë regjistrimit!"));
+      alert("âŒ " + (err.response?.data?.message || "Gabim gjatÃ« regjistrimit!"));
     }
   };
 
@@ -71,10 +71,10 @@ export default function Register() {
         email: formData.email,
         code: verificationCode,
       });
-      setVerificationMessage("✅ " + res.data.message);
+      setVerificationMessage("âœ… " + res.data.message);
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
-      setVerificationMessage("❌ " + (err.response?.data?.message || "Gabim në verifikim."));
+      setVerificationMessage("âŒ " + (err.response?.data?.message || "Gabim nÃ« verifikim."));
     }
   };
 
@@ -83,9 +83,9 @@ export default function Register() {
       const res = await axios.post(`${API_BASE_URL}/api/auth/resend-verification`, {
         email: formData.email,
       });
-      setResendMessage("📧 " + res.data.message);
+      setResendMessage("ðŸ“§ " + res.data.message);
     } catch (err) {
-      setResendMessage("❌ " + (err.response?.data?.message || "Gabim në ridërgim."));
+      setResendMessage("âŒ " + (err.response?.data?.message || "Gabim nÃ« ridÃ«rgim."));
     }
   };
 
@@ -100,7 +100,7 @@ export default function Register() {
         boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)"
       }}>
         <h2 className="text-center mb-4" style={{ color: "#D9A299" }}>
-          {isInvitation ? "📧 Kompleto Regjistrimin" : "Regjistrohu në MedPal"}
+          {isInvitation ? "ðŸ“§ Kompleto Regjistrimin" : "Regjistrohu nÃ« MedPal"}
         </h2>
         
         {isInvitation && (
@@ -110,15 +110,15 @@ export default function Register() {
             borderRadius: "12px",
             color: "#2c3e50"
           }}>
-            <strong>🎉 Ju jeni ftuar nga një klinikë!</strong><br/>
-            Emaili dhe fjalëkalimi janë vendosur automatikisht. Thjesht plotësoni emrin tuaj.
+            <strong>ðŸŽ‰ Ju jeni ftuar nga njÃ« klinikÃ«!</strong><br/>
+            Emaili dhe fjalÃ«kalimi janÃ« vendosur automatikisht. Thjesht plotÃ«soni emrin tuaj.
           </div>
         )}
 
         {!verificationStep ? (
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <input name="name" className="form-control form-control-lg" placeholder="Emri i plotë" autoComplete="off"  onChange={handleChange} required />
+              <input name="name" className="form-control form-control-lg" placeholder="Emri i plotÃ«" autoComplete="off"  onChange={handleChange} required />
             </div>
             <div className="mb-3">
               <input 
@@ -133,34 +133,34 @@ export default function Register() {
                 readOnly={isInvitation}
                 style={isInvitation ? { backgroundColor: "#f8f9fa", color: "#6c757d" } : {}}
               />
-              {isInvitation && <small className="text-muted">Emaili është vendosur nga klinika</small>}
+              {isInvitation && <small className="text-muted">Emaili Ã«shtÃ« vendosur nga klinika</small>}
             </div>
             <div className="mb-3">
               <input 
                 name="password" 
                 type="password" 
                 className="form-control form-control-lg" 
-                placeholder="Fjalëkalimi" 
+                placeholder="FjalÃ«kalimi" 
                 value={formData.password}
                 onChange={handleChange} 
                 required 
                 readOnly={isInvitation}
                 style={isInvitation ? { backgroundColor: "#f8f9fa", color: "#6c757d" } : {}}
               />
-              {isInvitation && <small className="text-muted">Fjalëkalimi është vendosur nga klinika</small>}
+              {isInvitation && <small className="text-muted">FjalÃ«kalimi Ã«shtÃ« vendosur nga klinika</small>}
             </div>
             {!isInvitation && (
               <div className="mb-3">
                 <select name="role" className="form-select form-select-lg" value={formData.role} onChange={handleChange}>
                   <option value="patient">Pacient</option>
-                  <option value="clinic">Klinikë</option>
+                  <option value="clinic">KlinikÃ«</option>
                 </select>
               </div>
             )}
 
             {formData.role === "clinic" && (
               <div className="mb-3">
-                <input name="clinicCode" className="form-control form-control-lg" placeholder="Kodi i Klinikës" value={formData.clinicCode} onChange={handleChange} required />
+                <input name="clinicCode" className="form-control form-control-lg" placeholder="Kodi i KlinikÃ«s" value={formData.clinicCode} onChange={handleChange} required />
               </div>
             )}
 
@@ -187,7 +187,7 @@ export default function Register() {
                 boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
               }}>Verifiko</button>
             </form>
-            <button className="btn btn-link" onClick={resendCode}>📩 Ridërgo Kodin</button>
+            <button className="btn btn-link" onClick={resendCode}>ðŸ“© RidÃ«rgo Kodin</button>
             <p>{verificationMessage}</p>
             <p>{resendMessage}</p>
           </div>

@@ -25,7 +25,7 @@ export default function DoctorList() {
   const fetchDoctors = async () => {
     try {
       const token = getToken();
-      const res = await axios.get(`${API_BASE_URL}/api/clinic/doctors", {
+      const res = await axios.get(`${API_BASE_URL}/api/clinic/doctors`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDoctors(res.data);
@@ -37,7 +37,7 @@ export default function DoctorList() {
   const fetchDepartments = async () => {
     try {
       const token = getToken();
-      const res = await axios.get(`${API_BASE_URL}/api/clinic/departments", {
+      const res = await axios.get(`${API_BASE_URL}/api/clinic/departments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDepartments(res.data);
@@ -49,7 +49,7 @@ export default function DoctorList() {
   const fetchServices = async () => {
     try {
       const token = getToken();
-      const res = await axios.get(`${API_BASE_URL}/api/clinic/services", {
+      const res = await axios.get(`${API_BASE_URL}/api/clinic/services`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClinicServices(res.data);

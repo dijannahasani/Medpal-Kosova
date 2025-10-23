@@ -19,7 +19,7 @@ export default function ClinicSetDoctorHours() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get(`${API_BASE_URL}/api/clinic/doctors", {
+      .get(`${API_BASE_URL}/api/clinic/doctors`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setDoctors(res.data))

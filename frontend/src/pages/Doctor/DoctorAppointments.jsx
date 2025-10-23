@@ -9,7 +9,7 @@ export default function DoctorAppointments() {
   const fetchAppointments = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/appointments/doctor", {
+      const res = await axios.get(`${API_BASE_URL}/api/appointments/doctor`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAppointments(res.data);

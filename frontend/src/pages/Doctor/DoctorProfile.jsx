@@ -34,7 +34,7 @@ export default function DoctorProfile() {
 
         // Merr tÃ« dhÃ«nat e mjekut
         const doctorResponse = await axios.get(
-          `${API_BASE_URL}/api/auth/me",
+          `${API_BASE_URL}/api/auth/me`,
           {
             headers: { 
               Authorization: `Bearer ${token}`,
@@ -48,7 +48,7 @@ export default function DoctorProfile() {
         // Merr orarin e punÃ«s
         try {
           const hoursResponse = await axios.get(
-            `${API_BASE_URL}/api/working-hours/me",
+            `${API_BASE_URL}/api/working-hours/me`,
             {
               headers: { 
                 Authorization: `Bearer ${token}`,

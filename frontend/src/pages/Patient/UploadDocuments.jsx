@@ -13,7 +13,7 @@ export default function UploadDocuments() {
   const fetchDocuments = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`${API_BASE_URL}/api/documents/mine", {
+      const res = await axios.get(`${API_BASE_URL}/api/documents/mine`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDocuments(res.data);
@@ -50,7 +50,7 @@ export default function UploadDocuments() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(`${API_BASE_URL}/api/documents/upload", formData, {
+      await axios.post(`${API_BASE_URL}/api/documents/upload`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

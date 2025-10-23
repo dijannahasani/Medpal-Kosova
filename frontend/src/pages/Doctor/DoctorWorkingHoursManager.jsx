@@ -38,7 +38,7 @@ export default function DoctorWorkingHoursManager() {
       const token = localStorage.getItem("token");
       
       const response = await axios.get(
-        `${API_BASE_URL}/api/working-hours/me",
+        `${API_BASE_URL}/api/working-hours/me`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -71,7 +71,7 @@ export default function DoctorWorkingHoursManager() {
       const token = localStorage.getItem("token");
       
       const response = await axios.post(
-        `${API_BASE_URL}/api/working-hours",
+        `${API_BASE_URL}/api/working-hours`,
         { workingHours },
         {
           headers: { Authorization: `Bearer ${token}` }

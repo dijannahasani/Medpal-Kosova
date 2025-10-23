@@ -21,7 +21,7 @@ export default function AddVisitReport() {
     (async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${API_BASE_URL}/api/appointments/doctor", {
+        const res = await axios.get(`${API_BASE_URL}/api/appointments/doctor`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAppointments(res.data.filter(a => a.status === "approved"));
@@ -41,7 +41,7 @@ export default function AddVisitReport() {
     setMessage({ text: "", type: "" });
     try {
       const token = localStorage.getItem("token");
-      await axios.post(`${API_BASE_URL}/api/reports", form, {
+      await axios.post(`${API_BASE_URL}/api/reports`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage({ text: "âœ… Raporti u ruajt me sukses!", type: "success" });

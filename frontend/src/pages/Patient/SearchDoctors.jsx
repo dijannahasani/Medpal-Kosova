@@ -17,8 +17,8 @@ export default function SearchDoctors() {
   useEffect(() => {
     const fetchFilters = async () => {
       const [depRes, servRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/departments"),
-        axios.get(`${API_BASE_URL}/api/services"),
+        axios.get(`${API_BASE_URL}/api/departments`),
+        axios.get(`${API_BASE_URL}/api/services`),
       ]);
       setDepartments(depRes.data);
       setServices(servRes.data);

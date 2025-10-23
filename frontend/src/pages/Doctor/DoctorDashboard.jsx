@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/Dashboard.css";
@@ -10,11 +10,11 @@ export default function DoctorDashboard() {
   const user = getUser();
 
   const cards = [
-    { to: "/doctor/appointments", icon: "📋", title: "Terminet", desc: "Shiko pacientët që kanë rezervuar" },
-    { to: "/doctor/calendar", icon: "📅", title: "Kalendar", desc: "Shiko terminet me kalendar" },
-    { to: "/doctor/add-report", icon: "🧾", title: "Krijo Raport", desc: "Shto raportin për termin" },
-    { to: "/doctor/reports", icon: "📑", title: "Raportet", desc: "Shiko të gjitha raportet që ke krijuar" },
-    { to: "/doctor/profile", icon: "👤", title: "Profili Im", desc: "Shiko dhe edito të dhënat personale" },
+    { to: "/doctor/appointments", icon: "ðŸ“‹", title: "Terminet", desc: "Shiko pacientÃ«t qÃ« kanÃ« rezervuar" },
+    { to: "/doctor/calendar", icon: "ðŸ“…", title: "Kalendar", desc: "Shiko terminet me kalendar" },
+    { to: "/doctor/add-report", icon: "ðŸ§¾", title: "Krijo Raport", desc: "Shto raportin pÃ«r termin" },
+    { to: "/doctor/reports", icon: "ðŸ“‘", title: "Raportet", desc: "Shiko tÃ« gjitha raportet qÃ« ke krijuar" },
+    { to: "/doctor/profile", icon: "ðŸ‘¤", title: "Profili Im", desc: "Shiko dhe edito tÃ« dhÃ«nat personale" },
   ];
 
   const handleLogout = () => {
@@ -49,7 +49,7 @@ export default function DoctorDashboard() {
               boxShadow: "0 8px 25px rgba(217, 162, 153, 0.3)"
             }}
           >
-            <h2 className="m-0">Mirësevini Dr. {user?.name || "Mjek"} 👨‍⚕️</h2>
+            <h2 className="m-0">MirÃ«sevini Dr. {user?.name || "Mjek"} ðŸ‘¨â€âš•ï¸</h2>
             <button
               className="btn btn-outline-light"
               onClick={handleLogout}
@@ -71,9 +71,9 @@ export default function DoctorDashboard() {
               }}
             >
               <div className="card-body p-3">
-                <h5 className="card-title mb-2" style={{ color: "white" }}>👨‍⚕️ Mirësevini Dr. {user?.name || "Mjek"}!</h5>
+                <h5 className="card-title mb-2" style={{ color: "white" }}>ðŸ‘¨â€âš•ï¸ MirÃ«sevini Dr. {user?.name || "Mjek"}!</h5>
                 <p className="card-text mb-0 small" style={{ color: "white" }}>
-                  Zgjidhni një nga opsionet më poshtë për të vazhduar
+                  Zgjidhni njÃ« nga opsionet mÃ« poshtÃ« pÃ«r tÃ« vazhduar
                 </p>
               </div>
             </div>

@@ -10,13 +10,13 @@ export default function PatientNotifications() {
     const fetchAppointments = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${API_BASE_URL}/api/appointments/mine", {
+        const res = await axios.get(`${API_BASE_URL}/api/appointments/mine`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAppointments(res.data);
 
         // Marko njoftimet si tÃ« lexuara
-        await axios.put(`${API_BASE_URL}/api/appointments/mark-seen", {}, {
+        await axios.put(`${API_BASE_URL}/api/appointments/mark-seen`, {}, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } catch (err) {

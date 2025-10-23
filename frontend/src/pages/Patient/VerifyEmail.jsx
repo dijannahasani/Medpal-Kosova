@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PatientHomeButton from "../../components/PatientHomeButton";
@@ -32,7 +32,7 @@ const VerifyEmail = () => {
       const res = await axios.post(`${API_BASE_URL}/api/auth/verify-email`, { email, code });
       setMessage(res.data.message);
     } catch (err) {
-      setMessage(err.response?.data?.message || "Gabim gjatë verifikimit.");
+      setMessage(err.response?.data?.message || "Gabim gjatÃ« verifikimit.");
     }
   };
 
@@ -59,7 +59,7 @@ const VerifyEmail = () => {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2rem", fontWeight: "bold" }}>
-                  📧 Verifikimi i Emailit
+                  ðŸ“§ Verifikimi i Emailit
                 </h2>
               </div>
               <div className="card-body p-5">
@@ -99,10 +99,10 @@ const VerifyEmail = () => {
                     fontWeight: "bold"
                   }}
                 >
-                  ✅ Verifiko Llogarinë
+                  âœ… Verifiko LlogarinÃ«
                 </button>
                 {message && (
-                  <div className={`alert mt-4 ${message.includes('✅') ? 'alert-success' : 'alert-danger'}`} style={{
+                  <div className={`alert mt-4 ${message.includes('âœ…') ? 'alert-success' : 'alert-danger'}`} style={{
                     borderRadius: "12px",
                     fontSize: "1rem"
                   }}>

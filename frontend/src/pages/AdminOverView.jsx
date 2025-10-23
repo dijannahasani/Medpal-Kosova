@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import axios from "axios";
 import API_BASE_URL from "../config/api";
 
@@ -9,13 +9,13 @@ export default function AdminOverview() {
   useEffect(() => {
     const fetchOverview = async () => {
       try {
-        const token = localStorage.getItem("token"); // ose adminToken, varësisht si e ruan
+        const token = localStorage.getItem("token"); // ose adminToken, varÃ«sisht si e ruan
         const res = await axios.get(`${API_BASE_URL}/api/admin/overview`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setStats(res.data);
       } catch (err) {
-        setError("Nuk mund të ngarkohen statistikat.");
+        setError("Nuk mund tÃ« ngarkohen statistikat.");
       }
     };
 
@@ -27,13 +27,13 @@ export default function AdminOverview() {
 
   return (
     <div className="container py-4">
-      <h2>📊 Përmbledhje Admini</h2>
+      <h2>ðŸ“Š PÃ«rmbledhje Admini</h2>
 
       <div className="row my-4">
         <div className="col-md-3">
           <div className="card text-white bg-primary mb-3">
             <div className="card-body">
-              <h5 className="card-title">Totali i Përdoruesve</h5>
+              <h5 className="card-title">Totali i PÃ«rdoruesve</h5>
               <p className="card-text fs-3">{stats.totalUsers}</p>
             </div>
           </div>
@@ -69,12 +69,12 @@ export default function AdminOverview() {
         </div>
       </div>
 
-      <h3>💰 Pagesat</h3>
+      <h3>ðŸ’° Pagesat</h3>
       <div className="row">
         <div className="col-md-4">
           <div className="card border-success mb-3">
             <div className="card-body">
-              <h6 className="card-title">Të Ardhurat Totale</h6>
+              <h6 className="card-title">TÃ« Ardhurat Totale</h6>
               <p className="card-text fs-4">${stats.payments.totalRevenue}</p>
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function AdminOverview() {
         <div className="col-md-4">
           <div className="card border-warning mb-3">
             <div className="card-body">
-              <h6 className="card-title">Pagesa në Pritje</h6>
+              <h6 className="card-title">Pagesa nÃ« Pritje</h6>
               <p className="card-text fs-4">${stats.payments.pendingPayments}</p>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function AdminOverview() {
         <div className="col-md-4">
           <div className="card border-danger mb-3">
             <div className="card-body">
-              <h6 className="card-title">Pagesa të Dështuar</h6>
+              <h6 className="card-title">Pagesa tÃ« DÃ«shtuar</h6>
               <p className="card-text fs-4">${stats.payments.failedPayments}</p>
             </div>
           </div>

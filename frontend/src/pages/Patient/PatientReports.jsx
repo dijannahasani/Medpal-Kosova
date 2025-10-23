@@ -10,7 +10,7 @@ export default function PatientReports() {
     const fetchReports = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${API_BASE_URL}/api/reports/me", {
+        const res = await axios.get(`${API_BASE_URL}/api/reports/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setReports(res.data);

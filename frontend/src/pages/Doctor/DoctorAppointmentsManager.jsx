@@ -20,7 +20,7 @@ export default function DoctorAppointmentsManager() {
       const token = localStorage.getItem("token");
       
       const response = await axios.get(
-        `${API_BASE_URL}/api/appointments/mine",
+        `${API_BASE_URL}/api/appointments/mine`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }

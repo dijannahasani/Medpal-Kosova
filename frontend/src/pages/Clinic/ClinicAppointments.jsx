@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import axios from "axios";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -24,12 +24,12 @@ export default function ClinicAppointments() {
       });
       setAppointments(res.data);
     } catch (err) {
-      console.error("❌ Gabim gjatë marrjes së termineve:", err);
+      console.error("âŒ Gabim gjatÃ« marrjes sÃ« termineve:", err);
     }
   };
 
   const updateStatus = async (appointmentId, status) => {
-    if (!window.confirm(`A dëshironi të ${status === "approved" ? "aprovoni" : "anuloni"} këtë termin?`)) return;
+    if (!window.confirm(`A dÃ«shironi tÃ« ${status === "approved" ? "aprovoni" : "anuloni"} kÃ«tÃ« termin?`)) return;
     try {
       const token = localStorage.getItem("token");
       await axios.put(
@@ -39,7 +39,7 @@ export default function ClinicAppointments() {
       );
       fetchAppointments();
     } catch (err) {
-      console.error("❌ Gabim gjatë përditësimit të statusit:", err);
+      console.error("âŒ Gabim gjatÃ« pÃ«rditÃ«simit tÃ« statusit:", err);
     }
   };
 
@@ -58,7 +58,7 @@ export default function ClinicAppointments() {
       link.download = `raporti_${appointmentId}.pdf`;
       link.click();
     } catch (err) {
-      console.error("❌ Gabim gjatë shkarkimit të PDF:", err);
+      console.error("âŒ Gabim gjatÃ« shkarkimit tÃ« PDF:", err);
     }
   };
 
@@ -120,14 +120,14 @@ export default function ClinicAppointments() {
               <div className="card-header text-center py-4 clinic-appointments-header">
                 <div className="header-row">
                   <h2 className="card-title mb-0">
-                    📅 Terminet për Klinikën
+                    ðŸ“… Terminet pÃ«r KlinikÃ«n
                   </h2>
                   <button className="btn btn-outline-light btn-lg export-btn" onClick={exportToExcel}>
-                    ⬇️ Eksporto Excel
+                    â¬‡ï¸ Eksporto Excel
                   </button>
                 </div>
                 <p className="mt-2 mb-0">
-                  Menaxhoni të gjitha terminet e klinikës suaj
+                  Menaxhoni tÃ« gjitha terminet e klinikÃ«s suaj
                 </p>
               </div>
               <div className="card-body p-5">
@@ -135,7 +135,7 @@ export default function ClinicAppointments() {
                 <input
                   type="text"
                   className="form-control form-control-lg mb-4"
-                  placeholder="🔍 Kërko sipas pacientit, doktorit, datës apo emailit..."
+                  placeholder="ðŸ” KÃ«rko sipas pacientit, doktorit, datÃ«s apo emailit..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   style={{
@@ -156,7 +156,7 @@ export default function ClinicAppointments() {
                     fontWeight: "500",
                     padding: "2rem"
                   }}>
-                    📭 Nuk ka termine të regjistruara ose kërkimi nuk përputhet me asnjë rezultat.
+                    ðŸ“­ Nuk ka termine tÃ« regjistruara ose kÃ«rkimi nuk pÃ«rputhet me asnjÃ« rezultat.
                   </div>
                 ) : (
                   <div className="table-responsive">
@@ -198,7 +198,7 @@ export default function ClinicAppointments() {
                                         onClick={() => openModal(doc.fileUrl)}
                                         style={{ color: "#D9A299" }}
                                       >
-                                        📎 {doc.title}
+                                        ðŸ“Ž {doc.title}
                                       </button>
                                     </li>
                                   ))}
@@ -216,7 +216,7 @@ export default function ClinicAppointments() {
                                     borderRadius: "8px",
                                     boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                   }}>
-                                    ✅ Aprovo
+                                    âœ… Aprovo
                                   </button>
                                   <button className="btn btn-danger btn-sm" onClick={() => updateStatus(a._id, "canceled")} style={{
                                     background: "linear-gradient(135deg, #DCC5B2, #D9A299)",
@@ -224,7 +224,7 @@ export default function ClinicAppointments() {
                                     borderRadius: "8px",
                                     boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                   }}>
-                                    ❌ Anulo
+                                    âŒ Anulo
                                   </button>
                                 </>
                               ) : (
@@ -252,7 +252,7 @@ export default function ClinicAppointments() {
                                   boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                 }}
                               >
-                                📄 Shkarko
+                                ðŸ“„ Shkarko
                               </button>
                             </td>
                           </tr>
@@ -267,14 +267,14 @@ export default function ClinicAppointments() {
         </div>
       </div>
 
-      {/* Modal për dokumentin PDF */}
+      {/* Modal pÃ«r dokumentin PDF */}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
         contentLabel="Dokumenti"
         style={{ content: { width: "80%", height: "80%", margin: "auto" } }}
       >
-        <button className="btn btn-danger mb-2" onClick={() => setModalIsOpen(false)}>❌ Mbyll</button>
+        <button className="btn btn-danger mb-2" onClick={() => setModalIsOpen(false)}>âŒ Mbyll</button>
         <iframe src={selectedDocUrl} title="Dokument" width="100%" height="90%"></iframe>
       </Modal>
       <ClinicHomeButton />

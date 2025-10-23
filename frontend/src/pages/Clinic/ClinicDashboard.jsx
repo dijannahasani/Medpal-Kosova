@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getUser, clearAuth } from "../../utils/auth";
@@ -31,15 +31,15 @@ export default function ClinicDashboard() {
   };
 
   const cards = [
-    { to: "/clinic/doctors", icon: "📋", title: "Lista e Mjekëve", desc: "Shiko të gjithë mjekët e klinikës" },
-    { to: "/clinic/add-doctor", icon: "➕", title: "Shto Mjek", desc: "Regjistro një mjek të ri" },
-    { to: "/clinic/calendar", icon: "📅", title: "Kalendar", desc: "Shiko terminet e klinikës" },
-    { to: "/clinic/appointments", icon: "📆", title: "Terminet", desc: "Shiko dhe shkarko raportet e termineve" },
-    { to: "/clinic/services", icon: "🏥", title: "Departamente & Shërbime", desc: "Menaxho departamentet" },
-    { to: "/clinic/set-working-hours", icon: "🕒", title: "Orari i Mjekëve", desc: "Cakto orarin për mjekët" },
-    { to: "/clinic/reports", icon: "📑", title: "Raportet", desc: "Shiko dhe shkarko raportet" },
-    { to: "/clinic/invite-patient", icon: "📧", title: "Fto Pacient", desc: "Dërgo ftesë për verifikim pacientit" },
-    { to: "/clinic/profile", icon: "⚙️", title: "Profili i Klinikës", desc: "Përditëso emrin, emailin ose fjalëkalimin" },
+    { to: "/clinic/doctors", icon: "ðŸ“‹", title: "Lista e MjekÃ«ve", desc: "Shiko tÃ« gjithÃ« mjekÃ«t e klinikÃ«s" },
+    { to: "/clinic/add-doctor", icon: "âž•", title: "Shto Mjek", desc: "Regjistro njÃ« mjek tÃ« ri" },
+    { to: "/clinic/calendar", icon: "ðŸ“…", title: "Kalendar", desc: "Shiko terminet e klinikÃ«s" },
+    { to: "/clinic/appointments", icon: "ðŸ“†", title: "Terminet", desc: "Shiko dhe shkarko raportet e termineve" },
+    { to: "/clinic/services", icon: "ðŸ¥", title: "Departamente & ShÃ«rbime", desc: "Menaxho departamentet" },
+    { to: "/clinic/set-working-hours", icon: "ðŸ•’", title: "Orari i MjekÃ«ve", desc: "Cakto orarin pÃ«r mjekÃ«t" },
+    { to: "/clinic/reports", icon: "ðŸ“‘", title: "Raportet", desc: "Shiko dhe shkarko raportet" },
+    { to: "/clinic/invite-patient", icon: "ðŸ“§", title: "Fto Pacient", desc: "DÃ«rgo ftesÃ« pÃ«r verifikim pacientit" },
+    { to: "/clinic/profile", icon: "âš™ï¸", title: "Profili i KlinikÃ«s", desc: "PÃ«rditÃ«so emrin, emailin ose fjalÃ«kalimin" },
   ];
 
   return (
@@ -73,7 +73,7 @@ export default function ClinicDashboard() {
             }}
           >
             <h2 className="m-0">
-              Mirësevini në Klinikën {user?.name || "Klinika e Re"} 👋
+              MirÃ«sevini nÃ« KlinikÃ«n {user?.name || "Klinika e Re"} ðŸ‘‹
             </h2>
             <button className="btn btn-outline-light" onClick={handleLogout}>
               Dil
@@ -93,9 +93,9 @@ export default function ClinicDashboard() {
               }}
             >
                 <div className="card-body p-3">
-                  <h5 className="card-title mb-2" style={{ color: "white" }}>👋 Mirësevini në Klinikën {user?.name || "Klinika e Re"}!</h5>
+                  <h5 className="card-title mb-2" style={{ color: "white" }}>ðŸ‘‹ MirÃ«sevini nÃ« KlinikÃ«n {user?.name || "Klinika e Re"}!</h5>
                   <p className="card-text mb-0 small" style={{ color: "white" }}>
-                    Zgjidhni një nga opsionet më poshtë për të vazhduar
+                    Zgjidhni njÃ« nga opsionet mÃ« poshtÃ« pÃ«r tÃ« vazhduar
                   </p>
                 </div>
             </div>

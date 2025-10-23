@@ -21,7 +21,7 @@ export default function DoctorWorkingHours() {
   useEffect(() => {
     const fetchWorkingHours = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/working-hours/me", {
+        const response = await axios.get(`${API_BASE_URL}/api/working-hours/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         
@@ -59,7 +59,7 @@ export default function DoctorWorkingHours() {
 
     try {
       await axios.post(
-        `${API_BASE_URL}/api/working-hours",
+        `${API_BASE_URL}/api/working-hours`,
         { workingHours },
         {
           headers: { Authorization: `Bearer ${token}` },

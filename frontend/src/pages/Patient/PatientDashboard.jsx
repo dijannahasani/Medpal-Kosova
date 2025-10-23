@@ -18,7 +18,7 @@ export default function PatientDashboard() {
           navigate("/login");
           return;
         }
-        const res = await axios.get(`${API_BASE_URL}/api/auth/me", {
+        const res = await axios.get(`${API_BASE_URL}/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);

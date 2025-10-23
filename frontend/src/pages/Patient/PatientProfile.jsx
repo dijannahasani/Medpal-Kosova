@@ -19,7 +19,7 @@ export default function PatientProfile() {
   useEffect(() => {
     const fetchData = async () => {
       const token = getToken();
-      const res = await axios.get(`${API_BASE_URL}/api/auth/me", {
+      const res = await axios.get(`${API_BASE_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setForm({ ...form, ...res.data });
@@ -36,7 +36,7 @@ export default function PatientProfile() {
     const token = getToken();
     try {
       console.log("ðŸ” Updating patient profile:", form);
-      const response = await axios.put(`${API_BASE_URL}/api/users/me", form, {
+      const response = await axios.put(`${API_BASE_URL}/api/users/me`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
