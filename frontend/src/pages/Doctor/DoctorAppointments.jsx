@@ -22,7 +22,7 @@ export default function DoctorAppointments() {
 
   const updateStatus = async (id, status) => {
     const token = localStorage.getItem("token");
-    await axios.put(${API_BASE_URL}/api/appointments/${id}/status`, { status }, {
+    await axios.put`(${API_BASE_URL}/api/appointments/${id}/status`, { status }, {
       headers: { Authorization: `Bearer ${token}` },
     });
     fetchAppointments();
@@ -30,7 +30,7 @@ export default function DoctorAppointments() {
 
   const downloadPDF = async (id) => {
     const token = localStorage.getItem("token");
-    const res = await axios.get(${API_BASE_URL}/api/appointments/${id}/pdf`, {
+    const res = await axios.get`(${API_BASE_URL}/api/appointments/${id}/pdf`, {
       headers: { Authorization: `Bearer ${token}` },
       responseType: "blob",
     });

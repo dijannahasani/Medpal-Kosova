@@ -28,7 +28,7 @@ export default function SearchDoctors() {
 
   const handleSearch = async () => {
     const params = new URLSearchParams(filters).toString();
-    const res = await axios.get(${API_BASE_URL}/api/doctors/search?${params}`);
+    const res = await axios.get`(${API_BASE_URL}/api/doctors/search?${params}`);
     setDoctors(res.data);
   };
 

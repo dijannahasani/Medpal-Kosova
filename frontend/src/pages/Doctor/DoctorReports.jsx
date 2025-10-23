@@ -28,7 +28,7 @@ export default function DoctorReports() {
   const handleDownload = async (reportId) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(${API_BASE_URL}/api/reports/${reportId}/pdf`, {
+      const res = await axios.get`(${API_BASE_URL}/api/reports/${reportId}/pdf`, {
         responseType: "blob",
         headers: { Authorization: `Bearer ${token}` },
       });

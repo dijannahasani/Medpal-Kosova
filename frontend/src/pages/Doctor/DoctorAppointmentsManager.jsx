@@ -44,7 +44,7 @@ export default function DoctorAppointmentsManager() {
       console.log("ðŸ“¤ Request data:", requestData);
       
       await axios.put(
-        ${API_BASE_URL}/api/appointments/${appointmentId}/status`,
+       ` ${API_BASE_URL}/api/appointments/${appointmentId}/status`,
         requestData,
         {
           headers: { Authorization: `Bearer ${token}` }

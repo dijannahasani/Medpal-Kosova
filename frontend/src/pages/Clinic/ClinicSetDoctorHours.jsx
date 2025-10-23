@@ -39,7 +39,7 @@ export default function ClinicSetDoctorHours() {
 
     try {
       await axios.post(
-        ${API_BASE_URL}/api/working-hours/${selectedDoctor}`,
+       ` ${API_BASE_URL}/api/working-hours/${selectedDoctor}`,
         { workingHours },
         { headers: { Authorization: `Bearer ${token}` } }
       );

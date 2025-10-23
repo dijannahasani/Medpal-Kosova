@@ -114,7 +114,7 @@ export default function DoctorProfile() {
       const token = localStorage.getItem("token");
       
       const response = await axios.put(
-        ${API_BASE_URL}/api/auth/update-profile`,
+       ` ${API_BASE_URL}/api/auth/update-profile`,
         editForm,
         {
           headers: { 
