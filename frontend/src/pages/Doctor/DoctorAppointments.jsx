@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DoctorHomeButton from "../../components/DoctorHomeButton";
@@ -67,10 +67,10 @@ export default function DoctorAppointments() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  ðŸ“… Terminet e PacientÃ«ve
+                  📅 Terminet e Pacientëve
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
-                  Menaxhoni tÃ« gjitha terminet e pacientÃ«ve tuaj
+                  Menaxhoni të gjitha terminet e pacientëve tuaj
                 </p>
               </div>
               <div className="card-body p-5">
@@ -136,9 +136,9 @@ export default function DoctorAppointments() {
                                 borderRadius: "8px"
                               }}
                 >
-                  <option value="pending">â³ Pending</option>
-                  <option value="approved">âœ… Approved</option>
-                  <option value="canceled">âŒ Canceled</option>
+                  <option value="pending">⏳ Pending</option>
+                  <option value="approved">✅ Approved</option>
+                  <option value="canceled">❌ Canceled</option>
                 </select>
               </td>
                           <td style={{ padding: "1rem" }}>
@@ -149,7 +149,7 @@ export default function DoctorAppointments() {
                               borderRadius: "8px",
                               boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                             }}>
-                  ðŸ“„
+                  📄
                 </button>
               </td>
             </tr>

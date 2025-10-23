@@ -1,7 +1,6 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import API_BASE_URL from "../config/api";
 
 import UserGrowthChart from "./userGrowthChart";
 import RevenueChart from "./RevenueChart";
@@ -36,7 +35,7 @@ export default function AdminDashboard() {
       setData(res.data);
       setLoading(false);
     } catch (err) {
-      setError("â›”ï¸ Nuk mund tÃ« merren pÃ«rdoruesit.");
+      setError("⛔️ Nuk mund të merren përdoruesit.");
       setLoading(false);
     }
   };
@@ -49,7 +48,7 @@ export default function AdminDashboard() {
       });
       setStats(statsRes.data);
     } catch {
-      setError("â›”ï¸ Nuk mund tÃ« merren statistikat.");
+      setError("⛔️ Nuk mund të merren statistikat.");
     }
   };
 
@@ -64,7 +63,7 @@ export default function AdminDashboard() {
       setProfileName(res.data.name);
       setProfileEmail(res.data.email);
     } catch {
-      setError("â›”ï¸ Nuk mund tÃ« merret profili.");
+      setError("⛔️ Nuk mund të merret profili.");
     }
   };
 
@@ -78,9 +77,9 @@ export default function AdminDashboard() {
       );
       setEditingProfile(false);
       fetchProfile();
-      alert("âœ… Profili u pÃ«rditÃ«sua me sukses!");
+      alert("✅ Profili u përditësua me sukses!");
     } catch {
-      alert("âŒ Gabim gjatÃ« pÃ«rditÃ«simit tÃ« profilit.");
+      alert("❌ Gabim gjatë përditësimit të profilit.");
     }
   };
 
@@ -112,12 +111,12 @@ export default function AdminDashboard() {
         users: prev.users.map((u) => (u._id === id ? { ...u, isVerified: true } : u)),
       }));
     } catch {
-      alert("âŒ Verifikimi dÃ«shtoi");
+      alert("❌ Verifikimi dështoi");
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("A je i sigurt qÃ« dÃ«shiron ta fshish kÃ«tÃ« pÃ«rdorues?")) return;
+    if (!window.confirm("A je i sigurt që dëshiron ta fshish këtë përdorues?")) return;
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`${API_BASE_URL}/api/admin/delete/${id}`, {
@@ -128,7 +127,7 @@ export default function AdminDashboard() {
         users: prev.users.filter((u) => u._id !== id),
       }));
     } catch {
-      alert("âŒ Fshirja dÃ«shtoi");
+      alert("❌ Fshirja dështoi");
     }
   };
 
@@ -137,7 +136,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="container py-4" style={{ backgroundColor: "#FAF7F3", minHeight: "100vh" }}>
-      <h2 className="mb-4" style={{ color: "#D9A299" }}>ðŸ“‹ Paneli i Adminit</h2>
+      <h2 className="mb-4" style={{ color: "#D9A299" }}>📋 Paneli i Adminit</h2>
 
       {/* --- Settings/Profile Section --- */}
       <section className="mb-4 p-3 border rounded" style={{ 
@@ -146,7 +145,7 @@ export default function AdminDashboard() {
         borderRadius: "15px",
         boxShadow: "0 4px 15px rgba(217, 162, 153, 0.1)"
       }}>
-        <h4 style={{ color: "#D9A299" }}>ðŸ‘¤ Profili im</h4>
+        <h4 style={{ color: "#D9A299" }}>👤 Profili im</h4>
         {!profile ? (
           <p>Duke ngarkuar profilin...</p>
         ) : editingProfile ? (
@@ -169,7 +168,7 @@ export default function AdminDashboard() {
                 onChange={(e) => setProfileEmail(e.target.value)}
                 disabled
               />
-              <small className="text-muted">Email nuk mund tÃ« ndryshohet.</small>
+              <small className="text-muted">Email nuk mund të ndryshohet.</small>
             </div>
             <button className="btn btn-success me-2" onClick={updateProfile}>
               Ruaj Ndryshimet
@@ -208,7 +207,7 @@ export default function AdminDashboard() {
           borderRadius: "15px",
           boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
         }}>
-          <h5>PÃ«rdorues Total</h5>
+          <h5>Përdorues Total</h5>
           <p className="fs-3">{stats?.totalUsers || 0}</p>
         </div>
         <div className="card p-3 flex-grow-1" style={{ 
@@ -218,7 +217,7 @@ export default function AdminDashboard() {
           borderRadius: "15px",
           boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
         }}>
-          <h5>TÃ« Verifikuar</h5>
+          <h5>Të Verifikuar</h5>
           <p className="fs-3">{stats?.verifiedUsers || 0}</p>
         </div>
         <div className="card p-3 flex-grow-1" style={{ 
@@ -228,7 +227,7 @@ export default function AdminDashboard() {
           borderRadius: "15px",
           boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
         }}>
-          <h5>TÃ« Pa Verifikuar</h5>
+          <h5>Të Pa Verifikuar</h5>
           <p className="fs-3">{stats?.unverifiedUsers || 0}</p>
         </div>
         <div className="card p-3 flex-grow-1" style={{ 
@@ -238,7 +237,7 @@ export default function AdminDashboard() {
           borderRadius: "15px",
           boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
         }}>
-          <h5>TÃ« Ardhurat</h5>
+          <h5>Të Ardhurat</h5>
           <p className="fs-3">${stats?.totalRevenue?.toFixed(2) || "0.00"}</p>
         </div>
       </div>
@@ -247,7 +246,7 @@ export default function AdminDashboard() {
       <div className="mb-3 d-flex gap-2 align-items-center">
         <input
           type="text"
-          placeholder="KÃ«rko emÃ«r ose email"
+          placeholder="Kërko emër ose email"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="form-control"
@@ -259,14 +258,14 @@ export default function AdminDashboard() {
           className="form-select"
           style={{ maxWidth: 200 }}
         >
-          <option value="">TÃ« gjitha rolet</option>
+          <option value="">Të gjitha rolet</option>
           <option value="admin">Admin</option>
-          <option value="clinic">KlinikÃ«</option>
-          <option value="user">PÃ«rdorues</option>
+          <option value="clinic">Klinikë</option>
+          <option value="user">Përdorues</option>
         </select>
       </div>
 
-      {/* Tabela me pÃ«rdoruesit */}
+      {/* Tabela me përdoruesit */}
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
@@ -285,7 +284,7 @@ export default function AdminDashboard() {
               <td>{u.role}</td>
               <td>
                 {u.isVerified ? (
-                  "âœ”ï¸"
+                  "✔️"
                 ) : (
                   <button
                     onClick={() => handleVerify(u._id)}
@@ -323,12 +322,12 @@ export default function AdminDashboard() {
 
       {/* Grafiqet */}
       <div className="my-4">
-        <h4>ðŸ“ˆ Rritja e PÃ«rdoruesve</h4>
+        <h4>📈 Rritja e Përdoruesve</h4>
         <UserGrowthChart />
       </div>
 
       <div className="my-4">
-        <h4>ðŸ’° TÃ« Ardhurat Mujore</h4>
+        <h4>💰 Të Ardhurat Mujore</h4>
         <RevenueChart />
       </div>
     </div>

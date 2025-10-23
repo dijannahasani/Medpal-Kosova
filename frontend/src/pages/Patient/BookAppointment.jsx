@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -28,7 +28,7 @@ export default function BookAppointment() {
         const res = await axios.get(`${API_BASE_URL}/api/doctors/public`);
         setDoctors(res.data);
       } catch (err) {
-        console.error("âŒ Gabim nÃ« marrjen e mjekÃ«ve:", err);
+        console.error("❌ Gabim në marrjen e mjekëve:", err);
       }
     };
     fetchDoctors();
@@ -38,13 +38,13 @@ export default function BookAppointment() {
     setLoadingServices(true);
     try {
       const [servicesRes, hoursRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/doctors/${doctorId}/services`), // VetÃ«m shÃ«rbimet e doktorit
+        axios.get(`${API_BASE_URL}/api/doctors/${doctorId}/services`), // Vetëm shërbimet e doktorit
         axios.get(`${API_BASE_URL}/api/working-hours/${doctorId}`),
       ]);
       setServices(servicesRes.data);
       setWorkingHours(hoursRes.data);
     } catch (err) {
-      console.error("âŒ Gabim nÃ« marrjen e shÃ«rbimeve ose orarit:", err);
+      console.error("❌ Gabim në marrjen e shërbimeve ose orarit:", err);
       setServices([]);
       setWorkingHours(null);
     } finally {
@@ -55,11 +55,11 @@ export default function BookAppointment() {
   const fetchTakenTimes = async (doctorId, date) => {
     try {
       const res = await axios.get(
-       ` ${API_BASE_URL}/api/appointments/taken?doctorId=${doctorId}&date=${date}`
+        `${API_BASE_URL}/api/appointments/taken?doctorId=${doctorId}&date=${date}`
       );
       setTakenTimes(res.data);
     } catch (err) {
-      console.error("âŒ Gabim nÃ« kontrollin e orÃ«ve tÃ« zÃ«na:", err);
+      console.error("❌ Gabim në kontrollin e orëve të zëna:", err);
     }
   };
 
@@ -115,9 +115,9 @@ export default function BookAppointment() {
     const token = localStorage.getItem("token");
     setSuccessMessage("");
 
-    // â›” Kontroll nÃ«se mjeku nuk punon atÃ« ditÃ«
+    // ⛔ Kontroll nëse mjeku nuk punon atë ditë
     if (!currentDaySchedule()) {
-      setSuccessMessage("âŒ Mjeku nuk punon kÃ«tÃ« ditÃ«. Ju lutemi zgjidhni njÃ« ditÃ« tjetÃ«r.");
+      setSuccessMessage("❌ Mjeku nuk punon këtë ditë. Ju lutemi zgjidhni një ditë tjetër.");
       return;
     }
 
@@ -126,17 +126,17 @@ export default function BookAppointment() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setSuccessMessage("âœ… Termini u regjistrua me sukses!");
+      setSuccessMessage("✅ Termini u regjistrua me sukses!");
       setTimeout(() => {
         navigate("/patient");
       }, 1500);
     } catch (err) {
       if (err.response?.status === 409) {
-        setSuccessMessage("âŒ Ky orar Ã«shtÃ« i zÃ«nÃ« pÃ«r kÃ«tÃ« mjek.");
+        setSuccessMessage("❌ Ky orar është i zënë për këtë mjek.");
       } else if (err.response?.data?.message) {
-        setSuccessMessage("âŒ " + err.response.data.message);
+        setSuccessMessage("❌ " + err.response.data.message);
       } else {
-        setSuccessMessage("âŒ Gabim gjatÃ« rezervimit.");
+        setSuccessMessage("❌ Gabim gjatë rezervimit.");
       }
       console.error(err);
     }
@@ -165,10 +165,10 @@ export default function BookAppointment() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "1.75rem", fontWeight: "bold", color: "white" }}>
-                  ðŸ“… Rezervo Terminin
+                  📅 Rezervo Terminin
                 </h2>
                 <p className="mt-2 mb-0 small d-none d-md-block" style={{ opacity: "0.9", color: "white" }}>
-                  Zgjidhni mjekun dhe orarin qÃ« ju pÃ«rshtatet
+                  Zgjidhni mjekun dhe orarin që ju përshtatet
                 </p>
               </div>
               <div className="card-body p-3 p-md-4">
@@ -178,7 +178,7 @@ export default function BookAppointment() {
                     className="alert mb-3"
                     role="alert"
                     style={{
-                      background: successMessage.startsWith("âœ…") 
+                      background: successMessage.startsWith("✅") 
                         ? "linear-gradient(145deg, #F0E4D3, #DCC5B2)" 
                         : "linear-gradient(145deg, #DCC5B2, #D9A299)",
                       border: "1px solid rgba(220, 197, 178, 0.3)",
@@ -195,7 +195,7 @@ export default function BookAppointment() {
                 <form onSubmit={handleSubmit} className="d-grid gap-3">
                   <div className="form-group">
                     <label className="form-label fw-bold mb-2" style={{ color: "#D9A299", fontSize: "1rem" }}>
-                      ðŸ‘¨â€âš•ï¸ Zgjedh Mjekun
+                      👨‍⚕️ Zgjedh Mjekun
                     </label>
                     <select
                       name="doctorId"
@@ -220,7 +220,7 @@ export default function BookAppointment() {
 
                   <div className="form-group">
                     <label className="form-label fw-bold mb-2" style={{ color: "#D9A299", fontSize: "1rem" }}>
-                      ðŸ¥ Zgjedh ShÃ«rbimin
+                      🏥 Zgjedh Shërbimin
                     </label>
                     <select
                       name="serviceId"
@@ -237,10 +237,10 @@ export default function BookAppointment() {
                         minHeight: "48px"
                       }}
                     >
-                      <option value="">Zgjedh ShÃ«rbimin</option>
+                      <option value="">Zgjedh Shërbimin</option>
                       {services.map((s) => (
                         <option key={s._id} value={s._id}>
-                          {s.name} â€“ {s.price}â‚¬
+                          {s.name} – {s.price}€
                         </option>
                       ))}
                     </select>
@@ -254,13 +254,13 @@ export default function BookAppointment() {
                       color: "#2c3e50",
                       fontSize: "0.9rem"
                     }}>
-                      âš ï¸ Ky mjek nuk ka shÃ«rbime tÃ« disponueshme.
+                      ⚠️ Ky mjek nuk ka shërbime të disponueshme.
                     </div>
                   )}
 
                   <div className="form-group">
                     <label className="form-label fw-bold mb-2" style={{ color: "#D9A299", fontSize: "1rem" }}>
-                      ðŸ“… Zgjedh DatÃ«n
+                      📅 Zgjedh Datën
                     </label>
                     <input
                       name="date"
@@ -289,7 +289,7 @@ export default function BookAppointment() {
                         borderRadius: "12px",
                         color: "#2c3e50"
                       }}>
-                        ðŸ•’ Orari pÃ«r kÃ«tÃ« ditÃ«: {currentDaySchedule().start} - {currentDaySchedule().end}
+                        🕒 Orari për këtë ditë: {currentDaySchedule().start} - {currentDaySchedule().end}
                       </div>
                     ) : (
                       <div className="alert alert-danger" style={{
@@ -298,14 +298,14 @@ export default function BookAppointment() {
                         borderRadius: "12px",
                         color: "white"
                       }}>
-                        âŒ Mjeku nuk punon kÃ«tÃ« ditÃ«.
+                        ❌ Mjeku nuk punon këtë ditë.
                       </div>
                     )
                   )}
 
                   <div className="form-group">
                     <label className="form-label fw-bold mb-2" style={{ color: "#D9A299", fontSize: "1.1rem" }}>
-                      ðŸ•’ Zgjedh OrÃ«n
+                      🕒 Zgjedh Orën
                     </label>
                     <select
                       name="time"
@@ -321,7 +321,7 @@ export default function BookAppointment() {
                         fontSize: "1.1rem"
                       }}
                     >
-                      <option value="">Zgjedh OrÃ«n</option>
+                      <option value="">Zgjedh Orën</option>
                       {timeOptions().map((t) => (
                         <option key={t} value={t}>{t}</option>
                       ))}
@@ -352,7 +352,7 @@ export default function BookAppointment() {
                       e.target.style.boxShadow = "0 4px 15px rgba(217, 162, 153, 0.3)";
                     }}
                   >
-                    âœ… Rezervo Terminin
+                    ✅ Rezervo Terminin
                   </button>
                 </form>
               </div>

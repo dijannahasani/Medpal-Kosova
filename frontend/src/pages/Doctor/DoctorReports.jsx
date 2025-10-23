@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DoctorHomeButton from "../../components/DoctorHomeButton";
@@ -16,7 +16,7 @@ export default function DoctorReports() {
         });
         setReports(res.data);
       } catch (err) {
-        console.error("âŒ Gabim nÃ« marrjen e raporteve tÃ« mjekut:", err);
+        console.error("❌ Gabim në marrjen e raporteve të mjekut:", err);
       } finally {
         setLoading(false);
       }
@@ -41,7 +41,7 @@ export default function DoctorReports() {
       link.click();
       link.remove();
     } catch (err) {
-      console.error("âŒ Gabim gjatÃ« shkarkimit tÃ« PDF:", err);
+      console.error("❌ Gabim gjatë shkarkimit të PDF:", err);
     }
   };
 
@@ -69,7 +69,7 @@ export default function DoctorReports() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  ðŸ“‘ Raportet e Mia tÃ« Vizitave
+                  📑 Raportet e Mia të Vizitave
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
                   Shikoni dhe shkarkoni raportet e vizitave tuaja
@@ -80,7 +80,7 @@ export default function DoctorReports() {
                 {loading ? (
                   <div className="text-center" style={{ padding: "3rem" }}>
                     <div className="spinner-border" role="status" style={{ color: "#D9A299", width: "3rem", height: "3rem" }}></div>
-                    <p className="mt-3" style={{ fontSize: "1.2rem", color: "#D9A299" }}>â³ Duke u ngarkuar...</p>
+                    <p className="mt-3" style={{ fontSize: "1.2rem", color: "#D9A299" }}>⏳ Duke u ngarkuar...</p>
                   </div>
                 ) : reports.length === 0 ? (
                   <div className="alert text-center" style={{
@@ -91,7 +91,7 @@ export default function DoctorReports() {
                     fontSize: "1.1rem",
                     padding: "2rem"
                   }}>
-                    ðŸ“­ Nuk ka raporte tÃ« krijuara ende.
+                    📭 Nuk ka raporte të krijuara ende.
                   </div>
                 ) : (
                   <div className="list-group" style={{
@@ -111,14 +111,14 @@ export default function DoctorReports() {
                         <div className="row align-items-center">
                           <div className="col-md-8">
                             <p style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
-                              ðŸ§‘â€ðŸ’¼ <strong style={{ color: "#D9A299" }}>Pacienti:</strong> {r.patientId?.name}
+                              🧑‍💼 <strong style={{ color: "#D9A299" }}>Pacienti:</strong> {r.patientId?.name}
                             </p>
                             <p style={{ fontSize: "0.95rem", marginBottom: "0.5rem", textAlign: "left", marginLeft: "-6px" }}>
-                              <span style={{ whiteSpace: "nowrap", display: "inline-block" }}>ðŸ“… <strong>Data:</strong>&nbsp;{r.appointmentId?.date}</span>
-                              <span style={{ margin: "0 6px", whiteSpace: "nowrap", display: "inline-block" }}>â° <strong>Ora:</strong>&nbsp;{r.appointmentId?.time}</span>
+                              <span style={{ whiteSpace: "nowrap", display: "inline-block" }}>📅 <strong>Data:</strong>&nbsp;{r.appointmentId?.date}</span>
+                              <span style={{ margin: "0 6px", whiteSpace: "nowrap", display: "inline-block" }}>⏰ <strong>Ora:</strong>&nbsp;{r.appointmentId?.time}</span>
                             </p>
                             <p style={{ fontSize: "1rem", marginBottom: "0" }}>
-                              ðŸ“‹ <strong>Diagnoza:</strong> {r.diagnosis}
+                              📋 <strong>Diagnoza:</strong> {r.diagnosis}
                             </p>
                           </div>
                           <div className="col-md-4 text-end">
@@ -148,7 +148,7 @@ export default function DoctorReports() {
                               e.target.style.transform = "translateY(0)";
                               e.target.style.boxShadow = "0 6px 18px rgba(217, 162, 153, 0.35)";
                             }}>
-                              â¬‡ï¸ Shkarko PDF
+                              ⬇️ Shkarko PDF
                             </button>
                           </div>
                         </div>

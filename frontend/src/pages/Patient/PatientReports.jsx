@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PatientHomeButton from "../../components/PatientHomeButton";
@@ -15,7 +15,7 @@ export default function PatientReports() {
         });
         setReports(res.data);
       } catch (err) {
-        console.error("âŒ Gabim nÃ« marrjen e raporteve:", err);
+        console.error("❌ Gabim në marrjen e raporteve:", err);
       }
     };
 
@@ -38,7 +38,7 @@ export default function PatientReports() {
       link.click();
       link.remove();
     } catch (err) {
-      console.error("âŒ Gabim gjatÃ« shkarkimit:", err);
+      console.error("❌ Gabim gjatë shkarkimit:", err);
     }
   };
 
@@ -65,10 +65,10 @@ export default function PatientReports() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  ðŸ“‹ Raportet e Mia
+                  📋 Raportet e Mia
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
-                  Shikoni dhe shkarkoni raportet mjekÃ«sore
+                  Shikoni dhe shkarkoni raportet mjekësore
                 </p>
               </div>
               <div className="card-body p-5">
@@ -81,7 +81,7 @@ export default function PatientReports() {
                     color: "#2c3e50",
                     fontSize: "1.1rem",
                     padding: "2rem"
-                  }}>ðŸ“­ Nuk ka raporte ende.</div>
+                  }}>📭 Nuk ka raporte ende.</div>
                 ) : (
                   <div className="list-group" style={{
                     background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
@@ -100,11 +100,11 @@ export default function PatientReports() {
                         <div className="d-flex flex-column">
                           <div className="mb-3">
                             <p style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>
-                              ðŸ‘¨â€âš•ï¸ <strong style={{ color: "#D9A299" }}>{r.doctorId?.name}</strong>
+                              👨‍⚕️ <strong style={{ color: "#D9A299" }}>{r.doctorId?.name}</strong>
                             </p>
                             <p style={{ fontSize: "0.95rem", marginBottom: "0", textAlign: "left", marginLeft: "-6px" }}>
-                              <span style={{ whiteSpace: "nowrap", display: "inline-block" }}>ðŸ“…&nbsp;{r.appointmentId?.date}</span>
-                              <span style={{ margin: "0 6px", whiteSpace: "nowrap", display: "inline-block" }}>â°&nbsp;{r.appointmentId?.time}</span>
+                              <span style={{ whiteSpace: "nowrap", display: "inline-block" }}>📅&nbsp;{r.appointmentId?.date}</span>
+                              <span style={{ margin: "0 6px", whiteSpace: "nowrap", display: "inline-block" }}>⏰&nbsp;{r.appointmentId?.time}</span>
                             </p>
                           </div>
                           <div className="text-center">
@@ -136,7 +136,7 @@ export default function PatientReports() {
                                 e.target.style.boxShadow = "0 6px 20px rgba(217, 162, 153, 0.4)";
                               }}
                             >
-                              â¬‡ï¸ Shkarko PDF
+                              ⬇️ Shkarko PDF
                             </button>
                           </div>
                         </div>

@@ -1,4 +1,4 @@
-﻿// src/pages/Doctor/AddVisitReport.jsx
+// src/pages/Doctor/AddVisitReport.jsx
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Form, Button, Alert, Card, Spinner } from "react-bootstrap";
@@ -26,7 +26,7 @@ export default function AddVisitReport() {
         });
         setAppointments(res.data.filter(a => a.status === "approved"));
       } catch (err) {
-        console.error("âŒ Gabim nÃ« marrjen e termineve:", err);
+        console.error("❌ Gabim në marrjen e termineve:", err);
       }
     })();
   }, []);
@@ -44,7 +44,7 @@ export default function AddVisitReport() {
       await axios.post(`${API_BASE_URL}/api/reports`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setMessage({ text: "âœ… Raporti u ruajt me sukses!", type: "success" });
+      setMessage({ text: "✅ Raporti u ruajt me sukses!", type: "success" });
       setForm({
         appointmentId: "",
         diagnosis: "",
@@ -54,8 +54,8 @@ export default function AddVisitReport() {
         symptoms: "",
       });
     } catch (err) {
-      console.error("âŒ Gabim gjatÃ« ruajtjes sÃ« raportit:", err);
-      setMessage({ text: "âŒ DÃ«shtoi ruajtja e raportit.", type: "danger" });
+      console.error("❌ Gabim gjatë ruajtjes së raportit:", err);
+      setMessage({ text: "❌ Dështoi ruajtja e raportit.", type: "danger" });
     } finally {
       setSubmitting(false);
     }
@@ -85,10 +85,10 @@ export default function AddVisitReport() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  ðŸ§¾ Krijo Raport Vizite
+                  🧾 Krijo Raport Vizite
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
-                  Krijoni raporte tÃ« detajuara pÃ«r vizitat e pacientÃ«ve
+                  Krijoni raporte të detajuara për vizitat e pacientëve
                 </p>
               </div>
               <div className="card-body p-5">
@@ -115,7 +115,7 @@ export default function AddVisitReport() {
                   border: "1px solid rgba(220, 197, 178, 0.3)"
                 }}>
                   <div className="mb-4">
-                    <label className="form-label fw-bold" style={{fontSize: "1.1rem" }}>ðŸ“‹ Zgjedh Terminin</label>
+                    <label className="form-label fw-bold" style={{fontSize: "1.1rem" }}>📋 Zgjedh Terminin</label>
                     <select
                       name="appointmentId"
                       className="form-select form-select-lg"
@@ -126,7 +126,7 @@ export default function AddVisitReport() {
                       <option value="">Zgjidh</option>
                       {appointments.map(a => (
                         <option key={a._id} value={a._id}>
-                          {a.patientId?.name} â€“ {a.date} {a.time}
+                          {a.patientId?.name} – {a.date} {a.time}
                         </option>
                       ))}
                     </select>
@@ -139,7 +139,7 @@ export default function AddVisitReport() {
                       className="form-control"
                       value={form.diagnosis}
                       onChange={handleChange}
-                      placeholder="PÃ«rshkruaj diagnozÃ«n"
+                      placeholder="Përshkruaj diagnozën"
                       rows={3}
                       required
                     />
@@ -152,14 +152,14 @@ export default function AddVisitReport() {
                       className="form-control"
                       value={form.recommendation}
                       onChange={handleChange}
-                      placeholder="Rekomandimet pÃ«r pacientin"
+                      placeholder="Rekomandimet për pacientin"
                       rows={2}
                     />
                   </div>
 
                   <div className="row mb-4">
                     <div className="col-md-6">
-                      <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>Temperatura (Â°C)</label>
+                      <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>Temperatura (°C)</label>
                       <input
                         type="number"
                         name="temperature"
@@ -207,7 +207,7 @@ export default function AddVisitReport() {
                         Po ruhet...
                       </>
                     ) : (
-                      "ðŸ’¾ Ruaj Raportin"
+                      "💾 Ruaj Raportin"
                     )}
                   </button>
                 </form>

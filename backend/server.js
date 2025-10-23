@@ -13,7 +13,7 @@ const corsOptions = {
     config.CLIENT_URL,
     'http://localhost:5173',
     'http://localhost:3000',
-    'https://medpal-frontend.onrender.com'
+    'https://medpal-kosova-937n.onrender.com'
   ],
   credentials: true,
   optionsSuccessStatus: 200

@@ -1,7 +1,6 @@
-﻿// src/pages/Clinic/ClinicAddDepartment.jsx
+// src/pages/Clinic/ClinicAddDepartment.jsx
 import { useState, useEffect } from "react";
 import axios from "axios";
-import API_BASE_URL from "../../config/api";
 import { getToken } from "../../utils/auth";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
 
@@ -18,7 +17,7 @@ export default function ClinicAddDepartment() {
         });
         setDepartments(res.data);
       } catch (err) {
-        console.error("âŒ Gabim nÃ« marrjen e departamenteve:", err);
+        console.error("❌ Gabim në marrjen e departamenteve:", err);
       }
     };
 
@@ -27,7 +26,7 @@ export default function ClinicAddDepartment() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name.trim()) return alert("âš ï¸ Ju lutemi shkruani emrin e departamentit.");
+    if (!name.trim()) return alert("⚠️ Ju lutemi shkruani emrin e departamentit.");
 
     try {
       await axios.post(
@@ -36,22 +35,22 @@ export default function ClinicAddDepartment() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setName("");
-      alert("âœ… Departamenti u shtua me sukses!");
-      // Rifresko listÃ«n
+      alert("✅ Departamenti u shtua me sukses!");
+      // Rifresko listën
       const res = await axios.get(`${API_BASE_URL}/api/clinic/departments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDepartments(res.data);
     } catch (err) {
-      console.error("âŒ Gabim:", err);
-      console.error("âŒ Error response:", err.response?.data);
-      alert("âŒ Gabim gjatÃ« shtimit tÃ« departamentit: " + (err.response?.data?.message || err.message));
+      console.error("❌ Gabim:", err);
+      console.error("❌ Error response:", err.response?.data);
+      alert("❌ Gabim gjatë shtimit të departamentit: " + (err.response?.data?.message || err.message));
     }
   };
 
   return (
     <div style={{ maxWidth: "500px", margin: "40px auto" }}>
-      <h2>âž• Shto Departament</h2>
+      <h2>➕ Shto Departament</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -65,10 +64,10 @@ export default function ClinicAddDepartment() {
 
       {departments.length > 0 && (
         <>
-          <h3 style={{ marginTop: "30px" }}>ðŸ“‹ Departamentet ekzistuese:</h3>
+          <h3 style={{ marginTop: "30px" }}>📋 Departamentet ekzistuese:</h3>
           <ul>
             {departments.map((dep) => (
-              <li key={dep._id}>â€¢ {dep.name}</li>
+              <li key={dep._id}>• {dep.name}</li>
             ))}
           </ul>
         </>

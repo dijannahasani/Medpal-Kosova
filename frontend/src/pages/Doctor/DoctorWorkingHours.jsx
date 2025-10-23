@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DoctorHomeButton from "../../components/DoctorHomeButton";
@@ -65,10 +65,10 @@ export default function DoctorWorkingHours() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setMessage("âœ… Orari u ruajt me sukses!");
+      setMessage("✅ Orari u ruajt me sukses!");
       setTimeout(() => setMessage(""), 3000);
     } catch (err) {
-      setMessage("âŒ Gabim gjatÃ« ruajtjes sÃ« orarit.");
+      setMessage("❌ Gabim gjatë ruajtjes së orarit.");
       setTimeout(() => setMessage(""), 3000);
     } finally {
       setLoading(false);
@@ -76,12 +76,12 @@ export default function DoctorWorkingHours() {
   };
 
   const weekdays = {
-    monday: "E HÃ«nÃ«",
-    tuesday: "E MartÃ«", 
-    wednesday: "E MÃ«rkurÃ«",
+    monday: "E Hënë",
+    tuesday: "E Martë", 
+    wednesday: "E Mërkurë",
     thursday: "E Enjte",
     friday: "E Premte",
-    saturday: "E ShtunÃ«",
+    saturday: "E Shtunë",
     sunday: "E Diel"
   };
 
@@ -95,10 +95,10 @@ export default function DoctorWorkingHours() {
         {/* Header */}
         <div className="text-center mb-4">
           <h2 className="text-white mb-2" style={{ fontWeight: "600" }}>
-            ðŸ• Menaxho Orarin e PunÃ«s
+            🕐 Menaxho Orarin e Punës
           </h2>
           <p className="text-white-50 mb-4">
-            Vendosni orarin tuaj tÃ« punÃ«s pÃ«r secilin ditÃ« tÃ« javÃ«s
+            Vendosni orarin tuaj të punës për secilin ditë të javës
           </p>
         </div>
 
@@ -111,11 +111,11 @@ export default function DoctorWorkingHours() {
           <div className="card-body p-4">
             
             {message && (
-              <div className={`alert ${message.includes('âœ…') ? 'alert-success' : 'alert-danger'}`} style={{
-                background: message.includes('âœ…') ? 
+              <div className={`alert ${message.includes('✅') ? 'alert-success' : 'alert-danger'}`} style={{
+                background: message.includes('✅') ? 
                   "linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1))" :
                   "linear-gradient(145deg, #FFF3CD, #FFEAA7)",
-                border: `1px solid ${message.includes('âœ…') ? 'rgba(76, 175, 80, 0.2)' : 'rgba(255, 193, 7, 0.3)'}`,
+                border: `1px solid ${message.includes('✅') ? 'rgba(76, 175, 80, 0.2)' : 'rgba(255, 193, 7, 0.3)'}`,
                 borderRadius: "10px"
               }}>
                 {message}
@@ -156,7 +156,7 @@ export default function DoctorWorkingHours() {
                                   color: "#2c3e50",
                                   fontSize: "0.95rem"
                                 }}>
-                                  ðŸ“… {dayName}
+                                  📅 {dayName}
                                 </label>
                               </div>
                             </div>
@@ -216,7 +216,7 @@ export default function DoctorWorkingHours() {
                     fontSize: "0.9rem"
                   }}
                 >
-                  â† Kthehu
+                  ← Kthehu
                 </button>
                 <button 
                   type="submit" 
@@ -233,7 +233,7 @@ export default function DoctorWorkingHours() {
                     fontSize: "0.9rem"
                   }}
                 >
-                  {loading ? "ðŸ”„ Duke ruajtur..." : "ðŸ’¾ Ruaj Orarin"}
+                  {loading ? "🔄 Duke ruajtur..." : "💾 Ruaj Orarin"}
                 </button>
               </div>
             </form>

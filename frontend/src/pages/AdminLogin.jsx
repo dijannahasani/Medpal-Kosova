@@ -1,5 +1,4 @@
-﻿import React, { useState } from "react";
-import API_BASE_URL from "../config/api";
+import React, { useState } from "react";
 
 export default function AdminLogin({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -23,13 +22,13 @@ export default function AdminLogin({ onLogin }) {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Gabim nÃ« login");
+      if (!res.ok) throw new Error(data.message || "Gabim në login");
 
-      // Ruaj token dhe user nÃ« localStorage pÃ«r PrivateRoute
+      // Ruaj token dhe user në localStorage për PrivateRoute
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // ThÃ«rrit onLogin pa parametra, sepse tokenin e ruajtÃ«m vetÃ«
+      // Thërrit onLogin pa parametra, sepse tokenin e ruajtëm vetë
       if (onLogin) onLogin();
 
     } catch (err) {
@@ -51,7 +50,7 @@ export default function AdminLogin({ onLogin }) {
 
       <input
         type="password"
-        placeholder="FjalÃ«kalimi"
+        placeholder="Fjalëkalimi"
         value={password}
         onChange={e => setPassword(e.target.value)}
         required
@@ -67,7 +66,7 @@ export default function AdminLogin({ onLogin }) {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <button type="submit">KyÃ§u</button>
+      <button type="submit">Kyçu</button>
     </form>
   );
 }

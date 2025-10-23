@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PatientHomeButton from "../../components/PatientHomeButton";
@@ -15,12 +15,12 @@ export default function PatientNotifications() {
         });
         setAppointments(res.data);
 
-        // Marko njoftimet si tÃ« lexuara
+        // Marko njoftimet si të lexuara
         await axios.put(`${API_BASE_URL}/api/appointments/mark-seen`, {}, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } catch (err) {
-        console.error("âŒ Gabim nÃ« marrjen e njoftimeve:", err.message);
+        console.error("❌ Gabim në marrjen e njoftimeve:", err.message);
       }
     };
 
@@ -50,10 +50,10 @@ export default function PatientNotifications() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  ðŸ”” Njoftimet e mia
+                  🔔 Njoftimet e mia
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
-                  Shikoni tÃ« gjitha njoftimet pÃ«r terminet tuaja
+                  Shikoni të gjitha njoftimet për terminet tuaja
                 </p>
               </div>
               <div className="card-body p-5">
@@ -65,7 +65,7 @@ export default function PatientNotifications() {
                     color: "#2c3e50",
                     fontSize: "1.1rem",
                     padding: "2rem"
-                  }}>S'keni ende ndonjÃ« njoftim pÃ«r termine.</div>
+                  }}>S'keni ende ndonjë njoftim për termine.</div>
                 ) : (
                   <ul className="list-group" style={{
                     background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
@@ -83,7 +83,7 @@ export default function PatientNotifications() {
                         padding: "1.5rem",
                         fontSize: "1.1rem"
                       }}>
-                        <strong style={{ color: "#D9A299" }}>{a.status.toUpperCase()}</strong> â€“ Termini te <b>{a.doctorId?.name}</b>, mÃ« <u>{a.date}</u> ora {a.time}
+                        <strong style={{ color: "#D9A299" }}>{a.status.toUpperCase()}</strong> – Termini te <b>{a.doctorId?.name}</b>, më <u>{a.date}</u> ora {a.time}
                       </li>
                     ))}
                   </ul>

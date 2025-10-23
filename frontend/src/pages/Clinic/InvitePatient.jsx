@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { getToken } from "../../utils/auth";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
@@ -25,7 +25,7 @@ const InvitePatient = () => {
     setError("");
 
     try {
-      const token = getToken(); // JWT i klinikÃ«s
+      const token = getToken(); // JWT i klinikës
       const response = await axios.post(
         `${API_BASE_URL}/api/auth/invite-patient`,
         formData,
@@ -40,7 +40,7 @@ const InvitePatient = () => {
       setFormData({ name: "", email: "" });
     } catch (err) {
       setError(
-        err.response?.data?.message || "Gabim gjatÃ« dÃ«rgimit tÃ« ftesÃ«s."
+        err.response?.data?.message || "Gabim gjatë dërgimit të ftesës."
       );
     }
   };
@@ -68,10 +68,10 @@ const InvitePatient = () => {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color:"white" }}>
-                  ðŸ“© Fto Pacient tÃ« Ri
+                  📩 Fto Pacient të Ri
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
-                  DÃ«rgoni ftesÃ« pÃ«r regjistrim nÃ« klinikÃ«n tuaj
+                  Dërgoni ftesë për regjistrim në klinikën tuaj
                 </p>
               </div>
               <div className="card-body p-5">
@@ -129,7 +129,7 @@ const InvitePatient = () => {
                     e.target.style.transform = "translateY(0)";
                     e.target.style.boxShadow = "0 8px 25px rgba(217, 162, 153, 0.4)";
                   }}>
-                    ðŸ“§ DÃ«rgo FtesÃ«n
+                    📧 Dërgo Ftesën
                   </button>
                 </form>
 

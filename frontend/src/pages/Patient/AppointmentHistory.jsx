@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MobileNavbar from "../../components/MobileNavbar";
@@ -16,7 +16,7 @@ export default function AppointmentHistory() {
         });
         setAppointments(res.data);
       } catch (err) {
-        console.error("âŒ Gabim:", err);
+        console.error("❌ Gabim:", err);
       }
     };
 
@@ -30,9 +30,9 @@ export default function AppointmentHistory() {
         userRole="patient"
         userName="Pacient"
         dashboardLinks={[
-          { to: "/patient/book-appointment", icon: "ðŸ“…", title: "Rezervo Terminin" },
-          { to: "/patient/history", icon: "ðŸ“–", title: "Historiku" },
-          { to: "/patient/profile", icon: "ðŸ‘¤", title: "Profili Im" }
+          { to: "/patient/book-appointment", icon: "📅", title: "Rezervo Terminin" },
+          { to: "/patient/history", icon: "📖", title: "Historiku" },
+          { to: "/patient/profile", icon: "👤", title: "Profili Im" }
         ]}
       />
 
@@ -59,10 +59,10 @@ export default function AppointmentHistory() {
                   border: "none"
                 }}>
                   <h2 className="card-title mb-0" style={{ fontSize: "1.75rem", fontWeight: "bold", color: "white" }}>
-                    ðŸ“– Historiku i Termineve
+                    📖 Historiku i Termineve
                   </h2>
                   <p className="mt-2 mb-0 small d-none d-md-block" style={{ opacity: "0.9", color: "white" }}>
-                    Shikoni tÃ« gjitha terminet tuaja tÃ« kaluara
+                    Shikoni të gjitha terminet tuaja të kaluara
                   </p>
                 </div>
                 <div className="card-body p-3 p-md-4">
@@ -75,7 +75,7 @@ export default function AppointmentHistory() {
                       fontSize: "1rem",
                       padding: "2rem"
                     }}>
-                      Nuk keni termine tÃ« regjistruara.
+                      Nuk keni termine të regjistruara.
                     </div>
                   ) : (
                     <div className="table-responsive">
@@ -91,7 +91,7 @@ export default function AppointmentHistory() {
                         }}>
                           <tr>
                             <th scope="col" style={{ padding: "0.75rem 0.5rem", fontSize: "0.95rem" }}>Mjeku</th>
-                            <th scope="col" style={{ padding: "0.75rem 0.5rem", fontSize: "0.95rem" }} className="d-none d-md-table-cell">ShÃ«rbimi</th>
+                            <th scope="col" style={{ padding: "0.75rem 0.5rem", fontSize: "0.95rem" }} className="d-none d-md-table-cell">Shërbimi</th>
                             <th scope="col" style={{ padding: "0.75rem 0.5rem", fontSize: "0.95rem" }}>Data</th>
                             <th scope="col" style={{ padding: "0.75rem 0.5rem", fontSize: "0.95rem" }} className="d-none d-sm-table-cell">Ora</th>
                             <th scope="col" style={{ padding: "0.75rem 0.5rem", fontSize: "0.95rem" }}>Statusi</th>

@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PatientHomeButton from "../../components/PatientHomeButton";
@@ -8,7 +8,7 @@ export default function UploadDocuments() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
-  const [deleting, setDeleting] = useState(null); // pÃ«r tÃ« treguar se cili dokument po fshihet
+  const [deleting, setDeleting] = useState(null); // për të treguar se cili dokument po fshihet
 
   const fetchDocuments = async () => {
     try {
@@ -18,7 +18,7 @@ export default function UploadDocuments() {
       });
       setDocuments(res.data);
     } catch (err) {
-      console.error("âŒ Gabim nÃ« marrjen e dokumenteve:", err);
+      console.error("❌ Gabim në marrjen e dokumenteve:", err);
     }
   };
 
@@ -28,7 +28,7 @@ export default function UploadDocuments() {
 
   // Auto-clear success messages after 5 seconds
   useEffect(() => {
-    if (message && message.startsWith("âœ…")) {
+    if (message && message.startsWith("✅")) {
       const timer = setTimeout(() => {
         setMessage("");
       }, 5000);
@@ -40,7 +40,7 @@ export default function UploadDocuments() {
     e.preventDefault();
 
     if (!title || !file) {
-      setMessage("â— Titulli dhe dokumenti janÃ« tÃ« detyrueshÃ«m.");
+      setMessage("❗ Titulli dhe dokumenti janë të detyrueshëm.");
       return;
     }
 
@@ -56,7 +56,7 @@ export default function UploadDocuments() {
           "Content-Type": "multipart/form-data",
         },
       });
-      setMessage("âœ… Dokumenti u ngarkua me sukses!");
+      setMessage("✅ Dokumenti u ngarkua me sukses!");
       setTitle("");
       setFile(null);
       // Reset file input
@@ -64,15 +64,15 @@ export default function UploadDocuments() {
       if (fileInput) fileInput.value = '';
       fetchDocuments();
     } catch (err) {
-      console.error("âŒ Gabim gjatÃ« ngarkimit:", err);
-      setMessage("âŒ DÃ«shtoi ngarkimi i dokumentit.");
+      console.error("❌ Gabim gjatë ngarkimit:", err);
+      setMessage("❌ Dështoi ngarkimi i dokumentit.");
     }
   };
 
   const handleDelete = async (documentId, documentTitle) => {
     // Konfirmo fshirjen
     const confirm = window.confirm(
-      `A jeni tÃ« sigurt qÃ« doni tÃ« fshini dokumentin "${documentTitle}"?\n\nKy veprim nuk mund tÃ« anulluar.`
+      `A jeni të sigurt që doni të fshini dokumentin "${documentTitle}"?\n\nKy veprim nuk mund të anulluar.`
     );
     
     if (!confirm) return;
@@ -85,11 +85,11 @@ export default function UploadDocuments() {
         headers: { Authorization: `Bearer ${token}` }
       });
       
-      setMessage("âœ… Dokumenti u fshi me sukses!");
-      fetchDocuments(); // Rifresko listÃ«n
+      setMessage("✅ Dokumenti u fshi me sukses!");
+      fetchDocuments(); // Rifresko listën
     } catch (err) {
-      console.error("âŒ Gabim gjatÃ« fshirjes:", err);
-      setMessage("âŒ DÃ«shtoi fshirja e dokumentit.");
+      console.error("❌ Gabim gjatë fshirjes:", err);
+      setMessage("❌ Dështoi fshirja e dokumentit.");
     } finally {
       setDeleting(null);
     }
@@ -118,10 +118,10 @@ export default function UploadDocuments() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  ðŸ“Ž Ngarko Dokumente MjekÃ«sore
+                  📎 Ngarko Dokumente Mjekësore
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
-                  Ngarkoni dhe menaxhoni dokumentet tuaja mjekÃ«sore
+                  Ngarkoni dhe menaxhoni dokumentet tuaja mjekësore
                 </p>
               </div>
               <div className="card-body p-5">
@@ -130,7 +130,7 @@ export default function UploadDocuments() {
                   <div
                     className="alert mb-4"
                     style={{
-                      background: message.startsWith("âœ…") 
+                      background: message.startsWith("✅") 
                         ? "linear-gradient(145deg, #F0E4D3, #DCC5B2)" 
                         : "linear-gradient(145deg, #DCC5B2, #D9A299)",
                       border: "1px solid rgba(220, 197, 178, 0.3)",
@@ -153,7 +153,7 @@ export default function UploadDocuments() {
                   <div className="row">
                     <div className="col-md-6 mb-4">
                       <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>
-                        ðŸ“ Titulli i dokumentit
+                        📝 Titulli i dokumentit
                       </label>
                       <input
                         type="text"
@@ -171,7 +171,7 @@ export default function UploadDocuments() {
                     </div>
                     <div className="col-md-6 mb-4">
                       <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>
-                        ðŸ“ Zgjidh dokumentin
+                        📁 Zgjidh dokumentin
                       </label>
                       <input
                         type="file"
@@ -199,11 +199,11 @@ export default function UploadDocuments() {
                     fontWeight: "bold",
                     transition: "all 0.3s ease"
                   }}>
-                    ðŸ“¤ Ngarko Dokumentin
+                    📤 Ngarko Dokumentin
                   </button>
                 </form>
 
-                <h4 className="mb-4" style={{ color: "#D9A299", fontSize: "1.5rem" }}>ðŸ—‚ï¸ Dokumentet e ngarkuara</h4>
+                <h4 className="mb-4" style={{ color: "#D9A299", fontSize: "1.5rem" }}>🗂️ Dokumentet e ngarkuara</h4>
                 {documents.length === 0 ? (
                   <div className="alert text-center" style={{
                     background: "linear-gradient(145deg, #F0E4D3, #DCC5B2)",
@@ -212,7 +212,7 @@ export default function UploadDocuments() {
                     color: "#2c3e50",
                     fontSize: "1.1rem",
                     padding: "2rem"
-                  }}>S'keni ngarkuar ende asnjÃ« dokument.</div>
+                  }}>S'keni ngarkuar ende asnjë dokument.</div>
                 ) : (
                   <div className="list-group" style={{
                     background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
@@ -233,7 +233,7 @@ export default function UploadDocuments() {
                           <div className="col-md-8">
                             <h6 className="mb-2" style={{ color: "#D9A299", fontSize: "1.2rem" }}>{doc.title}</h6>
                             <small className="text-muted" style={{ fontSize: "1rem" }}>
-                              Ngarkuar mÃ«: {new Date(doc.createdAt || doc.uploadDate).toLocaleDateString('sq-AL')}
+                              Ngarkuar më: {new Date(doc.createdAt || doc.uploadDate).toLocaleDateString('sq-AL')}
                             </small>
                           </div>
                           <div className="col-md-4 text-end">
@@ -255,7 +255,7 @@ export default function UploadDocuments() {
                                   fontWeight: "bold"
                                 }}
                               >
-                                ðŸ‘ï¸ Shiko
+                                👁️ Shiko
                               </a>
                               <button
                                 className="btn btn-lg"
@@ -276,10 +276,10 @@ export default function UploadDocuments() {
                                 {deleting === doc._id ? (
                                   <>
                                     <span className="spinner-border spinner-border-sm me-1" role="status"></span>
-                                    Duke fshirÃ«...
+                                    Duke fshirë...
                                   </>
                                 ) : (
-                                  'ðŸ—‘ï¸ Fshi'
+                                  '🗑️ Fshi'
                                 )}
                               </button>
                             </div>

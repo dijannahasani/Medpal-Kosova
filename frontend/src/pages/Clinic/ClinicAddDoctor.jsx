@@ -1,9 +1,8 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getToken } from "../../utils/auth";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
-import API_BASE_URL from "../../config/api";
 
 export default function ClinicAddDoctor() {
   const [formData, setFormData] = useState({
@@ -19,19 +18,19 @@ export default function ClinicAddDoctor() {
 
   useEffect(() => {
     const token = getToken();
-    console.log("ðŸ” Loading departments and services...");
+    console.log("🔍 Loading departments and services...");
 
     axios
       .get(`${API_BASE_URL}/api/clinic/departments`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log("âœ… Departments loaded:", res.data);
+        console.log("✅ Departments loaded:", res.data);
         setDepartments(res.data);
       })
       .catch((err) => {
-        console.error("âŒ Gabim nÃ« departamente:", err);
-        console.error("âŒ Error details:", err.response?.data);
+        console.error("❌ Gabim në departamente:", err);
+        console.error("❌ Error details:", err.response?.data);
       });
 
     axios
@@ -39,12 +38,12 @@ export default function ClinicAddDoctor() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log("âœ… Services loaded:", res.data);
+        console.log("✅ Services loaded:", res.data);
         setClinicServices(res.data);
       })
       .catch((err) => {
-        console.error("âŒ Gabim nÃ« shÃ«rbime:", err);
-        console.error("âŒ Error details:", err.response?.data);
+        console.error("❌ Gabim në shërbime:", err);
+        console.error("❌ Error details:", err.response?.data);
       });
   }, []);
 
@@ -78,7 +77,7 @@ export default function ClinicAddDoctor() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      alert("ðŸ‘¨â€âš•ï¸ Mjeku u shtua me sukses!");
+      alert("👨‍⚕️ Mjeku u shtua me sukses!");
       setFormData({
         name: "",
         email: "",
@@ -87,8 +86,8 @@ export default function ClinicAddDoctor() {
         services: [],
       });
     } catch (err) {
-      const message = err.response?.data?.message || "Gabim gjatÃ« shtimit tÃ« mjekut.";
-      alert("âŒ " + message);
+      const message = err.response?.data?.message || "Gabim gjatë shtimit të mjekut.";
+      alert("❌ " + message);
     }
   };
 
@@ -115,10 +114,10 @@ export default function ClinicAddDoctor() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  âž• Shto Mjek tÃ« Ri
+                  ➕ Shto Mjek të Ri
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
-                  Regjistroni njÃ« mjek tÃ« ri nÃ« klinikÃ«n tuaj
+                  Regjistroni një mjek të ri në klinikën tuaj
                 </p>
               </div>
               <div className="card-body p-5">
@@ -161,12 +160,12 @@ export default function ClinicAddDoctor() {
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>FjalÃ«kalimi</label>
+                    <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>Fjalëkalimi</label>
                     <input
                       name="password"
                       type="password"
                       className="form-control form-control-lg"
-                      placeholder="FjalÃ«kalimi"
+                      placeholder="Fjalëkalimi"
                       value={formData.password}
                       onChange={handleChange}
                       required
@@ -195,7 +194,7 @@ export default function ClinicAddDoctor() {
                     >
                       <option value="">Zgjedh Departamentin</option>
                       {departments.length === 0 ? (
-                        <option value="" disabled>Nuk ka departamente tÃ« regjistruara</option>
+                        <option value="" disabled>Nuk ka departamente të regjistruara</option>
                       ) : (
                         departments.map((d) => (
                           <option key={d._id} value={d._id}>
@@ -212,13 +211,13 @@ export default function ClinicAddDoctor() {
                         color: "#2c3e50",
                         fontSize: "0.9rem"
                       }}>
-                        âš ï¸ Nuk ka departamente tÃ« regjistruara. Ju lutem shtoni departamente nÃ« <a href="/clinic/services" style={{ color: "#D9A299", textDecoration: "underline" }}>Menaxho Departamentet & ShÃ«rbimet</a>.
+                        ⚠️ Nuk ka departamente të regjistruara. Ju lutem shtoni departamente në <a href="/clinic/services" style={{ color: "#D9A299", textDecoration: "underline" }}>Menaxho Departamentet & Shërbimet</a>.
                       </div>
                     )}
                   </div>
 
                   <div className="mb-5">
-                    <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>ShÃ«rbimet</label>
+                    <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>Shërbimet</label>
                     <div className="border rounded p-3" style={{ 
                       maxHeight: "200px", 
                       overflowY: "auto",
@@ -228,13 +227,13 @@ export default function ClinicAddDoctor() {
                     }}>
                       {!formData.departmentId && (
                         <p className="text-muted text-center" style={{ fontSize: "0.9rem", color: "#6c757d" }}>
-                          ðŸ” Zgjedh njÃ« departament pÃ«r tÃ« parÃ« shÃ«rbimet
+                          🔍 Zgjedh një departament për të parë shërbimet
                         </p>
                       )}
                       {formData.departmentId && 
                         clinicServices.filter(s => s.departmentId?._id === formData.departmentId).length === 0 && (
                         <p className="text-muted text-center" style={{ fontSize: "0.9rem", color: "#6c757d" }}>
-                          âš ï¸ Nuk ka shÃ«rbime tÃ« regjistruara pÃ«r kÃ«tÃ« departament
+                          ⚠️ Nuk ka shërbime të regjistruara për këtë departament
                         </p>
                       )}
                       {formData.departmentId && 
@@ -250,7 +249,7 @@ export default function ClinicAddDoctor() {
                                 onChange={() => handleServiceCheckboxChange(s._id)}
                               />
                               <label className="form-check-label" htmlFor={`service-${s._id}`}>
-                                {s.name} â€“ {s.price}â‚¬
+                                {s.name} – {s.price}€
                               </label>
                             </div>
                           ))
@@ -277,7 +276,7 @@ export default function ClinicAddDoctor() {
                     e.target.style.transform = "translateY(0)";
                     e.target.style.boxShadow = "0 8px 25px rgba(217, 162, 153, 0.4)";
                   }}>
-                    âž• Shto Mjekun
+                    ➕ Shto Mjekun
                   </button>
                 </form>
               </div>

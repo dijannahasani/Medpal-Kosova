@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./DoctorList.css";
@@ -30,7 +30,7 @@ export default function DoctorList() {
       });
       setDoctors(res.data);
     } catch (err) {
-      console.error("âŒ Gabim nÃ« marrjen e mjekÃ«ve:", err);
+      console.error("❌ Gabim në marrjen e mjekëve:", err);
     }
   };
 
@@ -42,7 +42,7 @@ export default function DoctorList() {
       });
       setDepartments(res.data);
     } catch (err) {
-      console.error("âŒ Gabim nÃ« marrjen e departamenteve:", err);
+      console.error("❌ Gabim në marrjen e departamenteve:", err);
     }
   };
 
@@ -54,12 +54,12 @@ export default function DoctorList() {
       });
       setClinicServices(res.data);
     } catch (err) {
-      console.error("âŒ Gabim nÃ« marrjen e shÃ«rbimeve:", err);
+      console.error("❌ Gabim në marrjen e shërbimeve:", err);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("A jeni tÃ« sigurt qÃ« doni ta fshini mjekun?")) return;
+    if (!window.confirm("A jeni të sigurt që doni ta fshini mjekun?")) return;
     try {
       const token = getToken();
       await axios.delete(`${API_BASE_URL}/api/clinic/doctors/${id}`, {
@@ -67,7 +67,7 @@ export default function DoctorList() {
       });
       fetchDoctors();
     } catch (err) {
-      console.error("âŒ Gabim gjatÃ« fshirjes:", err);
+      console.error("❌ Gabim gjatë fshirjes:", err);
     }
   };
 
@@ -98,7 +98,7 @@ export default function DoctorList() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Departamenti & shÃ«rbimet
+      // Departamenti & shërbimet
       await axios.put(
         `${API_BASE_URL}/api/clinic/doctors/${id}`,
         { departmentId: editedDepartmentId, services: editedServices },
@@ -108,7 +108,7 @@ export default function DoctorList() {
       setEditingDoctor(null);
       fetchDoctors();
     } catch (err) {
-      console.error("âŒ Gabim gjatÃ« ruajtjes sÃ« mjekut:", err);
+      console.error("❌ Gabim gjatë ruajtjes së mjekut:", err);
     }
   };
 
@@ -139,10 +139,10 @@ export default function DoctorList() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color:"white" }}>
-                  ðŸ“‹ Lista e MjekÃ«ve tÃ« KlinikÃ«s
+                  📋 Lista e Mjekëve të Klinikës
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
-                  Menaxhoni mjekÃ«t dhe shÃ«rbimet e klinikÃ«s suaj
+                  Menaxhoni mjekët dhe shërbimet e klinikës suaj
                 </p>
               </div>
               <div className="card-body p-5">
@@ -161,7 +161,7 @@ export default function DoctorList() {
                           <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Emri</th>
                           <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Email</th>
                           <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Departamenti</th>
-                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>ShÃ«rbimet</th>
+                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Shërbimet</th>
                           <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Veprime</th>
                         </tr>
                       </thead>
@@ -219,7 +219,7 @@ export default function DoctorList() {
                                   ))}
                                 </select>
                               ) : (
-                                doc.departmentId?.name || "â›” Pa Departament"
+                                doc.departmentId?.name || "⛔ Pa Departament"
                               )}
                             </td>
                             <td style={{ padding: "1rem" }}>
@@ -238,7 +238,7 @@ export default function DoctorList() {
                                         className="form-check-label"
                                         htmlFor={`edit-service-${s._id}`}
                                       >
-                                        {s.name} â€“ {s.price}â‚¬
+                                        {s.name} – {s.price}€
                                       </label>
                                     </div>
                                   ))}
@@ -250,7 +250,7 @@ export default function DoctorList() {
                                   ))}
                                 </ul>
                               ) : (
-                                <span className="text-muted">â›” Pa shÃ«rbime</span>
+                                <span className="text-muted">⛔ Pa shërbime</span>
                               )}
                             </td>
                             <td style={{ padding: "1rem" }}>
@@ -262,7 +262,7 @@ export default function DoctorList() {
                                     borderRadius: "8px",
                                     boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                   }}>
-                                    ðŸ’¾ Ruaj
+                                    💾 Ruaj
                                   </button>
                                   <button className="btn btn-secondary btn-sm" onClick={() => setEditingDoctor(null)} style={{
                                     background: "linear-gradient(135deg, #F0E4D3, #DCC5B2)",
@@ -282,7 +282,7 @@ export default function DoctorList() {
                                     borderRadius: "8px",
                                     boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                   }}>
-                                    âœï¸ Edito
+                                    ✏️ Edito
                                   </button>
                                   <button className="btn btn-outline-danger btn-sm" onClick={() => handleDelete(doc._id)} style={{
                                     background: "linear-gradient(135deg, #DCC5B2, #D9A299)",
@@ -291,7 +291,7 @@ export default function DoctorList() {
                                     borderRadius: "8px",
                                     boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                   }}>
-                                    ðŸ—‘ï¸ Fshij
+                                    🗑️ Fshij
                                   </button>
                                 </>
                               )}
@@ -311,7 +311,7 @@ export default function DoctorList() {
                     fontWeight: "500",
                     padding: "2rem"
                   }}>
-                    ðŸ“­ Nuk ka mjekÃ« tÃ« regjistruar.
+                    📭 Nuk ka mjekë të regjistruar.
                   </div>
                 )}
               </div>

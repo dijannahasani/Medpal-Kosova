@@ -1,7 +1,6 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
-import API_BASE_URL from "../config/api";
 
 import {
   Chart as ChartJS,
@@ -36,7 +35,7 @@ export default function UserGrowthChart() {
           labels,
           datasets: [
             {
-              label: "PÃ«rdorues tÃ« Regjistruar",
+              label: "Përdorues të Regjistruar",
               data: counts,
               borderColor: "rgba(75,192,192,1)",
               backgroundColor: "rgba(75,192,192,0.2)",
@@ -46,14 +45,14 @@ export default function UserGrowthChart() {
         });
         setLoading(false);
       } catch (err) {
-        setError("Gabim gjatÃ« marrjes sÃ« tÃ« dhÃ«nave");
+        setError("Gabim gjatë marrjes së të dhënave");
         setLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  if (loading) return <div>Duke ngarkuar grafikÃ«t...</div>;
+  if (loading) return <div>Duke ngarkuar grafikët...</div>;
   if (error) return <div className="alert alert-danger">{error}</div>;
 
   return <Line data={data} />;

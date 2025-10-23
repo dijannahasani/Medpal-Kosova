@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
 
@@ -20,7 +20,7 @@ export default function ClinicProfileUpdate() {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
-    console.log("ðŸ” Frontend - Sending clinic update request:", {
+    console.log("🔍 Frontend - Sending clinic update request:", {
       form,
       token: token ? "Token present" : "No token"
     });
@@ -30,8 +30,8 @@ export default function ClinicProfileUpdate() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log("âœ… Frontend - Clinic update successful:", res.data);
-      alert("âœ… Profili u pÃ«rditÃ«sua me sukses!");
+      console.log("✅ Frontend - Clinic update successful:", res.data);
+      alert("✅ Profili u përditësua me sukses!");
       // Save updated clinic in both storages so getUser() (which checks sessionStorage first)
       // and other components see the same value.
       const clinicObj = res.data.clinic;
@@ -43,8 +43,8 @@ export default function ClinicProfileUpdate() {
       }
 
   // Debug: log stored values for verification
-  console.log('ðŸ—‚ï¸ Stored clinic (localStorage):', localStorage.getItem('user'));
-  try { console.log('ðŸ—‚ï¸ Stored clinic (sessionStorage):', sessionStorage.getItem('user')); } catch (e) {}
+  console.log('🗂️ Stored clinic (localStorage):', localStorage.getItem('user'));
+  try { console.log('🗂️ Stored clinic (sessionStorage):', sessionStorage.getItem('user')); } catch (e) {}
 
   // Notify other components in this window that the clinic data changed
       try {
@@ -53,9 +53,9 @@ export default function ClinicProfileUpdate() {
         // ignore if custom events are not supported
       }
     } catch (err) {
-      console.error("âŒ Frontend - Clinic update failed:", err);
-      console.error("âŒ Error response:", err.response?.data);
-      alert("âŒ DÃ«shtoi pÃ«rditÃ«simi. Kontrollo tÃ« dhÃ«nat.");
+      console.error("❌ Frontend - Clinic update failed:", err);
+      console.error("❌ Error response:", err.response?.data);
+      alert("❌ Dështoi përditësimi. Kontrollo të dhënat.");
     }
   };
 
@@ -82,16 +82,16 @@ export default function ClinicProfileUpdate() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color:"white" }}>
-                  âš™ï¸ PÃ«rditÃ«so Profilin e KlinikÃ«s
+                  ⚙️ Përditëso Profilin e Klinikës
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
-                  Menaxhoni tÃ« dhÃ«nat e klinikÃ«s suaj
+                  Menaxhoni të dhënat e klinikës suaj
                 </p>
               </div>
               <div className="card-body p-5">
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
-                    <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>Emri i KlinikÃ«s</label>
+                    <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>Emri i Klinikës</label>
                     <input 
                       name="name" 
                       value={form.name} 
@@ -141,7 +141,7 @@ export default function ClinicProfileUpdate() {
                     e.target.style.transform = "translateY(0)";
                     e.target.style.boxShadow = "0 8px 25px rgba(217, 162, 153, 0.4)";
                   }}>
-                    ðŸ’¾ Ruaj Ndryshimet
+                    💾 Ruaj Ndryshimet
                   </button>
                 </form>
               </div>

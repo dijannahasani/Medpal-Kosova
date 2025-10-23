@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
@@ -21,7 +21,7 @@ export default function DoctorCalendarView() {
         });
         setAppointments(res.data);
       } catch (err) {
-        console.error("âŒ Gabim nÃ« marrjen e termineve:", err);
+        console.error("❌ Gabim në marrjen e termineve:", err);
       }
     };
     fetchAppointments();
@@ -75,10 +75,10 @@ export default function DoctorCalendarView() {
                 border: "none"
               }}>
                 <h3 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  ðŸ—“ï¸ Terminet pÃ«r Dr. {JSON.parse(localStorage.getItem("user"))?.name}
+                  🗓️ Terminet për Dr. {JSON.parse(localStorage.getItem("user"))?.name}
                 </h3>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
-                  Shikoni terminin tuaj nÃ« kalendar
+                  Shikoni terminin tuaj në kalendar
                 </p>
               </div>
               <div className="card-body p-5">
@@ -103,7 +103,7 @@ export default function DoctorCalendarView() {
                           }
                         }}
                       >
-                        â€¹
+                        ‹
                       </button>
 
                       <button
@@ -127,7 +127,7 @@ export default function DoctorCalendarView() {
                           }
                         }}
                       >
-                        â€º
+                        ›
                       </button>
                     </div>
 
@@ -150,7 +150,7 @@ export default function DoctorCalendarView() {
                 </div>
 
                 <h5 className="text-center mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>
-                  Terminet pÃ«r datÃ«n <strong>{date.toDateString()}</strong>:
+                  Terminet për datën <strong>{date.toDateString()}</strong>:
                 </h5>
 
                 {filteredAppointments.length > 0 ? (
@@ -172,7 +172,7 @@ export default function DoctorCalendarView() {
                       }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                           <div style={{ fontWeight: 600, color: '#D9A299' }}>
-                            â° {a.time} â€“ {a.patientId?.name}
+                            ⏰ {a.time} – {a.patientId?.name}
                           </div>
                           <div className="appointment-email">
                             {a.patientId?.email}
@@ -190,7 +190,7 @@ export default function DoctorCalendarView() {
                     fontSize: "1.1rem",
                     padding: "2rem"
                   }}>
-                    Nuk ka termine pÃ«r kÃ«tÃ« datÃ«.
+                    Nuk ka termine për këtë datë.
                   </div>
                 )}
               </div>

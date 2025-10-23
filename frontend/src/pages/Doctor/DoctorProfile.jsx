@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DoctorHomeButton from "../../components/DoctorHomeButton";
@@ -27,12 +27,12 @@ export default function DoctorProfile() {
         const token = localStorage.getItem("token");
 
         if (!token) {
-          setError("Nuk jeni i loguar! Ju lutem identifikohuni pÃ«rsÃ«ri.");
+          setError("Nuk jeni i loguar! Ju lutem identifikohuni përsëri.");
           setLoading(false);
           return;
         }
 
-        // Merr tÃ« dhÃ«nat e mjekut
+        // Merr të dhënat e mjekut
         const doctorResponse = await axios.get(
           `${API_BASE_URL}/api/auth/me`,
           {
@@ -45,7 +45,7 @@ export default function DoctorProfile() {
         
         setDoctor(doctorResponse.data);
 
-        // Merr orarin e punÃ«s
+        // Merr orarin e punës
         try {
           const hoursResponse = await axios.get(
             `${API_BASE_URL}/api/working-hours/me`,
@@ -57,14 +57,14 @@ export default function DoctorProfile() {
               timeout: 10000
             }
           );
-          console.log("ðŸ” Working hours data received:", hoursResponse.data);
+          console.log("🔍 Working hours data received:", hoursResponse.data);
           setWorkingHours(hoursResponse.data.workingHours);
         } catch (hoursError) {
-          console.warn("âš ï¸ Nuk u mor orari i punÃ«s", hoursError);
+          console.warn("⚠️ Nuk u mor orari i punës", hoursError);
           setWorkingHours(null);
         }
       } catch (err) {
-        console.error("âŒ Gabim kryesor:", err);
+        console.error("❌ Gabim kryesor:", err);
         handleError(err);
       } finally {
         setLoading(false);
@@ -76,20 +76,20 @@ export default function DoctorProfile() {
 
   const handleError = (err) => {
     if (err.response?.status === 401) {
-      setError("Session ka skaduar. Ju lutem identifikohuni pÃ«rsÃ«ri.");
+      setError("Session ka skaduar. Ju lutem identifikohuni përsëri.");
       localStorage.removeItem("token");
     } else if (err.response?.status === 404) {
       setError("Endpoint nuk u gjet. Kontaktoni administratorin.");
     } else if (err.code === 'NETWORK_ERROR' || err.code === 'ECONNREFUSED') {
-      setError("Serveri nuk Ã«shtÃ« i arritshÃ«m. Kontrolloni nÃ«se serveri Ã«shtÃ« duke punuar.");
+      setError("Serveri nuk është i arritshëm. Kontrolloni nëse serveri është duke punuar.");
     } else {
-      setError(err.response?.data?.message || "Gabim nÃ« marrjen e tÃ« dhÃ«nave nga serveri");
+      setError(err.response?.data?.message || "Gabim në marrjen e të dhënave nga serveri");
     }
   };
 
-  // Funksionet pÃ«r butonat
+  // Funksionet për butonat
   const handleEditProfile = () => {
-    console.log("âœï¸ Edit Profile button clicked");
+    console.log("✏️ Edit Profile button clicked");
     setEditForm({
       name: doctor?.name || '',
       email: doctor?.email || '',
@@ -114,7 +114,7 @@ export default function DoctorProfile() {
       const token = localStorage.getItem("token");
       
       const response = await axios.put(
-       ` ${API_BASE_URL}/api/auth/update-profile`,
+        `${API_BASE_URL}/api/auth/update-profile`,
         editForm,
         {
           headers: { 
@@ -124,7 +124,7 @@ export default function DoctorProfile() {
         }
       );
 
-      // PÃ«rditÃ«so tÃ« dhÃ«nat lokale me pÃ«rgjigjen nga serveri
+      // Përditëso të dhënat lokale me përgjigjen nga serveri
       setDoctor(prev => ({
         ...prev,
         ...response.data
@@ -135,20 +135,20 @@ export default function DoctorProfile() {
       const updatedUser = { ...user, ...response.data };
       localStorage.setItem("user", JSON.stringify(updatedUser));
       
-      console.log("âœ… Profili u pÃ«rditÃ«sua me sukses!", response.data);
-      alert("âœ… Profili u pÃ«rditÃ«sua me sukses!");
+      console.log("✅ Profili u përditësua me sukses!", response.data);
+      alert("✅ Profili u përditësua me sukses!");
       setShowEditModal(false);
       
     } catch (error) {
-      console.error("âŒ Gabim nÃ« ruajtjen e profilit:", error);
-      alert("âŒ Gabim nÃ« ruajtjen e tÃ« dhÃ«nave: " + (error.response?.data?.message || error.message));
+      console.error("❌ Gabim në ruajtjen e profilit:", error);
+      alert("❌ Gabim në ruajtjen e të dhënave: " + (error.response?.data?.message || error.message));
     } finally {
       setSaving(false);
     }
   };
 
   const handleManageSchedule = () => {
-    // Navigimi tek faqja e menaxhimit tÃ« orarit
+    // Navigimi tek faqja e menaxhimit të orarit
     window.location.href = '/doctor/working-hours';
   };
 
@@ -157,9 +157,9 @@ export default function DoctorProfile() {
     window.location.href = '/doctor/appointments-manager';
   };
 
-  // Funksion pÃ«r tÃ« formatuar kohÃ«n
+  // Funksion për të formatuar kohën
   const formatTime = (timeString) => {
-    if (!timeString) return "â€”";
+    if (!timeString) return "—";
     try {
       const [hours, minutes] = timeString.split(':');
       return `${hours}:${minutes}`;
@@ -168,18 +168,18 @@ export default function DoctorProfile() {
     }
   };
 
-  // Funksion pÃ«r tÃ« formatuar ditÃ«t
+  // Funksion për të formatuar ditët
   const formatDays = (workingHours) => {
     if (!workingHours) return [];
     
     const dayNames = {
-      'monday': 'E HÃ«nÃ«',
-      'tuesday': 'E MartÃ«', 
-      'wednesday': 'E MÃ«rkurÃ«',
+      'monday': 'E Hënë',
+      'tuesday': 'E Martë', 
+      'wednesday': 'E Mërkurë',
       'thursday': 'E Enjte',
       'friday': 'E Premte',
-      'saturday': 'E ShtunÃ«',
-      'sunday': 'E DielÃ«'
+      'saturday': 'E Shtunë',
+      'sunday': 'E Dielë'
     };
 
     const activeDays = [];
@@ -196,7 +196,7 @@ export default function DoctorProfile() {
     return activeDays;
   };
 
-  // Funksion pÃ«r tÃ« kontrolluar nÃ«se ka orar aktiv
+  // Funksion për të kontrolluar nëse ka orar aktiv
   const hasActiveSchedule = (workingHours) => {
     if (!workingHours) return false;
     return Object.values(workingHours).some(day => day && day.start && day.end);
@@ -222,7 +222,7 @@ export default function DoctorProfile() {
                   <div className="spinner-border mb-3" role="status" style={{ color: "#D9A299", width: "3rem", height: "3rem" }}>
               <span className="visually-hidden">Duke u ngarkuar...</span>
                   </div>
-                  <p style={{ color: "#D9A299", fontSize: "1.2rem" }}>â³ Duke ngarkuar profilin...</p>
+                  <p style={{ color: "#D9A299", fontSize: "1.2rem" }}>⏳ Duke ngarkuar profilin...</p>
                 </div>
               </div>
             </div>
@@ -258,7 +258,7 @@ export default function DoctorProfile() {
                     color: "white",
                     fontSize: "1.1rem"
                   }}>
-          <h4 className="alert-heading">âŒ Gabim</h4>
+          <h4 className="alert-heading">❌ Gabim</h4>
           <p>{error}</p>
                     <hr style={{ borderColor: "rgba(255, 255, 255, 0.3)" }} />
           <div className="d-flex gap-2 flex-wrap">
@@ -271,7 +271,7 @@ export default function DoctorProfile() {
                         color: "white",
                         borderRadius: "8px"
             }}>
-              ðŸ” Rilogo
+              🔐 Rilogo
             </button>
                     </div>
                   </div>
@@ -310,8 +310,8 @@ export default function DoctorProfile() {
                     color: "#2c3e50",
                     fontSize: "1.1rem"
                   }}>
-          <h4 className="alert-heading">âš ï¸ Nuk u gjetÃ«n tÃ« dhÃ«na</h4>
-          <p>Nuk u gjetÃ«n tÃ« dhÃ«na pÃ«r mjekun. Ju lutem kontaktoni administratorin.</p>
+          <h4 className="alert-heading">⚠️ Nuk u gjetën të dhëna</h4>
+          <p>Nuk u gjetën të dhëna për mjekun. Ju lutem kontaktoni administratorin.</p>
                   </div>
                 </div>
               </div>
@@ -346,7 +346,7 @@ export default function DoctorProfile() {
                 border: "none"
               }}>
                 <div className="d-flex justify-content-between align-items-center">
-                  <h3 className="mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold" }}>ðŸ‘¨â€âš•ï¸ Profili i Mjekut</h3>
+                  <h3 className="mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold" }}>👨‍⚕️ Profili i Mjekut</h3>
                   <span className="badge" style={{
                     background: "rgba(255, 255, 255, 0.2)",
                     color: "white",
@@ -360,7 +360,7 @@ export default function DoctorProfile() {
                 </p>
         </div>
               <div className="card-body p-5">
-          {/* Informacioni BazÃ« */}
+          {/* Informacioni Bazë */}
                 <div className="mb-4" style={{
                   background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
                   padding: "2rem",
@@ -368,18 +368,18 @@ export default function DoctorProfile() {
                   boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
                   border: "1px solid rgba(220, 197, 178, 0.3)"
                 }}>
-                  <h5 className="mb-3" style={{ color: "#D9A299", fontSize: "1.5rem" }}>ðŸ“‹ Informacione Personale</h5>
+                  <h5 className="mb-3" style={{ color: "#D9A299", fontSize: "1.5rem" }}>📋 Informacione Personale</h5>
             <div className="row">
               <div className="col-md-6">
                 <div className="mb-3">
-                  <label className="form-label fw-bold text-muted">Emri i PlotÃ«</label>
-                  <p className="form-control-plaintext border-bottom pb-2">{doctor.name || "â€”"}</p>
+                  <label className="form-label fw-bold text-muted">Emri i Plotë</label>
+                  <p className="form-control-plaintext border-bottom pb-2">{doctor.name || "—"}</p>
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
                   <label className="form-label fw-bold text-muted">Email</label>
-                  <p className="form-control-plaintext border-bottom pb-2">{doctor.email || "â€”"}</p>
+                  <p className="form-control-plaintext border-bottom pb-2">{doctor.email || "—"}</p>
                 </div>
               </div>
             </div>
@@ -387,13 +387,13 @@ export default function DoctorProfile() {
               <div className="col-md-6">
                 <div className="mb-3">
                   <label className="form-label fw-bold text-muted">Telefoni</label>
-                  <p className="form-control-plaintext border-bottom pb-2">{doctor.phone || "â€”"}</p>
+                  <p className="form-control-plaintext border-bottom pb-2">{doctor.phone || "—"}</p>
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="mb-3">
                   <label className="form-label fw-bold text-muted">Specializimi</label>
-                  <p className="form-control-plaintext border-bottom pb-2">{doctor.specialization || "â€”"}</p>
+                  <p className="form-control-plaintext border-bottom pb-2">{doctor.specialization || "—"}</p>
                 </div>
               </div>
             </div>
@@ -411,7 +411,7 @@ export default function DoctorProfile() {
             )}
           </div>
 
-          {/* Orari i PunÃ«s */}
+          {/* Orari i Punës */}
                 <div className="mt-4" style={{
                   background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
                   padding: "2rem",
@@ -420,7 +420,7 @@ export default function DoctorProfile() {
                   border: "1px solid rgba(220, 197, 178, 0.3)"
                 }}>
             <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h5 className="mb-0" style={{ color: "#D9A299", fontSize: "1.5rem" }}>ðŸ• Orari i PunÃ«s</h5>
+                    <h5 className="mb-0" style={{ color: "#D9A299", fontSize: "1.5rem" }}>🕐 Orari i Punës</h5>
               
               {hasActiveSchedule(workingHours) && (
                 <button 
@@ -432,7 +432,7 @@ export default function DoctorProfile() {
                     padding: "0.4rem 0.8rem"
                   }}
                 >
-                  {showScheduleDetails ? 'ðŸ”¼ Fshih Detajet' : 'ðŸ”½ Shiko Detajet'}
+                  {showScheduleDetails ? '🔼 Fshih Detajet' : '🔽 Shiko Detajet'}
                 </button>
               )}
             </div>
@@ -451,14 +451,14 @@ export default function DoctorProfile() {
                   <div className="d-flex justify-content-between align-items-center flex-wrap gap-2" style={{ width: '100%' }}>
                     <div style={{ minWidth: 0, flex: '1 1 auto' }}>
                       <h6 className="mb-1 text-success" style={{ fontSize: "0.88rem", margin: 0 }}>
-                        âœ… Orari Aktiv
+                        ✅ Orari Aktiv
                       </h6>
                       <small className="text-muted" style={{ fontSize: "0.73rem", display: 'block', whiteSpace: 'normal', marginTop: '4px' }}>
-                        {formatDays(workingHours).length} ditÃ« pune tÃ« konfiguruara
+                        {formatDays(workingHours).length} ditë pune të konfiguruara
                       </small>
                     </div>
                     <span className="badge bg-success schedule-badge" style={{ fontSize: "0.75rem", padding: "0.35rem 0.7rem", flex: '0 0 auto', marginLeft: '8px' }}>
-                      ðŸ¥ NÃ« ShÃ«rbim
+                      🏥 Në Shërbim
                     </span>
                   </div>
                 </div>
@@ -481,7 +481,7 @@ export default function DoctorProfile() {
                                   fontSize: "0.9rem",
                                   flex: "0 0 auto"
                                 }}>
-                                  ðŸ“… {schedule.day}
+                                  📅 {schedule.day}
                                 </h6>
                                 <div className="text-end">
                                   <span style={{ 
@@ -509,7 +509,7 @@ export default function DoctorProfile() {
                     }}>
                       <div className="d-flex justify-content-between align-items-center flex-wrap gap-2" style={{ width: '100%' }}>
                         <small className="text-success fw-bold" style={{ fontSize: "0.8rem", minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          ðŸ“Š Total: {formatDays(workingHours).length} ditÃ« aktive
+                          📊 Total: {formatDays(workingHours).length} ditë aktive
                         </small>
                         <small className="text-muted" style={{ fontSize: "0.75rem", minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           Orari i vendosur nga {workingHours.setBy === 'clinic' ? 'klinika' : 'ju'}
@@ -528,11 +528,11 @@ export default function DoctorProfile() {
                       fontSize: "1rem"
                     }}>
                 <div className="d-flex align-items-start gap-3">
-                  <div style={{ fontSize: "2rem" }}>âš ï¸</div>
+                  <div style={{ fontSize: "2rem" }}>⚠️</div>
                   <div>
-                    <strong>Nuk ka orar tÃ« punÃ«s tÃ« definuar</strong>
+                    <strong>Nuk ka orar të punës të definuar</strong>
                     <p className="mb-2 mt-1" style={{ fontSize: "0.9rem" }}>
-                      Ju lutem kontaktoni administratorin e klinikÃ«s pÃ«r tÃ« vendosur orarin tuaj tÃ« punÃ«s ose vendoseni vetÃ« nÃ«pÃ«rmjet butonit "ðŸ—“ï¸ Orari".
+                      Ju lutem kontaktoni administratorin e klinikës për të vendosur orarin tuaj të punës ose vendoseni vetë nëpërmjet butonit "🗓️ Orari".
                     </p>
                     <div className="d-flex gap-2 flex-wrap">
                       <button 
@@ -540,7 +540,7 @@ export default function DoctorProfile() {
                         className="btn btn-sm btn-warning"
                         style={{ fontSize: "0.8rem" }}
                       >
-                        ðŸ—“ï¸ Vendos Orarin
+                        🗓️ Vendos Orarin
                       </button>
                       <span className="text-muted" style={{ fontSize: "0.8rem", alignSelf: "center" }}>
                         ose kontaktoni administratorin
@@ -552,7 +552,7 @@ export default function DoctorProfile() {
             )}
           </div>
 
-          {/* Butona tÃ« Veprimit */}
+          {/* Butona të Veprimit */}
                 <div className="mt-4 pt-3" style={{
                   background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
                   padding: "2rem",
@@ -571,7 +571,7 @@ export default function DoctorProfile() {
                       fontSize: "1rem",
                       fontWeight: "bold"
                     }}>
-                ðŸ“‹ Takimet
+                📋 Takimet
               </button>
                     <button className="btn btn-lg" onClick={handleManageSchedule} style={{
                       background: "linear-gradient(135deg, #F0E4D3, #DCC5B2)",
@@ -583,7 +583,7 @@ export default function DoctorProfile() {
                       fontSize: "1rem",
                       fontWeight: "bold"
                     }}>
-                ðŸ—“ï¸ Orari
+                🗓️ Orari
               </button>
                     <button className="btn btn-lg" onClick={handleEditProfile} style={{
                       background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
@@ -595,7 +595,7 @@ export default function DoctorProfile() {
                       fontSize: "1rem",
                       fontWeight: "bold"
                     }}>
-                âœï¸ Edit Profile
+                ✏️ Edit Profile
               </button>
                   </div>
                 </div>
@@ -611,20 +611,20 @@ export default function DoctorProfile() {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">âœï¸ Editoni Profilin</h5>
+                <h5 className="modal-title">✏️ Editoni Profilin</h5>
                 <button type="button" className="btn-close" onClick={() => setShowEditModal(false)}></button>
               </div>
               <div className="modal-body">
                 <form>
                   <div className="mb-3">
-                    <label className="form-label">Emri i PlotÃ« *</label>
+                    <label className="form-label">Emri i Plotë *</label>
                     <input
                       type="text"
                       className="form-control"
                       name="name"
                       value={editForm.name}
                       onChange={handleInputChange}
-                      placeholder="Shkruani emrin e plotÃ«"
+                      placeholder="Shkruani emrin e plotë"
                       required
                     />
                   </div>
@@ -673,7 +673,7 @@ export default function DoctorProfile() {
                       name="bio"
                       value={editForm.bio}
                       onChange={handleInputChange}
-                      placeholder="PÃ«rshkrimi i shkurtÃ«r pÃ«r veten..."
+                      placeholder="Përshkrimi i shkurtër për veten..."
                       rows="3"
                     />
                   </div>
@@ -681,7 +681,7 @@ export default function DoctorProfile() {
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={() => setShowEditModal(false)}>
-                  âŒ Anulo
+                  ❌ Anulo
                 </button>
                 <button 
                   type="button" 
@@ -695,7 +695,7 @@ export default function DoctorProfile() {
                       Duke ruajtur...
                     </>
                   ) : (
-                    'ðŸ’¾ Ruaj Ndryshimet'
+                    '💾 Ruaj Ndryshimet'
                   )}
                 </button>
               </div>

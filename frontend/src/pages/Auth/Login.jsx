@@ -1,8 +1,7 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import API_BASE_URL from "../../config/api";
 
 export default function Login() {
   const [step, setStep] = useState("select"); // select, login, forgot, reset
@@ -13,7 +12,7 @@ export default function Login() {
     doctorCode: "",
     code: "",
     newPassword: "",
-    adminSecret: "", // shtuar pÃ«r admin
+    adminSecret: "", // shtuar për admin
   });
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -59,7 +58,7 @@ export default function Login() {
 
       const { token, user } = res.data;
       if (role === "patient" && !user.isVerified) {
-        return setError("ðŸ“§ Ju lutemi verifikoni emailin pÃ«rpara se tÃ« qaseni.");
+        return setError("📧 Ju lutemi verifikoni emailin përpara se të qaseni.");
       }
 
       localStorage.setItem("token", token);
@@ -71,7 +70,7 @@ export default function Login() {
       
       navigate(`/${user.role}`);
     } catch (err) {
-      setError(err.response?.data?.message || "Gabim gjatÃ« qasjes.");
+      setError(err.response?.data?.message || "Gabim gjatë qasjes.");
     }
   };
 
@@ -84,10 +83,10 @@ export default function Login() {
         email: formData.email,
         role,
       });
-      setMessage("âœ… NjÃ« kod Ã«shtÃ« dÃ«rguar nÃ« email. Kontrollo inbox-in.");
+      setMessage("✅ Një kod është dërguar në email. Kontrollo inbox-in.");
       setStep("reset");
     } catch (err) {
-      setError(err.response?.data?.message || "Gabim gjatÃ« dÃ«rgimit tÃ« kodit.");
+      setError(err.response?.data?.message || "Gabim gjatë dërgimit të kodit.");
     }
   };
 
@@ -103,10 +102,10 @@ export default function Login() {
         code: formData.code,
         newPassword: formData.newPassword,
       });
-      setMessage("ðŸ”’ FjalÃ«kalimi u ndryshua me sukses. Mund tÃ« qaseni tani.");
+      setMessage("🔒 Fjalëkalimi u ndryshua me sukses. Mund të qaseni tani.");
       setStep("login");
     } catch (err) {
-      setError(err.response?.data?.message || "Gabim gjatÃ« ndryshimit tÃ« fjalÃ«kalimit.");
+      setError(err.response?.data?.message || "Gabim gjatë ndryshimit të fjalëkalimit.");
     }
   };
 
@@ -129,7 +128,7 @@ export default function Login() {
       }}>
         {step === "select" && (
           <>
-            <h2 className="mb-4 text-center" style={{ color: "#D9A299" }}>Zgjedh mÃ«nyrÃ«n e qasjes</h2>
+            <h2 className="mb-4 text-center" style={{ color: "#D9A299" }}>Zgjedh mënyrën e qasjes</h2>
             <div className="d-grid gap-3">
               <button className="btn btn-lg" onClick={() => handleRoleSelect("patient")} style={{
                 background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
@@ -138,7 +137,7 @@ export default function Login() {
                 borderRadius: "10px",
                 boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
               }}>
-                ðŸ§‘â€âš•ï¸ Vazhdo si Pacient
+                🧑‍⚕️ Vazhdo si Pacient
               </button>
               <button className="btn btn-lg" onClick={() => handleRoleSelect("doctor")} style={{
                 background: "linear-gradient(135deg, #DCC5B2, #F0E4D3)",
@@ -147,7 +146,7 @@ export default function Login() {
                 borderRadius: "10px",
                 boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
               }}>
-                ðŸ‘¨â€âš•ï¸ Vazhdo si Mjek
+                👨‍⚕️ Vazhdo si Mjek
               </button>
               <button className="btn btn-lg" onClick={() => handleRoleSelect("clinic")} style={{
                 background: "linear-gradient(135deg, #F0E4D3, #FAF7F3)",
@@ -156,7 +155,7 @@ export default function Login() {
                 borderRadius: "10px",
                 boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
               }}>
-                ðŸ¥ Vazhdo si KlinikÃ«
+                🏥 Vazhdo si Klinikë
               </button>
 
               
@@ -174,7 +173,7 @@ export default function Login() {
               {role === "doctor"
                 ? "Mjek"
                 : role === "clinic"
-                ? "KlinikÃ«"
+                ? "Klinikë"
                 : role === "admin"
                 ? "Admin"
                 : "Pacient"}
@@ -212,7 +211,7 @@ export default function Login() {
                   name="password"
                   type="password"
                   className="form-control form-control-lg"
-                  placeholder="FjalÃ«kalimi"
+                  placeholder="Fjalëkalimi"
                   value={formData.password}
                   onChange={handleChange}
                   autoComplete="off"
@@ -227,7 +226,7 @@ export default function Login() {
                     className="btn btn-link p-0"
                     onClick={() => setStep("forgot")}
                   >
-                    ðŸ” Keni harruar fjalÃ«kalimin?
+                    🔐 Keni harruar fjalëkalimin?
                   </button>
                 </div>
               )}
@@ -238,14 +237,14 @@ export default function Login() {
             </form>
 
             <button className="btn btn-link mt-4" onClick={() => setStep("select")}>
-              ðŸ”™ Kthehu prapa
+              🔙 Kthehu prapa
             </button>
           </>
         )}
 
         {step === "forgot" && (
           <>
-            <h2 className="mb-4 text-center">ðŸ” Keni harruar fjalÃ«kalimin?</h2>
+            <h2 className="mb-4 text-center">🔐 Keni harruar fjalëkalimin?</h2>
             {error && <div className="alert alert-danger">{error}</div>}
             {message && <div className="alert alert-success">{message}</div>}
             <form onSubmit={handleForgot} autoComplete="off">
@@ -260,18 +259,18 @@ export default function Login() {
                 required
               />
               <button type="submit" className="btn btn-warning w-100">
-                DÃ«rgo kodin
+                Dërgo kodin
               </button>
             </form>
             <button className="btn btn-link mt-3" onClick={() => setStep("login")}>
-              ðŸ”™ Kthehu te qasja
+              🔙 Kthehu te qasja
             </button>
           </>
         )}
 
         {step === "reset" && (
           <>
-            <h2 className="mb-4 text-center">ðŸ”‘ Ndrysho fjalÃ«kalimin</h2>
+            <h2 className="mb-4 text-center">🔑 Ndrysho fjalëkalimin</h2>
             {error && <div className="alert alert-danger">{error}</div>}
             {message && <div className="alert alert-success">{message}</div>}
             <form onSubmit={handleReset} autoComplete="off">
@@ -288,18 +287,18 @@ export default function Login() {
                 name="newPassword"
                 type="password"
                 className="form-control form-control-lg mb-3"
-                placeholder="FjalÃ«kalimi i ri"
+                placeholder="Fjalëkalimi i ri"
                 value={formData.newPassword}
                 onChange={handleChange}
                 autoComplete="off"
                 required
               />
               <button type="submit" className="btn btn-success w-100">
-                Ndrysho fjalÃ«kalimin
+                Ndrysho fjalëkalimin
               </button>
             </form>
             <button className="btn btn-link mt-3" onClick={() => setStep("login")}>
-              ðŸ”™ Kthehu te qasja
+              🔙 Kthehu te qasja
             </button>
           </>
         )}
