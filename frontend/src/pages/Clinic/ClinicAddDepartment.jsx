@@ -1,6 +1,7 @@
 // src/pages/Clinic/ClinicAddDepartment.jsx
 import { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "../../config/api";
 import { getToken } from "../../utils/auth";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
 
@@ -12,7 +13,7 @@ export default function ClinicAddDepartment() {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/clinic/departments", {
+        const res = await axios.get(`${API_BASE_URL}/api/clinic/departments`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDepartments(res.data);
@@ -30,14 +31,14 @@ export default function ClinicAddDepartment() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/clinic/departments",
+        `${API_BASE_URL}/api/clinic/departments`,
         { name },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setName("");
       alert("✅ Departamenti u shtua me sukses!");
       // Rifresko listën
-      const res = await axios.get("http://localhost:5000/api/clinic/departments", {
+      const res = await axios.get(`${API_BASE_URL}/api/clinic/departments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDepartments(res.data);

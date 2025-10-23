@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./DoctorList.css";
@@ -25,49 +25,49 @@ export default function DoctorList() {
   const fetchDoctors = async () => {
     try {
       const token = getToken();
-      const res = await axios.get("http://localhost:5000/api/clinic/doctors", {
+      const res = await axios.get(`${API_BASE_URL}/api/clinic/doctors", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDoctors(res.data);
     } catch (err) {
-      console.error("❌ Gabim në marrjen e mjekëve:", err);
+      console.error("âŒ Gabim nÃ« marrjen e mjekÃ«ve:", err);
     }
   };
 
   const fetchDepartments = async () => {
     try {
       const token = getToken();
-      const res = await axios.get("http://localhost:5000/api/clinic/departments", {
+      const res = await axios.get(`${API_BASE_URL}/api/clinic/departments", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDepartments(res.data);
     } catch (err) {
-      console.error("❌ Gabim në marrjen e departamenteve:", err);
+      console.error("âŒ Gabim nÃ« marrjen e departamenteve:", err);
     }
   };
 
   const fetchServices = async () => {
     try {
       const token = getToken();
-      const res = await axios.get("http://localhost:5000/api/clinic/services", {
+      const res = await axios.get(`${API_BASE_URL}/api/clinic/services", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClinicServices(res.data);
     } catch (err) {
-      console.error("❌ Gabim në marrjen e shërbimeve:", err);
+      console.error("âŒ Gabim nÃ« marrjen e shÃ«rbimeve:", err);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("A jeni të sigurt që doni ta fshini mjekun?")) return;
+    if (!window.confirm("A jeni tÃ« sigurt qÃ« doni ta fshini mjekun?")) return;
     try {
       const token = getToken();
-      await axios.delete(`http://localhost:5000/api/clinic/doctors/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/clinic/doctors/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchDoctors();
     } catch (err) {
-      console.error("❌ Gabim gjatë fshirjes:", err);
+      console.error("âŒ Gabim gjatÃ« fshirjes:", err);
     }
   };
 
@@ -93,14 +93,14 @@ export default function DoctorList() {
 
       // Emri & emaili
       await axios.put(
-        `http://localhost:5000/api/clinic/users/${id}`,
+        `${API_BASE_URL}/api/clinic/users/${id}`,
         { name: editedName, email: editedEmail },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Departamenti & shërbimet
+      // Departamenti & shÃ«rbimet
       await axios.put(
-        `http://localhost:5000/api/clinic/doctors/${id}`,
+        `${API_BASE_URL}/api/clinic/doctors/${id}`,
         { departmentId: editedDepartmentId, services: editedServices },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -108,7 +108,7 @@ export default function DoctorList() {
       setEditingDoctor(null);
       fetchDoctors();
     } catch (err) {
-      console.error("❌ Gabim gjatë ruajtjes së mjekut:", err);
+      console.error("âŒ Gabim gjatÃ« ruajtjes sÃ« mjekut:", err);
     }
   };
 
@@ -139,10 +139,10 @@ export default function DoctorList() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color:"white" }}>
-                  📋 Lista e Mjekëve të Klinikës
+                  ðŸ“‹ Lista e MjekÃ«ve tÃ« KlinikÃ«s
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
-                  Menaxhoni mjekët dhe shërbimet e klinikës suaj
+                  Menaxhoni mjekÃ«t dhe shÃ«rbimet e klinikÃ«s suaj
                 </p>
               </div>
               <div className="card-body p-5">
@@ -161,7 +161,7 @@ export default function DoctorList() {
                           <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Emri</th>
                           <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Email</th>
                           <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Departamenti</th>
-                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Shërbimet</th>
+                          <th style={{ padding: "1rem", fontSize: "1.1rem" }}>ShÃ«rbimet</th>
                           <th style={{ padding: "1rem", fontSize: "1.1rem" }}>Veprime</th>
                         </tr>
                       </thead>
@@ -219,7 +219,7 @@ export default function DoctorList() {
                                   ))}
                                 </select>
                               ) : (
-                                doc.departmentId?.name || "⛔ Pa Departament"
+                                doc.departmentId?.name || "â›” Pa Departament"
                               )}
                             </td>
                             <td style={{ padding: "1rem" }}>
@@ -238,7 +238,7 @@ export default function DoctorList() {
                                         className="form-check-label"
                                         htmlFor={`edit-service-${s._id}`}
                                       >
-                                        {s.name} – {s.price}€
+                                        {s.name} â€“ {s.price}â‚¬
                                       </label>
                                     </div>
                                   ))}
@@ -250,7 +250,7 @@ export default function DoctorList() {
                                   ))}
                                 </ul>
                               ) : (
-                                <span className="text-muted">⛔ Pa shërbime</span>
+                                <span className="text-muted">â›” Pa shÃ«rbime</span>
                               )}
                             </td>
                             <td style={{ padding: "1rem" }}>
@@ -262,7 +262,7 @@ export default function DoctorList() {
                                     borderRadius: "8px",
                                     boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                   }}>
-                                    💾 Ruaj
+                                    ðŸ’¾ Ruaj
                                   </button>
                                   <button className="btn btn-secondary btn-sm" onClick={() => setEditingDoctor(null)} style={{
                                     background: "linear-gradient(135deg, #F0E4D3, #DCC5B2)",
@@ -282,7 +282,7 @@ export default function DoctorList() {
                                     borderRadius: "8px",
                                     boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                   }}>
-                                    ✏️ Edito
+                                    âœï¸ Edito
                                   </button>
                                   <button className="btn btn-outline-danger btn-sm" onClick={() => handleDelete(doc._id)} style={{
                                     background: "linear-gradient(135deg, #DCC5B2, #D9A299)",
@@ -291,7 +291,7 @@ export default function DoctorList() {
                                     borderRadius: "8px",
                                     boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                   }}>
-                                    🗑️ Fshij
+                                    ðŸ—‘ï¸ Fshij
                                   </button>
                                 </>
                               )}
@@ -311,7 +311,7 @@ export default function DoctorList() {
                     fontWeight: "500",
                     padding: "2rem"
                   }}>
-                    📭 Nuk ka mjekë të regjistruar.
+                    ðŸ“­ Nuk ka mjekÃ« tÃ« regjistruar.
                   </div>
                 )}
               </div>

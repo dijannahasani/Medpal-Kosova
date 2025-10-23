@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getToken, getUser, setAuth } from "../../utils/auth";
@@ -19,7 +19,7 @@ export default function PatientProfile() {
   useEffect(() => {
     const fetchData = async () => {
       const token = getToken();
-      const res = await axios.get("http://localhost:5000/api/auth/me", {
+      const res = await axios.get(`${API_BASE_URL}/api/auth/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setForm({ ...form, ...res.data });
@@ -35,8 +35,8 @@ export default function PatientProfile() {
     e.preventDefault();
     const token = getToken();
     try {
-      console.log("🔍 Updating patient profile:", form);
-      const response = await axios.put("http://localhost:5000/api/users/me", form, {
+      console.log("ðŸ” Updating patient profile:", form);
+      const response = await axios.put(`${API_BASE_URL}/api/users/me", form, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
@@ -45,12 +45,12 @@ export default function PatientProfile() {
       const updatedUser = { ...currentUser, ...response.data };
       setAuth(token, updatedUser);
       
-      console.log("✅ Profile updated successfully:", response.data);
-      alert("✅ Profili u përditësua me sukses!");
+      console.log("âœ… Profile updated successfully:", response.data);
+      alert("âœ… Profili u pÃ«rditÃ«sua me sukses!");
     } catch (err) {
-      console.error("❌ Error updating profile:", err);
-      console.error("❌ Error response:", err.response?.data);
-      alert("❌ Gabim në përditësim: " + (err.response?.data?.message || err.message));
+      console.error("âŒ Error updating profile:", err);
+      console.error("âŒ Error response:", err.response?.data);
+      alert("âŒ Gabim nÃ« pÃ«rditÃ«sim: " + (err.response?.data?.message || err.message));
     }
   };
 
@@ -77,10 +77,10 @@ export default function PatientProfile() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  👤 Profili i Pacientit
+                  ðŸ‘¤ Profili i Pacientit
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
-                  Përditësoni të dhënat tuaja personale
+                  PÃ«rditÃ«soni tÃ« dhÃ«nat tuaja personale
                 </p>
               </div>
               <div className="card-body p-5">
@@ -133,15 +133,15 @@ export default function PatientProfile() {
                     >
                       <option value="">Zgjedh Gjinine</option>
                       <option value="male">Mashkull</option>
-                      <option value="female">Femër</option>
-                      <option value="other">Tjetër</option>
+                      <option value="female">FemÃ«r</option>
+                      <option value="other">TjetÃ«r</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="mb-4">
                   <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>
-                    Historia mjekësore
+                    Historia mjekÃ«sore
                   </label>
                   <textarea
                     name="medicalHistory"
@@ -167,7 +167,7 @@ export default function PatientProfile() {
                   fontSize: "1.2rem",
                   fontWeight: "bold",
                   transition: "all 0.3s ease"
-                }}>💾 Ruaj Ndryshimet</button>
+                }}>ðŸ’¾ Ruaj Ndryshimet</button>
                 </form>
               </div>
             </div>

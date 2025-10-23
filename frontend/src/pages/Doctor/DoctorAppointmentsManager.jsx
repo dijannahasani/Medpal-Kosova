@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DoctorHomeButton from "../../components/DoctorHomeButton";
@@ -20,7 +20,7 @@ export default function DoctorAppointmentsManager() {
       const token = localStorage.getItem("token");
       
       const response = await axios.get(
-        "http://localhost:5000/api/appointments/mine",
+        `${API_BASE_URL}/api/appointments/mine",
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -28,8 +28,8 @@ export default function DoctorAppointmentsManager() {
       
       setAppointments(response.data);
     } catch (err) {
-      console.error("Gabim në marrjen e takimeve:", err);
-      setError("Nuk u morën takimet. " + (err.response?.data?.message || err.message));
+      console.error("Gabim nÃ« marrjen e takimeve:", err);
+      setError("Nuk u morÃ«n takimet. " + (err.response?.data?.message || err.message));
     } finally {
       setLoading(false);
     }
@@ -37,21 +37,21 @@ export default function DoctorAppointmentsManager() {
 
   const handleStatusChange = async (appointmentId, newStatus) => {
     try {
-      console.log("📝 Changing status:", { appointmentId, newStatus });
+      console.log("ðŸ“ Changing status:", { appointmentId, newStatus });
       const token = localStorage.getItem("token");
       
       const requestData = { status: newStatus };
-      console.log("📤 Request data:", requestData);
+      console.log("ðŸ“¤ Request data:", requestData);
       
       await axios.put(
-        `http://localhost:5000/api/appointments/${appointmentId}/status`,
+        ${API_BASE_URL}/api/appointments/${appointmentId}/status`,
         requestData,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
       
-      // Përditëso listën lokale
+      // PÃ«rditÃ«so listÃ«n lokale
       setAppointments(prev => 
         prev.map(apt => 
           apt._id === appointmentId 
@@ -60,19 +60,19 @@ export default function DoctorAppointmentsManager() {
         )
       );
       
-      alert(`✅ Statusi i takimit u ndryshua në "${newStatus}"`);
+      alert(`âœ… Statusi i takimit u ndryshua nÃ« "${newStatus}"`);
     } catch (err) {
-      console.error("Gabim në ndryshimin e statusit:", err);
-      alert("❌ Gabim në ndryshimin e statusit: " + (err.response?.data?.message || err.message));
+      console.error("Gabim nÃ« ndryshimin e statusit:", err);
+      alert("âŒ Gabim nÃ« ndryshimin e statusit: " + (err.response?.data?.message || err.message));
     }
   };
 
   const getStatusBadge = (status) => {
     const statusMap = {
-      pending: { class: "bg-warning text-dark", text: "⏳ Në pritje" },
-      approved: { class: "bg-success", text: "✅ Aprovuar" },
-      completed: { class: "bg-primary", text: "✅ Përfunduar" },
-      canceled: { class: "bg-danger", text: "❌ Anuluar" }
+      pending: { class: "bg-warning text-dark", text: "â³ NÃ« pritje" },
+      approved: { class: "bg-success", text: "âœ… Aprovuar" },
+      completed: { class: "bg-primary", text: "âœ… PÃ«rfunduar" },
+      canceled: { class: "bg-danger", text: "âŒ Anuluar" }
     };
     
     const statusInfo = statusMap[status] || { class: "bg-secondary", text: status };
@@ -140,7 +140,7 @@ export default function DoctorAppointmentsManager() {
               }}>
                 <div className="d-flex justify-content-between align-items-center">
                   <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color:"white" }}>
-                    📋 Menaxhimi i Takimeve
+                    ðŸ“‹ Menaxhimi i Takimeve
                   </h2>
                   <button 
                     className="btn btn-outline-light btn-lg"
@@ -152,11 +152,11 @@ export default function DoctorAppointmentsManager() {
                       fontWeight: "bold"
                     }}
                   >
-                    ← Kthehu në Profil
+                    â† Kthehu nÃ« Profil
                   </button>
                 </div>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
-                  Menaxhoni të gjitha takimet e pacientëve tuaj
+                  Menaxhoni tÃ« gjitha takimet e pacientÃ«ve tuaj
                 </p>
               </div>
               <div className="card-body p-5">
@@ -169,7 +169,7 @@ export default function DoctorAppointmentsManager() {
                     color: "white",
                     fontSize: "1.1rem"
                   }}>
-                    <strong>❌ Gabim:</strong> {error}
+                    <strong>âŒ Gabim:</strong> {error}
                     <button 
                       className="btn btn-sm ms-2"
                       onClick={fetchAppointments}
@@ -180,7 +180,7 @@ export default function DoctorAppointmentsManager() {
                         borderRadius: "8px"
                       }}
                     >
-                      🔄 Provo Përsëri
+                      ðŸ”„ Provo PÃ«rsÃ«ri
                     </button>
                   </div>
                 )}
@@ -205,15 +205,15 @@ export default function DoctorAppointmentsManager() {
                             borderRadius: "12px"
                           }}
                         >
-                          <option value="all">🔍 Të gjitha takimet</option>
-                          <option value="pending">⏳ Në pritje</option>
-                          <option value="approved">✅ Aprovuar</option>
-                          <option value="completed">✅ Përfunduar</option>
-                          <option value="canceled">❌ Anuluar</option>
+                          <option value="all">ðŸ” TÃ« gjitha takimet</option>
+                          <option value="pending">â³ NÃ« pritje</option>
+                          <option value="approved">âœ… Aprovuar</option>
+                          <option value="completed">âœ… PÃ«rfunduar</option>
+                          <option value="canceled">âŒ Anuluar</option>
                         </select>
                       </div>
                       <div className="col-md-4">
-                        <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>Filtro sipas datës:</label>
+                        <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>Filtro sipas datÃ«s:</label>
                         <input
                           type="date"
                           className="form-control form-control-lg"
@@ -240,7 +240,7 @@ export default function DoctorAppointmentsManager() {
                             boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                           }}
                         >
-                          🗑️ Pastro
+                          ðŸ—‘ï¸ Pastro
                         </button>
                       </div>
                     </div>
@@ -274,7 +274,7 @@ export default function DoctorAppointmentsManager() {
                   <div className="card-body p-0">
                     {filteredAppointments.length === 0 ? (
                       <div className="text-center py-5">
-                        <p className="text-muted mb-3" style={{ fontSize: "1.1rem" }}>📭 Nuk ka takime për t'i shfaqur</p>
+                        <p className="text-muted mb-3" style={{ fontSize: "1.1rem" }}>ðŸ“­ Nuk ka takime pÃ«r t'i shfaqur</p>
                         <button 
                           className="btn btn-lg"
                           onClick={fetchAppointments}
@@ -286,7 +286,7 @@ export default function DoctorAppointmentsManager() {
                             boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                           }}
                         >
-                          🔄 Rifresko
+                          ðŸ”„ Rifresko
                         </button>
                       </div>
                     ) : (
@@ -300,12 +300,12 @@ export default function DoctorAppointmentsManager() {
                             color: "white"
                           }}>
                             <tr>
-                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>👤 Pacienti</th>
-                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>📅 Data</th>
-                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>🕐 Koha</th>
-                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>🏥 Shërbimi</th>
-                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>📊 Statusi</th>
-                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>⚙️ Veprime</th>
+                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>ðŸ‘¤ Pacienti</th>
+                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>ðŸ“… Data</th>
+                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>ðŸ• Koha</th>
+                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>ðŸ¥ ShÃ«rbimi</th>
+                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>ðŸ“Š Statusi</th>
+                              <th style={{ padding: "1rem", fontSize: "1.1rem" }}>âš™ï¸ Veprime</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -331,7 +331,7 @@ export default function DoctorAppointmentsManager() {
                                   <strong>{appointment.time}</strong>
                                 </td>
                                 <td style={{ padding: "1rem" }}>
-                                  {appointment.serviceId?.name || 'Konsultim i përgjithshëm'}
+                                  {appointment.serviceId?.name || 'Konsultim i pÃ«rgjithshÃ«m'}
                                 </td>
                                 <td style={{ padding: "1rem" }}>
                                   {getStatusBadge(appointment.status)}
@@ -352,7 +352,7 @@ export default function DoctorAppointmentsManager() {
                                             boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                           }}
                                         >
-                                          ✅
+                                          âœ…
                                         </button>
                                         <button
                                           className="btn btn-sm"
@@ -366,7 +366,7 @@ export default function DoctorAppointmentsManager() {
                                             boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                           }}
                                         >
-                                          ❌
+                                          âŒ
                                         </button>
                                       </>
                                     )}
@@ -374,7 +374,7 @@ export default function DoctorAppointmentsManager() {
                                       <button
                                         className="btn btn-sm"
                                         onClick={() => handleStatusChange(appointment._id, 'completed')}
-                                        title="Shëno si të përfunduar"
+                                        title="ShÃ«no si tÃ« pÃ«rfunduar"
                                         style={{
                                           background: "linear-gradient(135deg, #D9A299, #DCC5B2)",
                                           border: "none",
@@ -383,17 +383,17 @@ export default function DoctorAppointmentsManager() {
                                           boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                                         }}
                                       >
-                                        ✅ Përfundo
+                                        âœ… PÃ«rfundo
                                       </button>
                                     )}
                                     {appointment.status === 'completed' && (
                                       <span className="text-success small">
-                                        ✅ E përfunduar
+                                        âœ… E pÃ«rfunduar
                                       </span>
                                     )}
                                     {appointment.status === 'canceled' && (
                                       <span className="text-muted small">
-                                        ❌ E anuluar
+                                        âŒ E anuluar
                                       </span>
                                     )}
                                   </div>
@@ -418,7 +418,7 @@ export default function DoctorAppointmentsManager() {
                     }}>
                       <div className="card-body text-center">
                         <h4 style={{ color: "#D9A299", fontSize: "2rem" }}>{appointments.filter(a => a.status === 'pending').length}</h4>
-                        <small style={{ color: "#2c3e50", fontSize: "1rem" }}>Në pritje</small>
+                        <small style={{ color: "#2c3e50", fontSize: "1rem" }}>NÃ« pritje</small>
                       </div>
                     </div>
                   </div>
@@ -444,7 +444,7 @@ export default function DoctorAppointmentsManager() {
                     }}>
                       <div className="card-body text-center">
                         <h4 style={{ color: "#D9A299", fontSize: "2rem" }}>{appointments.filter(a => a.status === 'completed').length}</h4>
-                        <small style={{ color: "#2c3e50", fontSize: "1rem" }}>Përfunduar</small>
+                        <small style={{ color: "#2c3e50", fontSize: "1rem" }}>PÃ«rfunduar</small>
                       </div>
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,7 +18,7 @@ export default function PatientDashboard() {
           navigate("/login");
           return;
         }
-        const res = await axios.get("http://localhost:5000/api/auth/me", {
+        const res = await axios.get(`${API_BASE_URL}/api/auth/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
@@ -38,37 +38,37 @@ export default function PatientDashboard() {
   const cards = [
     {
       to: "/patient/book-appointment",
-      icon: "📅",
+      icon: "ðŸ“…",
       title: "Rezervo Terminin",
-      desc: "Shiko mjekët dhe cakto vizitën",
+      desc: "Shiko mjekÃ«t dhe cakto vizitÃ«n",
     },
     {
       to: "/patient/profile",
-      icon: "👤",
+      icon: "ðŸ‘¤",
       title: "Profili Im",
-      desc: "Shiko dhe edito të dhënat",
+      desc: "Shiko dhe edito tÃ« dhÃ«nat",
     },
     {
       to: "/patient/history",
-      icon: "📖",
+      icon: "ðŸ“–",
       title: "Historiku",
       desc: "Terminet dhe vizitat e kaluara",
     },
     {
       to: "/patient/notifications",
-      icon: "🔔",
+      icon: "ðŸ””",
       title: "Njoftime",
       desc: "Kujtesa dhe rekomandime",
     },
     {
       to: "/patient/reports",
-      icon: "📋",
+      icon: "ðŸ“‹",
       title: "Raportet e Mia",
       desc: "Shiko dhe shkarko raportet",
     },
     {
       to: "/patient/documents",
-      icon: "📁",
+      icon: "ðŸ“",
       title: "Dokumentet",
       desc: "Recetat, analizat etj.",
     },
@@ -102,7 +102,7 @@ export default function PatientDashboard() {
             }}
           >
             <h2 className="m-0">
-              Mirësevini në MedPal, {user?.name || "Pacient"} 👋
+              MirÃ«sevini nÃ« MedPal, {user?.name || "Pacient"} ðŸ‘‹
             </h2>
             <button className="btn btn-outline-light" onClick={handleLogout}>
               Dil
@@ -122,9 +122,9 @@ export default function PatientDashboard() {
               }}
             >
               <div className="card-body p-3">
-                <h5 className="card-title mb-2" style={{ color: 'white' }}>👋 Mirësevini në MedPal!</h5>
+                <h5 className="card-title mb-2" style={{ color: 'white' }}>ðŸ‘‹ MirÃ«sevini nÃ« MedPal!</h5>
                 <p className="card-text mb-0 small" style={{ color: 'white' }}>
-                  Zgjidhni një nga opsionet më poshtë për të vazhduar
+                  Zgjidhni njÃ« nga opsionet mÃ« poshtÃ« pÃ«r tÃ« vazhduar
                 </p>
               </div>
             </div>

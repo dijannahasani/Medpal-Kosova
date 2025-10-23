@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DoctorHomeButton from "../../components/DoctorHomeButton";
@@ -19,13 +19,13 @@ export default function DoctorWorkingHoursManager() {
   const [error, setError] = useState(null);
 
   const dayNames = {
-    monday: "E Hënë",
-    tuesday: "E Martë", 
-    wednesday: "E Mërkurë",
+    monday: "E HÃ«nÃ«",
+    tuesday: "E MartÃ«", 
+    wednesday: "E MÃ«rkurÃ«",
     thursday: "E Enjte",
     friday: "E Premte",
-    saturday: "E Shtunë",
-    sunday: "E Dielë"
+    saturday: "E ShtunÃ«",
+    sunday: "E DielÃ«"
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function DoctorWorkingHoursManager() {
       const token = localStorage.getItem("token");
       
       const response = await axios.get(
-        "http://localhost:5000/api/working-hours/me",
+        `${API_BASE_URL}/api/working-hours/me",
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -48,8 +48,8 @@ export default function DoctorWorkingHoursManager() {
         setWorkingHours(response.data.workingHours);
       }
     } catch (err) {
-      console.error("Gabim në marrjen e orarit:", err);
-      setError("Nuk u mor orari i punës. Do të përdoren vlerat default.");
+      console.error("Gabim nÃ« marrjen e orarit:", err);
+      setError("Nuk u mor orari i punÃ«s. Do tÃ« pÃ«rdoren vlerat default.");
     } finally {
       setLoading(false);
     }
@@ -71,18 +71,18 @@ export default function DoctorWorkingHoursManager() {
       const token = localStorage.getItem("token");
       
       const response = await axios.post(
-        "http://localhost:5000/api/working-hours",
+        `${API_BASE_URL}/api/working-hours",
         { workingHours },
         {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
       
-      alert("✅ Orari i punës u ruajt me sukses!");
+      alert("âœ… Orari i punÃ«s u ruajt me sukses!");
       setError(null);
     } catch (err) {
-      console.error("Gabim në ruajtjen e orarit:", err);
-      alert("❌ Gabim në ruajtjen e orarit: " + (err.response?.data?.message || err.message));
+      console.error("Gabim nÃ« ruajtjen e orarit:", err);
+      alert("âŒ Gabim nÃ« ruajtjen e orarit: " + (err.response?.data?.message || err.message));
     } finally {
       setSaving(false);
     }
@@ -108,7 +108,7 @@ export default function DoctorWorkingHoursManager() {
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Duke u ngarkuar...</span>
           </div>
-          <p className="mt-3">Duke ngarkuar orarin e punës...</p>
+          <p className="mt-3">Duke ngarkuar orarin e punÃ«s...</p>
         </div>
       </div>
     );
@@ -117,24 +117,24 @@ export default function DoctorWorkingHoursManager() {
   return (
     <div className="container py-5" style={{ maxWidth: "800px" }}>
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>🗓️ Menaxhimi i Orarit të Punës</h2>
+        <h2>ðŸ—“ï¸ Menaxhimi i Orarit tÃ« PunÃ«s</h2>
         <button 
           className="btn btn-outline-secondary"
           onClick={() => window.location.href = '/doctor/profile'}
         >
-          ← Kthehu në Profil
+          â† Kthehu nÃ« Profil
         </button>
       </div>
 
       {error && (
         <div className="alert alert-warning mb-4">
-          <strong>⚠️ Paralajmërim:</strong> {error}
+          <strong>âš ï¸ ParalajmÃ«rim:</strong> {error}
         </div>
       )}
 
       <div className="card shadow">
         <div className="card-header bg-primary text-white">
-          <h5 className="mb-0">Cakto Orarin Tuaj të Punës</h5>
+          <h5 className="mb-0">Cakto Orarin Tuaj tÃ« PunÃ«s</h5>
         </div>
         <div className="card-body">
           <div className="row">
@@ -185,7 +185,7 @@ export default function DoctorWorkingHoursManager() {
                     )}
                     
                     {!hours.active && (
-                      <p className="text-muted small mb-0">🚫 Jo aktiv</p>
+                      <p className="text-muted small mb-0">ðŸš« Jo aktiv</p>
                     )}
                   </div>
                 </div>
@@ -209,7 +209,7 @@ export default function DoctorWorkingHoursManager() {
                   });
                 }}
               >
-                🔄 Reset në Default
+                ðŸ”„ Reset nÃ« Default
               </button>
               <button
                 className="btn btn-success"
@@ -222,7 +222,7 @@ export default function DoctorWorkingHoursManager() {
                     Duke ruajtur...
                   </>
                 ) : (
-                  '💾 Ruaj Orarin'
+                  'ðŸ’¾ Ruaj Orarin'
                 )}
               </button>
             </div>
@@ -232,12 +232,12 @@ export default function DoctorWorkingHoursManager() {
 
       <div className="card mt-4">
         <div className="card-body">
-          <h6 className="text-primary">💡 Shënime:</h6>
+          <h6 className="text-primary">ðŸ’¡ ShÃ«nime:</h6>
           <ul className="mb-0 small text-muted">
-            <li>Aktivizo/çaktivizo ditët sipas nevojës</li>
-            <li>Cakto kohën e fillimit dhe mbarimit për çdo ditë</li>
-            <li>Pacientët do të mund të rezervojnë takime vetëm në oraret aktive</li>
-            <li>Ndryshimet do të zbatohen menjëherë pas ruajtjes</li>
+            <li>Aktivizo/Ã§aktivizo ditÃ«t sipas nevojÃ«s</li>
+            <li>Cakto kohÃ«n e fillimit dhe mbarimit pÃ«r Ã§do ditÃ«</li>
+            <li>PacientÃ«t do tÃ« mund tÃ« rezervojnÃ« takime vetÃ«m nÃ« oraret aktive</li>
+            <li>Ndryshimet do tÃ« zbatohen menjÃ«herÃ« pas ruajtjes</li>
           </ul>
         </div>
       </div>

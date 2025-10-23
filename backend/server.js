@@ -1,14 +1,25 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
+const config = require('./config');
 
 // ✅ KRIJIMI I APP
 const app = express();
 
-// ✅ MIDDLWARE
-app.use(cors());
+// ✅ MIDDLEWARE - CORS Configuration
+const corsOptions = {
+  origin: [
+    config.CLIENT_URL,
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://medpal-frontend.onrender.com'
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // ✅ ROUTES

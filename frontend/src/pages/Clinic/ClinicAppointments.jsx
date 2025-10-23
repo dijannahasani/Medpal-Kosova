@@ -6,6 +6,7 @@ import Modal from "react-modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
 import "./ClinicAppointments.css";
+import API_BASE_URL from "../../config/api";
 
 Modal.setAppElement("#root");
 
@@ -18,7 +19,7 @@ export default function ClinicAppointments() {
   const fetchAppointments = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/appointments/all", {
+      const res = await axios.get(`${API_BASE_URL}/api/appointments/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAppointments(res.data);
@@ -32,7 +33,7 @@ export default function ClinicAppointments() {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5000/api/appointments/${appointmentId}/status`,
+        `${API_BASE_URL}/api/appointments/${appointmentId}/status`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -45,7 +46,7 @@ export default function ClinicAppointments() {
   const downloadPDF = async (appointmentId) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`http://localhost:5000/api/appointments/${appointmentId}/pdf`, {
+      const res = await axios.get(`${API_BASE_URL}/api/appointments/${appointmentId}/pdf`, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: "blob",
       });
@@ -81,7 +82,7 @@ export default function ClinicAppointments() {
   };
 
   const openModal = (fileUrl) => {
-    setSelectedDocUrl("http://localhost:5000" + fileUrl);
+    setSelectedDocUrl(API_BASE_URL + fileUrl);
     setModalIsOpen(true);
   };
 

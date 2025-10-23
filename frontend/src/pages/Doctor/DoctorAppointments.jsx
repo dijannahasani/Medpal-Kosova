@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DoctorHomeButton from "../../components/DoctorHomeButton";
@@ -9,7 +9,7 @@ export default function DoctorAppointments() {
   const fetchAppointments = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.get("http://localhost:5000/api/appointments/doctor", {
+      const res = await axios.get(`${API_BASE_URL}/api/appointments/doctor", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAppointments(res.data);
@@ -22,7 +22,7 @@ export default function DoctorAppointments() {
 
   const updateStatus = async (id, status) => {
     const token = localStorage.getItem("token");
-    await axios.put(`http://localhost:5000/api/appointments/${id}/status`, { status }, {
+    await axios.put(${API_BASE_URL}/api/appointments/${id}/status`, { status }, {
       headers: { Authorization: `Bearer ${token}` },
     });
     fetchAppointments();
@@ -30,7 +30,7 @@ export default function DoctorAppointments() {
 
   const downloadPDF = async (id) => {
     const token = localStorage.getItem("token");
-    const res = await axios.get(`http://localhost:5000/api/appointments/${id}/pdf`, {
+    const res = await axios.get(${API_BASE_URL}/api/appointments/${id}/pdf`, {
       headers: { Authorization: `Bearer ${token}` },
       responseType: "blob",
     });
@@ -67,10 +67,10 @@ export default function DoctorAppointments() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  📅 Terminet e Pacientëve
+                  ðŸ“… Terminet e PacientÃ«ve
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
-                  Menaxhoni të gjitha terminet e pacientëve tuaj
+                  Menaxhoni tÃ« gjitha terminet e pacientÃ«ve tuaj
                 </p>
               </div>
               <div className="card-body p-5">
@@ -136,9 +136,9 @@ export default function DoctorAppointments() {
                                 borderRadius: "8px"
                               }}
                 >
-                  <option value="pending">⏳ Pending</option>
-                  <option value="approved">✅ Approved</option>
-                  <option value="canceled">❌ Canceled</option>
+                  <option value="pending">â³ Pending</option>
+                  <option value="approved">âœ… Approved</option>
+                  <option value="canceled">âŒ Canceled</option>
                 </select>
               </td>
                           <td style={{ padding: "1rem" }}>
@@ -149,7 +149,7 @@ export default function DoctorAppointments() {
                               borderRadius: "8px",
                               boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                             }}>
-                  📄
+                  ðŸ“„
                 </button>
               </td>
             </tr>

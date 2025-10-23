@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -17,8 +17,8 @@ export default function SearchDoctors() {
   useEffect(() => {
     const fetchFilters = async () => {
       const [depRes, servRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/departments"),
-        axios.get("http://localhost:5000/api/services"),
+        axios.get(`${API_BASE_URL}/api/departments"),
+        axios.get(`${API_BASE_URL}/api/services"),
       ]);
       setDepartments(depRes.data);
       setServices(servRes.data);
@@ -28,13 +28,13 @@ export default function SearchDoctors() {
 
   const handleSearch = async () => {
     const params = new URLSearchParams(filters).toString();
-    const res = await axios.get(`http://localhost:5000/api/doctors/search?${params}`);
+    const res = await axios.get(${API_BASE_URL}/api/doctors/search?${params}`);
     setDoctors(res.data);
   };
 
   return (
     <div className="container mt-5" style={{ maxWidth: "800px" }}>
-      <h2 className="text-center mb-4">🔎 Kërko Mjekë</h2>
+      <h2 className="text-center mb-4">ðŸ”Ž KÃ«rko MjekÃ«</h2>
 
       <div className="row g-3 mb-3">
         <div className="col-md-4">
@@ -63,7 +63,7 @@ export default function SearchDoctors() {
             className="form-select"
             onChange={(e) => setFilters({ ...filters, serviceId: e.target.value })}
           >
-            <option value="">Zgjedh shërbimin</option>
+            <option value="">Zgjedh shÃ«rbimin</option>
             {services.map((s) => (
               <option key={s._id} value={s._id}>{s.name}</option>
             ))}
@@ -72,17 +72,17 @@ export default function SearchDoctors() {
       </div>
 
       <button onClick={handleSearch} className="btn btn-primary mb-4 w-100">
-        🔍 Kërko
+        ðŸ” KÃ«rko
       </button>
 
       <ul className="list-group">
         {doctors.map((d) => (
           <li key={d._id} className="list-group-item d-flex justify-content-between align-items-center">
             <div>
-              <strong>{d.name}</strong> – {d?.email || "nuk ka email"}
+              <strong>{d.name}</strong> â€“ {d?.email || "nuk ka email"}
             </div>
             <Link to={`/book-appointment?doctorId=${d._id}`} className="btn btn-outline-success">
-              📅 Rezervo
+              ðŸ“… Rezervo
             </Link>
           </li>
         ))}

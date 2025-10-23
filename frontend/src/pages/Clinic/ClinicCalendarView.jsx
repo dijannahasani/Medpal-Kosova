@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
@@ -16,12 +16,12 @@ export default function ClinicCalendarView() {
     const fetchAppointments = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/appointments/all", {
+        const res = await axios.get(`${API_BASE_URL}/api/appointments/all", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAppointments(res.data);
       } catch (err) {
-        console.error("❌ Gabim në marrjen e termineve:", err);
+        console.error("âŒ Gabim nÃ« marrjen e termineve:", err);
       }
     };
     fetchAppointments();
@@ -75,10 +75,10 @@ export default function ClinicCalendarView() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color:"white" }}>
-                  📅 Kalendar për Klinikën
+                  ðŸ“… Kalendar pÃ«r KlinikÃ«n
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
-                  Shikoni terminin e klinikës në kalendar
+                  Shikoni terminin e klinikÃ«s nÃ« kalendar
                 </p>
               </div>
               <div className="card-body p-5">
@@ -104,7 +104,7 @@ export default function ClinicCalendarView() {
                           }
                         }}
                       >
-                        ‹
+                        â€¹
                       </button>
 
                       <button
@@ -128,7 +128,7 @@ export default function ClinicCalendarView() {
                           }
                         }}
                       >
-                        ›
+                        â€º
                       </button>
                     </div>
                     <Calendar
@@ -151,7 +151,7 @@ export default function ClinicCalendarView() {
                 </div>
 
                 <h5 className="mt-3 text-center mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>
-                  Terminet për: <strong>{date.toDateString()}</strong>
+                  Terminet pÃ«r: <strong>{date.toDateString()}</strong>
                 </h5>
                 {filteredAppointments.length > 0 ? (
                   <ul className="list-group" style={{
@@ -169,9 +169,9 @@ export default function ClinicCalendarView() {
                         padding: "1.5rem",
                         fontSize: "1.1rem"
                       }}>
-                        <span>⏰ {a.time}</span>
-                        <span>👨‍⚕️ Dr. <strong style={{ color: "#D9A299" }}>{a.doctorName}</strong></span>
-                        <span>🧑‍🤝‍🧑 Pacient: <strong style={{ color: "#D9A299" }}>{a.patientId?.name}</strong></span>
+                        <span>â° {a.time}</span>
+                        <span>ðŸ‘¨â€âš•ï¸ Dr. <strong style={{ color: "#D9A299" }}>{a.doctorName}</strong></span>
+                        <span>ðŸ§‘â€ðŸ¤â€ðŸ§‘ Pacient: <strong style={{ color: "#D9A299" }}>{a.patientId?.name}</strong></span>
                       </li>
                     ))}
                   </ul>
@@ -184,7 +184,7 @@ export default function ClinicCalendarView() {
                     fontSize: "1.1rem",
                     padding: "2rem"
                   }}>
-                    📭 S'ka termine për këtë datë.
+                    ðŸ“­ S'ka termine pÃ«r kÃ«tÃ« datÃ«.
                   </div>
                 )}
               </div>

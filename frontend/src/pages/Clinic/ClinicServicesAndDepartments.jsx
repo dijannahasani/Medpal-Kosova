@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./ClinicServicesAndDepartments.css";
@@ -26,17 +26,17 @@ export default function ClinicServicesAndDepartments() {
   const fetchData = async () => {
     try {
       const [depRes, servRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/clinic/departments", {
+        axios.get(`${API_BASE_URL}/api/clinic/departments", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("http://localhost:5000/api/clinic/services", {
+        axios.get(`${API_BASE_URL}/api/clinic/services", {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
       setDepartments(depRes.data);
       setServices(servRes.data);
     } catch (err) {
-      console.error("❌ Gabim në marrjen e të dhënave:", err);
+      console.error("âŒ Gabim nÃ« marrjen e tÃ« dhÃ«nave:", err);
     }
   };
 
@@ -50,44 +50,44 @@ export default function ClinicServicesAndDepartments() {
     try {
       if (editingDepartment) {
         await axios.put(
-          `http://localhost:5000/api/clinic/departments/${editingDepartment}`,
+          ${API_BASE_URL}/api/clinic/departments/${editingDepartment}`,
           { name: departmentName },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setEditingDepartment(null);
-        alert("✅ Departamenti u përditësua me sukses!");
+        alert("âœ… Departamenti u pÃ«rditÃ«sua me sukses!");
       } else {
         await axios.post(
-          "http://localhost:5000/api/clinic/departments",
+          `${API_BASE_URL}/api/clinic/departments",
           { name: departmentName },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        alert("✅ Departamenti u shtua me sukses!");
+        alert("âœ… Departamenti u shtua me sukses!");
       }
       setDepartmentName("");
       fetchData();
     } catch (err) {
-      alert(`❌ Gabim gjatë ${editingDepartment ? 'përditësimit' : 'shtimit'} të departamentit.`);
+      alert(`âŒ Gabim gjatÃ« ${editingDepartment ? 'pÃ«rditÃ«simit' : 'shtimit'} tÃ« departamentit.`);
     }
   };
 
   const handleEditDepartment = (department) => {
-    console.log("🔧 Edit button clicked for department:", department);
+    console.log("ðŸ”§ Edit button clicked for department:", department);
     setEditingDepartment(department._id);
     setDepartmentName(department.name);
-    console.log("📝 Edit state set:", { editingDepartment: department._id, departmentName: department.name });
+    console.log("ðŸ“ Edit state set:", { editingDepartment: department._id, departmentName: department.name });
   };
 
   const handleDeleteDepartment = async (id) => {
-    if (!window.confirm("A jeni i sigurt që doni ta fshini këtë departament?")) return;
+    if (!window.confirm("A jeni i sigurt qÃ« doni ta fshini kÃ«tÃ« departament?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/clinic/departments/${id}`, {
+      await axios.delete(${API_BASE_URL}/api/clinic/departments/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchData();
-      alert("✅ Departamenti u fshi me sukses!");
+      alert("âœ… Departamenti u fshi me sukses!");
     } catch (err) {
-      alert("❌ Gabim gjatë fshirjes së departamentit.");
+      alert("âŒ Gabim gjatÃ« fshirjes sÃ« departamentit.");
     }
   };
 
@@ -100,33 +100,33 @@ export default function ClinicServicesAndDepartments() {
     e.preventDefault();
     const { name, price, departmentId } = serviceForm;
     if (!name || !price || !departmentId) {
-      return alert("Të gjitha fushat për shërbim janë të detyrueshme.");
+      return alert("TÃ« gjitha fushat pÃ«r shÃ«rbim janÃ« tÃ« detyrueshme.");
     }
 
     if (Number(price) <= 0) {
-      return alert("Çmimi duhet të jetë numër pozitiv.");
+      return alert("Ã‡mimi duhet tÃ« jetÃ« numÃ«r pozitiv.");
     }
 
     try {
       if (editingService) {
         await axios.put(
-          `http://localhost:5000/api/clinic/services/${editingService}`,
+          ${API_BASE_URL}/api/clinic/services/${editingService}`,
           { name, price, departmentId },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setEditingService(null);
       } else {
         await axios.post(
-          "http://localhost:5000/api/clinic/services",
+          `${API_BASE_URL}/api/clinic/services",
           { name, price, departmentId },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       }
       setServiceForm({ name: "", price: "", departmentId: "" });
       fetchData();
-      alert("✅ Shërbimi u ruajt me sukses!");
+      alert("âœ… ShÃ«rbimi u ruajt me sukses!");
     } catch (err) {
-      alert("❌ Gabim gjatë ruajtjes së shërbimit.");
+      alert("âŒ Gabim gjatÃ« ruajtjes sÃ« shÃ«rbimit.");
     }
   };
 
@@ -140,14 +140,14 @@ export default function ClinicServicesAndDepartments() {
   };
 
   const handleDeleteService = async (id) => {
-    if (!window.confirm("A jeni i sigurt që doni ta fshini këtë shërbim?")) return;
+    if (!window.confirm("A jeni i sigurt qÃ« doni ta fshini kÃ«tÃ« shÃ«rbim?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/clinic/services/${id}`, {
+      await axios.delete(${API_BASE_URL}/api/clinic/services/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchData();
     } catch (err) {
-      alert("❌ Gabim gjatë fshirjes së shërbimit.");
+      alert("âŒ Gabim gjatÃ« fshirjes sÃ« shÃ«rbimit.");
     }
   };
 
@@ -184,15 +184,15 @@ export default function ClinicServicesAndDepartments() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color:"white" }}>
-                  🏥 Menaxho Departamentet & Shërbimet
+                  ðŸ¥ Menaxho Departamentet & ShÃ«rbimet
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
-                  Krijoni dhe menaxhoni departamentet dhe shërbimet e klinikës
+                  Krijoni dhe menaxhoni departamentet dhe shÃ«rbimet e klinikÃ«s
                 </p>
               </div>
               <div className="card-body p-5">
 
-                {/* ➕ Shto/Përditëso Departament */}
+                {/* âž• Shto/PÃ«rditÃ«so Departament */}
                 <form onSubmit={handleAddOrUpdateDepartment} className="mb-5" style={{
                   background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
                   padding: "2rem",
@@ -201,7 +201,7 @@ export default function ClinicServicesAndDepartments() {
                   border: "1px solid rgba(220, 197, 178, 0.3)"
                 }}>
                   <h5 className="mb-3" style={{ color: "#D9A299", fontSize: "1.3rem" }}>
-                    {editingDepartment ? "✏️ Përditëso Departament" : "➕ Shto Departament"}
+                    {editingDepartment ? "âœï¸ PÃ«rditÃ«so Departament" : "âž• Shto Departament"}
                   </h5>
                   <div className="input-group">
                     <input
@@ -224,7 +224,7 @@ export default function ClinicServicesAndDepartments() {
                       borderRadius: "12px",
                       boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                     }}>
-                      {editingDepartment ? "Përditëso" : "Shto"}
+                      {editingDepartment ? "PÃ«rditÃ«so" : "Shto"}
                     </button>
                     {editingDepartment && (
                       <button
@@ -248,7 +248,7 @@ export default function ClinicServicesAndDepartments() {
                   </div>
                 </form>
 
-                {/* ➕ Shto/Përditëso Shërbim */}
+                {/* âž• Shto/PÃ«rditÃ«so ShÃ«rbim */}
                 <form onSubmit={handleAddOrUpdateService} className="mb-5" style={{
                   background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
                   padding: "2rem",
@@ -256,13 +256,13 @@ export default function ClinicServicesAndDepartments() {
                   boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
                   border: "1px solid rgba(220, 197, 178, 0.3)"
                 }}>
-                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>{editingService ? "✏️ Përditëso Shërbim" : "➕ Shto Shërbim"}</h5>
+                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>{editingService ? "âœï¸ PÃ«rditÃ«so ShÃ«rbim" : "âž• Shto ShÃ«rbim"}</h5>
                   <div className="mb-4">
                     <input
                       type="text"
                       name="name"
                       className="form-control form-control-lg"
-                      placeholder="Emri i shërbimit"
+                      placeholder="Emri i shÃ«rbimit"
                       autoComplete="off"
                       value={serviceForm.name}
                       onChange={handleServiceChange}
@@ -279,7 +279,7 @@ export default function ClinicServicesAndDepartments() {
                       type="number"
                       name="price"
                       className="form-control form-control-lg"
-                      placeholder="Çmimi (€)"
+                      placeholder="Ã‡mimi (â‚¬)"
                       value={serviceForm.price}
                       onChange={handleServiceChange}
                       required
@@ -319,7 +319,7 @@ export default function ClinicServicesAndDepartments() {
                     fontSize: "1.2rem",
                     fontWeight: "bold"
                   }}>
-                    {editingService ? "Përditëso" : "Shto"}
+                    {editingService ? "PÃ«rditÃ«so" : "Shto"}
                   </button>
                   {editingService && (
                     <button
@@ -345,7 +345,7 @@ export default function ClinicServicesAndDepartments() {
                   )}
                 </form>
 
-                {/* 🔍 Kërkimi dhe Filtrimi */}
+                {/* ðŸ” KÃ«rkimi dhe Filtrimi */}
                 <div className="mb-5" style={{
                   background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
                   padding: "2rem",
@@ -353,11 +353,11 @@ export default function ClinicServicesAndDepartments() {
                   boxShadow: "0 8px 25px rgba(217, 162, 153, 0.2)",
                   border: "1px solid rgba(220, 197, 178, 0.3)"
                 }}>
-                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>🔍 Kërko & Filtrim</h5>
+                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>ðŸ” KÃ«rko & Filtrim</h5>
                   <input
                     type="text"
                     className="form-control form-control-lg mb-3"
-                    placeholder="Kërko në departamente..."
+                    placeholder="KÃ«rko nÃ« departamente..."
                     value={searchDep}
                     onChange={(e) => setSearchDep(e.target.value)}
                     style={{
@@ -369,7 +369,7 @@ export default function ClinicServicesAndDepartments() {
                   <input
                     type="text"
                     className="form-control form-control-lg mb-3"
-                    placeholder="Kërko në shërbime..."
+                    placeholder="KÃ«rko nÃ« shÃ«rbime..."
                     value={searchServ}
                     onChange={(e) => setSearchServ(e.target.value)}
                     style={{
@@ -415,13 +415,13 @@ export default function ClinicServicesAndDepartments() {
                       marginTop: "0.5rem"
                     }}
                   >
-                    ♻️ Reseto filtrat
+                    â™»ï¸ Reseto filtrat
                   </button>
                 </div>
 
-                {/* 📋 Lista */}
+                {/* ðŸ“‹ Lista */}
                 <div>
-                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>📋 Departamentet ekzistuese:</h5>
+                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>ðŸ“‹ Departamentet ekzistuese:</h5>
                   <ul className="list-group mb-5" style={{
                     background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
                     borderRadius: "15px",
@@ -452,7 +452,7 @@ export default function ClinicServicesAndDepartments() {
                               boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                             }}
                           >
-                            ✏️
+                            âœï¸
                           </button>
                           <button 
                             className="btn btn-sm" 
@@ -465,14 +465,14 @@ export default function ClinicServicesAndDepartments() {
                               boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                             }}
                           >
-                            🗑️
+                            ðŸ—‘ï¸
                           </button>
                         </div>
                       </li>
                     ))}
                   </ul>
 
-                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>📄 Shërbimet ekzistuese:</h5>
+                  <h5 className="mb-4" style={{ color: "#D9A299", fontSize: "1.3rem" }}>ðŸ“„ ShÃ«rbimet ekzistuese:</h5>
                   <ul className="list-group" style={{
                     background: "linear-gradient(145deg, #FAF7F3, #F0E4D3)",
                     borderRadius: "15px",
@@ -489,7 +489,7 @@ export default function ClinicServicesAndDepartments() {
                         fontSize: "1.1rem"
                       }}>
                         <div>
-                          {s.name} – {s.price}€ ({s.departmentId?.name || "-"})
+                          {s.name} â€“ {s.price}â‚¬ ({s.departmentId?.name || "-"})
                         </div>
                         <div>
                           <button className="btn btn-sm me-2" onClick={() => handleEditService(s)} style={{
@@ -499,7 +499,7 @@ export default function ClinicServicesAndDepartments() {
                             borderRadius: "8px",
                             boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                           }}>
-                            ✏️
+                            âœï¸
                           </button>
                           <button className="btn btn-sm" onClick={() => handleDeleteService(s._id)} style={{
                             background: "linear-gradient(135deg, #DCC5B2, #D9A299)",
@@ -508,7 +508,7 @@ export default function ClinicServicesAndDepartments() {
                             borderRadius: "8px",
                             boxShadow: "0 4px 15px rgba(217, 162, 153, 0.3)"
                           }}>
-                            🗑️
+                            ðŸ—‘ï¸
                           </button>
                         </div>
                       </li>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import axios from "axios";
 import ClinicHomeButton from "../../components/ClinicHomeButton";
 import "./ClinicSetDoctorHours.css";
@@ -19,11 +19,11 @@ export default function ClinicSetDoctorHours() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:5000/api/clinic/doctors", {
+      .get(`${API_BASE_URL}/api/clinic/doctors", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setDoctors(res.data))
-      .catch((err) => console.error("❌ Gabim në marrjen e mjekëve:", err));
+      .catch((err) => console.error("âŒ Gabim nÃ« marrjen e mjekÃ«ve:", err));
   }, []);
 
   const handleChange = (day, field, value) => {
@@ -39,24 +39,24 @@ export default function ClinicSetDoctorHours() {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/working-hours/${selectedDoctor}`,
+        ${API_BASE_URL}/api/working-hours/${selectedDoctor}`,
         { workingHours },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("✅ Orari u ruajt me sukses!");
+      alert("âœ… Orari u ruajt me sukses!");
     } catch (err) {
-      console.error("❌ Gabim në ruajtje:", err);
-      alert("❌ Dështoi ruajtja e orarit.");
+      console.error("âŒ Gabim nÃ« ruajtje:", err);
+      alert("âŒ DÃ«shtoi ruajtja e orarit.");
     }
   };
 
   const dayLabels = {
-    monday: "E Hënë",
-    tuesday: "E Martë",
-    wednesday: "E Mërkurë",
+    monday: "E HÃ«nÃ«",
+    tuesday: "E MartÃ«",
+    wednesday: "E MÃ«rkurÃ«",
     thursday: "E Enjte",
     friday: "E Premte",
-    saturday: "E Shtunë",
+    saturday: "E ShtunÃ«",
     sunday: "E Diel",
   };
 
@@ -83,10 +83,10 @@ export default function ClinicSetDoctorHours() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color:"white" }}>
-                  🕐 Vendos Orarin për Mjekun
+                  ðŸ• Vendos Orarin pÃ«r Mjekun
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9" }}>
-                  Përcaktoni orarin e punës për mjekët e klinikës
+                  PÃ«rcaktoni orarin e punÃ«s pÃ«r mjekÃ«t e klinikÃ«s
                 </p>
               </div>
               <div className="card-body p-5">
@@ -159,7 +159,7 @@ export default function ClinicSetDoctorHours() {
                       e.target.style.boxShadow = "0 8px 25px rgba(217, 162, 153, 0.4)";
                     }
                   }}>
-                    💾 Ruaj Orarin
+                    ðŸ’¾ Ruaj Orarin
                   </button>
                 </form>
               </div>

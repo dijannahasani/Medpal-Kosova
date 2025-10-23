@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DoctorHomeButton from "../../components/DoctorHomeButton";
@@ -21,7 +21,7 @@ export default function DoctorWorkingHours() {
   useEffect(() => {
     const fetchWorkingHours = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/working-hours/me", {
+        const response = await axios.get(`${API_BASE_URL}/api/working-hours/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
         
@@ -59,16 +59,16 @@ export default function DoctorWorkingHours() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/working-hours",
+        `${API_BASE_URL}/api/working-hours",
         { workingHours },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setMessage("✅ Orari u ruajt me sukses!");
+      setMessage("âœ… Orari u ruajt me sukses!");
       setTimeout(() => setMessage(""), 3000);
     } catch (err) {
-      setMessage("❌ Gabim gjatë ruajtjes së orarit.");
+      setMessage("âŒ Gabim gjatÃ« ruajtjes sÃ« orarit.");
       setTimeout(() => setMessage(""), 3000);
     } finally {
       setLoading(false);
@@ -76,12 +76,12 @@ export default function DoctorWorkingHours() {
   };
 
   const weekdays = {
-    monday: "E Hënë",
-    tuesday: "E Martë", 
-    wednesday: "E Mërkurë",
+    monday: "E HÃ«nÃ«",
+    tuesday: "E MartÃ«", 
+    wednesday: "E MÃ«rkurÃ«",
     thursday: "E Enjte",
     friday: "E Premte",
-    saturday: "E Shtunë",
+    saturday: "E ShtunÃ«",
     sunday: "E Diel"
   };
 
@@ -95,10 +95,10 @@ export default function DoctorWorkingHours() {
         {/* Header */}
         <div className="text-center mb-4">
           <h2 className="text-white mb-2" style={{ fontWeight: "600" }}>
-            🕐 Menaxho Orarin e Punës
+            ðŸ• Menaxho Orarin e PunÃ«s
           </h2>
           <p className="text-white-50 mb-4">
-            Vendosni orarin tuaj të punës për secilin ditë të javës
+            Vendosni orarin tuaj tÃ« punÃ«s pÃ«r secilin ditÃ« tÃ« javÃ«s
           </p>
         </div>
 
@@ -111,11 +111,11 @@ export default function DoctorWorkingHours() {
           <div className="card-body p-4">
             
             {message && (
-              <div className={`alert ${message.includes('✅') ? 'alert-success' : 'alert-danger'}`} style={{
-                background: message.includes('✅') ? 
+              <div className={`alert ${message.includes('âœ…') ? 'alert-success' : 'alert-danger'}`} style={{
+                background: message.includes('âœ…') ? 
                   "linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1))" :
                   "linear-gradient(145deg, #FFF3CD, #FFEAA7)",
-                border: `1px solid ${message.includes('✅') ? 'rgba(76, 175, 80, 0.2)' : 'rgba(255, 193, 7, 0.3)'}`,
+                border: `1px solid ${message.includes('âœ…') ? 'rgba(76, 175, 80, 0.2)' : 'rgba(255, 193, 7, 0.3)'}`,
                 borderRadius: "10px"
               }}>
                 {message}
@@ -156,7 +156,7 @@ export default function DoctorWorkingHours() {
                                   color: "#2c3e50",
                                   fontSize: "0.95rem"
                                 }}>
-                                  📅 {dayName}
+                                  ðŸ“… {dayName}
                                 </label>
                               </div>
                             </div>
@@ -216,7 +216,7 @@ export default function DoctorWorkingHours() {
                     fontSize: "0.9rem"
                   }}
                 >
-                  ← Kthehu
+                  â† Kthehu
                 </button>
                 <button 
                   type="submit" 
@@ -233,7 +233,7 @@ export default function DoctorWorkingHours() {
                     fontSize: "0.9rem"
                   }}
                 >
-                  {loading ? "🔄 Duke ruajtur..." : "💾 Ruaj Orarin"}
+                  {loading ? "ðŸ”„ Duke ruajtur..." : "ðŸ’¾ Ruaj Orarin"}
                 </button>
               </div>
             </form>

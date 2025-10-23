@@ -1,4 +1,4 @@
-// src/pages/Doctor/AddVisitReport.jsx
+﻿// src/pages/Doctor/AddVisitReport.jsx
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Form, Button, Alert, Card, Spinner } from "react-bootstrap";
@@ -21,12 +21,12 @@ export default function AddVisitReport() {
     (async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/appointments/doctor", {
+        const res = await axios.get(`${API_BASE_URL}/api/appointments/doctor", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAppointments(res.data.filter(a => a.status === "approved"));
       } catch (err) {
-        console.error("❌ Gabim në marrjen e termineve:", err);
+        console.error("âŒ Gabim nÃ« marrjen e termineve:", err);
       }
     })();
   }, []);
@@ -41,10 +41,10 @@ export default function AddVisitReport() {
     setMessage({ text: "", type: "" });
     try {
       const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5000/api/reports", form, {
+      await axios.post(`${API_BASE_URL}/api/reports", form, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setMessage({ text: "✅ Raporti u ruajt me sukses!", type: "success" });
+      setMessage({ text: "âœ… Raporti u ruajt me sukses!", type: "success" });
       setForm({
         appointmentId: "",
         diagnosis: "",
@@ -54,8 +54,8 @@ export default function AddVisitReport() {
         symptoms: "",
       });
     } catch (err) {
-      console.error("❌ Gabim gjatë ruajtjes së raportit:", err);
-      setMessage({ text: "❌ Dështoi ruajtja e raportit.", type: "danger" });
+      console.error("âŒ Gabim gjatÃ« ruajtjes sÃ« raportit:", err);
+      setMessage({ text: "âŒ DÃ«shtoi ruajtja e raportit.", type: "danger" });
     } finally {
       setSubmitting(false);
     }
@@ -85,10 +85,10 @@ export default function AddVisitReport() {
                 border: "none"
               }}>
                 <h2 className="card-title mb-0" style={{ fontSize: "2.5rem", fontWeight: "bold", color: "white" }}>
-                  🧾 Krijo Raport Vizite
+                  ðŸ§¾ Krijo Raport Vizite
                 </h2>
                 <p className="mt-2 mb-0" style={{ fontSize: "1.1rem", opacity: "0.9", color: "white" }}>
-                  Krijoni raporte të detajuara për vizitat e pacientëve
+                  Krijoni raporte tÃ« detajuara pÃ«r vizitat e pacientÃ«ve
                 </p>
               </div>
               <div className="card-body p-5">
@@ -115,7 +115,7 @@ export default function AddVisitReport() {
                   border: "1px solid rgba(220, 197, 178, 0.3)"
                 }}>
                   <div className="mb-4">
-                    <label className="form-label fw-bold" style={{fontSize: "1.1rem" }}>📋 Zgjedh Terminin</label>
+                    <label className="form-label fw-bold" style={{fontSize: "1.1rem" }}>ðŸ“‹ Zgjedh Terminin</label>
                     <select
                       name="appointmentId"
                       className="form-select form-select-lg"
@@ -126,7 +126,7 @@ export default function AddVisitReport() {
                       <option value="">Zgjidh</option>
                       {appointments.map(a => (
                         <option key={a._id} value={a._id}>
-                          {a.patientId?.name} – {a.date} {a.time}
+                          {a.patientId?.name} â€“ {a.date} {a.time}
                         </option>
                       ))}
                     </select>
@@ -139,7 +139,7 @@ export default function AddVisitReport() {
                       className="form-control"
                       value={form.diagnosis}
                       onChange={handleChange}
-                      placeholder="Përshkruaj diagnozën"
+                      placeholder="PÃ«rshkruaj diagnozÃ«n"
                       rows={3}
                       required
                     />
@@ -152,14 +152,14 @@ export default function AddVisitReport() {
                       className="form-control"
                       value={form.recommendation}
                       onChange={handleChange}
-                      placeholder="Rekomandimet për pacientin"
+                      placeholder="Rekomandimet pÃ«r pacientin"
                       rows={2}
                     />
                   </div>
 
                   <div className="row mb-4">
                     <div className="col-md-6">
-                      <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>Temperatura (°C)</label>
+                      <label className="form-label fw-bold" style={{ color: "#D9A299", fontSize: "1.1rem" }}>Temperatura (Â°C)</label>
                       <input
                         type="number"
                         name="temperature"
@@ -207,7 +207,7 @@ export default function AddVisitReport() {
                         Po ruhet...
                       </>
                     ) : (
-                      "💾 Ruaj Raportin"
+                      "ðŸ’¾ Ruaj Raportin"
                     )}
                   </button>
                 </form>
