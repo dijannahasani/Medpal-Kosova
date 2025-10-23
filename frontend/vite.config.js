@@ -6,7 +6,10 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ['react-calendar']  // ← ADD THIS SECTION
+      external: [
+        'react-calendar',
+        'react-calendar/dist/Calendar.css'  // ← ADD THIS LINE
+      ]
     }
   }
 })
