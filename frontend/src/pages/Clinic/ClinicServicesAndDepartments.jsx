@@ -81,7 +81,7 @@ export default function ClinicServicesAndDepartments() {
   const handleDeleteDepartment = async (id) => {
     if (!window.confirm("A jeni i sigurt qÃ« doni ta fshini kÃ«tÃ« departament?")) return;
     try {
-      await axios.delete`(${API_BASE_URL}/api/clinic/departments/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/clinic/departments/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchData();
@@ -142,7 +142,7 @@ export default function ClinicServicesAndDepartments() {
   const handleDeleteService = async (id) => {
     if (!window.confirm("A jeni i sigurt qÃ« doni ta fshini kÃ«tÃ« shÃ«rbim?")) return;
     try {
-      await axios.delete`(${API_BASE_URL}/api/clinic/services/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/clinic/services/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchData();

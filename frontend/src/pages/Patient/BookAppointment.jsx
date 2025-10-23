@@ -38,8 +38,8 @@ export default function BookAppointment() {
     setLoadingServices(true);
     try {
       const [servicesRes, hoursRes] = await Promise.all([
-        axios.get`(${API_BASE_URL}/api/doctors/${doctorId}/services`), // VetÃ«m shÃ«rbimet e doktorit
-        axios.get`(${API_BASE_URL}/api/working-hours/${doctorId}`),
+        axios.get(`${API_BASE_URL}/api/doctors/${doctorId}/services`), // VetÃ«m shÃ«rbimet e doktorit
+        axios.get(`${API_BASE_URL}/api/working-hours/${doctorId}`),
       ]);
       setServices(servicesRes.data);
       setWorkingHours(hoursRes.data);
